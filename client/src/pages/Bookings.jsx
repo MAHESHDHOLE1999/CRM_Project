@@ -1,0 +1,390 @@
+import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import { Plus, Search, Filter, Edit, Trash2, CheckCircle, XCircle, Calendar, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter
+} from '@/components/ui/dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
+import { bookingService } from '@/services/bookingService';
+import BookingForm from '@/components/bookings/BookingForm';
+import { format } from 'date-fns';
+
+export default function Bookings() {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [bookingToConfirm, setBookingToConfirm] = useState(null);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['bookings', { search, status: statusFilter }],
+    queryFn: () => bookingService.getAll({ search, status: statusFilter })
+  });
+
+  const { data: statsData } = useQuery({
+    queryKey: ['booking-stats'],
+    queryFn: () => bookingService.getStats()
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id) => bookingService.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['bookings']);
+      queryClient.invalidateQueries(['booking-stats']);
+      toast.success('Booking deleted successfully');
+    }
+  });
+
+  const confirmMutation = useMutation({
+    mutationFn: ({ id, convertToCustomer }) => bookingService.confirm(id, convertToCustomer),
+    onSuccess: (response) => {
+      queryClient.invalidateQueries(['bookings']);
+      queryClient.invalidateQueries(['booking-stats']);
+      queryClient.invalidateQueries(['customers']);
+      queryClient.invalidateQueries(['dashboard-stats']);
+      
+      if (response.data.data.customer) {
+        toast.success('Booking confirmed and converted to active customer!');
+      } else {
+        toast.success('Booking confirmed');
+      }
+      setConfirmDialogOpen(false);
+      setBookingToConfirm(null);
+    },
+    onError: () => {
+      toast.error('Failed to confirm booking');
+    }
+  });
+
+  const cancelMutation = useMutation({
+    mutationFn: (id) => bookingService.cancel(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['bookings']);
+      queryClient.invalidateQueries(['booking-stats']);
+      toast.success('Booking cancelled');
+    }
+  });
+
+  const bookings = data?.data?.data?.bookings || [];
+  const stats = statsData?.data?.data || {};
+
+  const handleEdit = (booking) => {
+    setSelectedBooking(booking);
+    setDialogOpen(true);
+  };
+
+  const handleDelete = (id) => {
+    if (confirm('Are you sure you want to delete this booking?')) {
+      deleteMutation.mutate(id);
+    }
+  };
+
+  const handleAddNew = () => {
+    setSelectedBooking(null);
+    setDialogOpen(true);
+  };
+
+  const handleConfirmClick = (booking) => {
+    setBookingToConfirm(booking);
+    setConfirmDialogOpen(true);
+  };
+
+  const handleConfirmBooking = (convertToCustomer) => {
+    if (bookingToConfirm) {
+      confirmMutation.mutate({ 
+        id: bookingToConfirm._id, 
+        convertToCustomer 
+      });
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    const variants = {
+      Pending: 'default',
+      Confirmed: 'secondary',
+      Cancelled: 'destructive'
+    };
+    return <Badge variant={variants[status]}>{status}</Badge>;
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">{t('booking.title')}</h1>
+          <p className="text-muted-foreground mt-2">
+            Manage future bookings and reservations
+          </p>
+        </div>
+        <Button onClick={handleAddNew}>
+          <Plus className="h-4 w-4 mr-2" />
+          {t('booking.addNew')}
+        </Button>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Total Bookings
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{stats.totalBookings || 0}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Pending
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-600">{stats.pendingBookings || 0}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Confirmed
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">{stats.confirmedBookings || 0}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Cancelled
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-red-600">{stats.cancelledBookings || 0}</div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="p-4">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search bookings..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="w-full md:w-48">
+              <Filter className="h-4 w-4 mr-2" />
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Status</SelectItem>
+              <SelectItem value="Pending">Pending</SelectItem>
+              <SelectItem value="Confirmed">Confirmed</SelectItem>
+              <SelectItem value="Cancelled">Cancelled</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </Card>
+
+      <Card>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Customer</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>Booking Date</TableHead>
+                <TableHead>Time</TableHead>
+                <TableHead>Amount</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center py-8">
+                    {t('common.loading')}
+                  </TableCell>
+                </TableRow>
+              ) : bookings.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center py-8">
+                    {t('common.noData')}
+                  </TableCell>
+                </TableRow>
+              ) : (
+                bookings.map((booking) => (
+                  <TableRow key={booking._id}>
+                    <TableCell className="font-medium">{booking.customerName}</TableCell>
+                    <TableCell>{booking.phone}</TableCell>
+                    <TableCell>
+                      {format(new Date(booking.bookingDate), 'dd/MM/yyyy')}
+                    </TableCell>
+                    <TableCell>
+                      {booking.startTime} - {booking.endTime}
+                    </TableCell>
+                    <TableCell>₹{booking.totalAmount.toLocaleString('en-IN')}</TableCell>
+                    <TableCell>{getStatusBadge(booking.status)}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        {booking.status === 'Pending' && (
+                          <>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleConfirmClick(booking)}
+                              title="Confirm & Convert to Customer"
+                            >
+                              <CheckCircle className="h-4 w-4 text-green-600" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => cancelMutation.mutate(booking._id)}
+                              title="Cancel"
+                            >
+                              <XCircle className="h-4 w-4 text-red-600" />
+                            </Button>
+                          </>
+                        )}
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleEdit(booking)}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDelete(booking._id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </Card>
+
+      {/* Booking Form Dialog */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {selectedBooking ? 'Edit Booking' : t('booking.addNew')}
+            </DialogTitle>
+          </DialogHeader>
+          <BookingForm
+            booking={selectedBooking}
+            onSuccess={() => {
+              setDialogOpen(false);
+              queryClient.invalidateQueries(['bookings']);
+              queryClient.invalidateQueries(['booking-stats']);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Confirm Booking Dialog */}
+      <AlertDialog open={confirmDialogOpen} onOpenChange={setConfirmDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Booking</AlertDialogTitle>
+            <AlertDialogDescription>
+              Do you want to convert this booking into an active customer record?
+              <div className="mt-4 p-4 bg-muted rounded-lg">
+                <p className="font-semibold">{bookingToConfirm?.customerName}</p>
+                <p className="text-sm text-muted-foreground">{bookingToConfirm?.phone}</p>
+                <p className="text-sm mt-2">
+                  Booking Date: {bookingToConfirm && format(new Date(bookingToConfirm.bookingDate), 'dd/MM/yyyy')}
+                </p>
+                <p className="text-sm">
+                  Amount: ₹{bookingToConfirm?.totalAmount.toLocaleString('en-IN')}
+                </p>
+              </div>
+              <div className="mt-4 space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <span>Convert to Customer: Items will be marked as rented</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <ArrowRight className="h-4 w-4 text-blue-600" />
+                  <span>Just Confirm: Keeps as booking only</span>
+                </div>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <Button
+              variant="outline"
+              onClick={() => handleConfirmBooking(false)}
+            >
+              Just Confirm
+            </Button>
+            <AlertDialogAction
+              onClick={() => handleConfirmBooking(true)}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              <ArrowRight className="h-4 w-4 mr-2" />
+              Convert to Customer
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+}
