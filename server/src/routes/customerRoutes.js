@@ -8,9 +8,11 @@ import {
   getDashboardStats,
   getAnalytics,
   calculateRentalDuration,
-  getEnhancedDashboardStats
+  getEnhancedDashboardStats,
+  getFinancialStats
 } from '../controllers/customerController.js';
 import { authenticate } from '../middleware/auth.js';
+import { generateBill } from '../controllers/billController.js';
 
 const router = express.Router();
 
@@ -25,5 +27,7 @@ router.post('/calculate-duration', calculateRentalDuration);
 router.put('/:id', updateCustomer);
 router.delete('/:id', deleteCustomer);
 router.post('/:id/checkout', checkoutCustomer);
+router.get('/:id/bill', generateBill);
+router.get('/financial-stats', getFinancialStats);
 
 export default router;

@@ -10,5 +10,6 @@ export const customerService = {
   getStats: () => api.get('/customers/stats'),
   getEnhancedStats: () => api.get('/customers/enhanced-stats'),
   getAnalytics: (period) => api.get('/customers/analytics', { params: { period } }), // Add this
-  calculateDuration: (data) => api.post('/customers/calculate-duration', data)
+  calculateDuration: (data) => api.post('/customers/calculate-duration', data),
+  getFinancialStats: (params) => api.get('/customers/financial-stats', { params })
 };

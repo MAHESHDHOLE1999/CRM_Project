@@ -811,3 +811,73 @@ export const getEnhancedDashboardStats = async (req, res) => {
     });
   }
 };
+
+export const getFinancialStats = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { startDate, endDate } = req.query;
+
+    const query = { userId };
+    
+    if (startDate || endDate) {
+      query.registrationDate = {};
+      if (startDate) query.registrationDate.$gte = new Date(startDate);
+      if (endDate) query.registrationDate.$lte = new Date(endDate);
+    }
+
+    // Get all customers in date range
+    const customers = await Customer.find(query).lean();
+
+    // Calculate financial metrics
+    const financial = {
+      totalRevenue: customers.reduce((sum, c) => sum + (c.givenAmount || 0), 0),
+      pendingPayments: customers.reduce((sum, c) => sum + (c.remainingAmount || 0), 0),
+      totalAmount: customers.reduce((sum, c) => sum + (c.totalAmount || 0), 0),
+      completedBookings: customers.filter(c => c.status === 'Completed').length,
+      activeBookings: customers.filter(c => c.status === 'Active').length,
+      cancelledBookings: customers.filter(c => c.status === 'Cancelled').length,
+      collectionRate: 0
+    };
+
+    // Calculate collection rate
+    if (financial.totalAmount > 0) {
+      financial.collectionRate = (
+        (financial.totalRevenue / financial.totalAmount) * 100
+      ).toFixed(2);
+    }
+
+    // Get daily breakdown for chart
+    const dailyBreakdown = await Customer.aggregate([
+      { $match: query },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$registrationDate' } },
+          revenue: { $sum: '$givenAmount' },
+          pending: { $sum: '$remainingAmount' },
+          bookings: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        financial,
+        dailyBreakdown,
+        summary: {
+          totalCustomers: customers.length,
+          avgTransactionValue: customers.length > 0 
+            ? (financial.totalRevenue / customers.length).toFixed(0)
+            : 0
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Financial stats error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching financial statistics'
+    });
+  }
+};
