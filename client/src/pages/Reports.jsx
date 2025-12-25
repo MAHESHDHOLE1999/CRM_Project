@@ -486,7 +486,8 @@ export default function Reports() {
             {t("report.title")}
           </h1>
           <p className="text-muted-foreground mt-2">
-            Generate and download comprehensive business reports
+            {/* Generate and download comprehensive business reports */}
+            {t("report.generateReports")}
           </p>
         </div>
 

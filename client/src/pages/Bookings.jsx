@@ -69,7 +69,7 @@ export default function Bookings() {
     onSuccess: () => {
       queryClient.invalidateQueries(['bookings']);
       queryClient.invalidateQueries(['booking-stats']);
-      toast.success('Booking deleted successfully');
+      toast.success(t('common.deleteSuccess'));
     }
   });
 
@@ -82,15 +82,15 @@ export default function Bookings() {
       queryClient.invalidateQueries(['dashboard-stats']);
       
       if (response.data.data.customer) {
-        toast.success('Booking confirmed and converted to active customer!');
+        toast.success(t('booking.bookingConfirmed'));
       } else {
-        toast.success('Booking confirmed');
+        toast.success(t('booking.bookingConfirmed'));
       }
       setConfirmDialogOpen(false);
       setBookingToConfirm(null);
     },
     onError: () => {
-      toast.error('Failed to confirm booking');
+      toast.error(t('common.savingError'));
     }
   });
 
@@ -99,7 +99,7 @@ export default function Bookings() {
     onSuccess: () => {
       queryClient.invalidateQueries(['bookings']);
       queryClient.invalidateQueries(['booking-stats']);
-      toast.success('Booking cancelled');
+      toast.success(t('booking.bookingCancelled'));
     }
   });
 
@@ -112,7 +112,7 @@ export default function Bookings() {
   };
 
   const handleDelete = (id) => {
-    if (confirm('Are you sure you want to delete this booking?')) {
+    if (confirm(t('common.confirmDelete'))) {
       deleteMutation.mutate(id);
     }
   };
@@ -145,13 +145,37 @@ export default function Bookings() {
     return <Badge variant={variants[status]}>{status}</Badge>;
   };
 
+  // Stats cards configuration
+  const statsCards = [
+    {
+      titleKey: 'booking.totalBookings',
+      value: stats.totalBookings || 0,
+      colorClass: 'text-blue-600'
+    },
+    {
+      titleKey: 'booking.pending',
+      value: stats.pendingBookings || 0,
+      colorClass: 'text-orange-600'
+    },
+    {
+      titleKey: 'booking.confirmed',
+      value: stats.confirmedBookings || 0,
+      colorClass: 'text-green-600'
+    },
+    {
+      titleKey: 'booking.cancelled',
+      value: stats.cancelledBookings || 0,
+      colorClass: 'text-red-600'
+    }
+  ];
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{t('booking.title')}</h1>
           <p className="text-muted-foreground mt-2">
-            Manage future bookings and reservations
+            {t('booking.manageBookings') || 'Manage future bookings and reservations'}
           </p>
         </div>
         <Button onClick={handleAddNew}>
@@ -162,49 +186,20 @@ export default function Bookings() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Bookings
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalBookings || 0}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Pending
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-orange-600">{stats.pendingBookings || 0}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Confirmed
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">{stats.confirmedBookings || 0}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Cancelled
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.cancelledBookings || 0}</div>
-          </CardContent>
-        </Card>
+        {statsCards.map((card, index) => (
+          <Card key={index}>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                {t(card.titleKey)}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className={`text-2xl font-bold ${card.colorClass}`}>
+                {card.value}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       <Card className="p-4">
@@ -212,7 +207,7 @@ export default function Bookings() {
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search bookings..."
+              placeholder={t('booking.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10"
@@ -224,10 +219,10 @@ export default function Bookings() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="Pending">Pending</SelectItem>
-              <SelectItem value="Confirmed">Confirmed</SelectItem>
-              <SelectItem value="Cancelled">Cancelled</SelectItem>
+              <SelectItem value="all">{t('common.selectOption')}</SelectItem>
+              <SelectItem value="Pending">{t('booking.pending')}</SelectItem>
+              <SelectItem value="Confirmed">{t('booking.confirmed')}</SelectItem>
+              <SelectItem value="Cancelled">{t('booking.cancelled')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -238,13 +233,13 @@ export default function Bookings() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Customer</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>Booking Date</TableHead>
-                <TableHead>Time</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t('booking.customerName')}</TableHead>
+                <TableHead>{t('customer.phone')}</TableHead>
+                <TableHead>{t('booking.date')}</TableHead>
+                <TableHead>{t('booking.time')}</TableHead>
+                <TableHead>{t('customer.totalAmount')}</TableHead>
+                <TableHead>{t('customer.status')}</TableHead>
+                <TableHead>{t('common.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -281,7 +276,7 @@ export default function Bookings() {
                               variant="ghost"
                               size="icon"
                               onClick={() => handleConfirmClick(booking)}
-                              title="Confirm & Convert to Customer"
+                              title={t('booking.confirmBooking')}
                             >
                               <CheckCircle className="h-4 w-4 text-green-600" />
                             </Button>
@@ -289,7 +284,7 @@ export default function Bookings() {
                               variant="ghost"
                               size="icon"
                               onClick={() => cancelMutation.mutate(booking._id)}
-                              title="Cancel"
+                              title={t('common.cancel')}
                             >
                               <XCircle className="h-4 w-4 text-red-600" />
                             </Button>
@@ -299,6 +294,7 @@ export default function Bookings() {
                           variant="ghost"
                           size="icon"
                           onClick={() => handleEdit(booking)}
+                          title={t('common.edit')}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
@@ -306,6 +302,7 @@ export default function Bookings() {
                           variant="ghost"
                           size="icon"
                           onClick={() => handleDelete(booking._id)}
+                          title={t('common.delete')}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -324,7 +321,7 @@ export default function Bookings() {
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {selectedBooking ? 'Edit Booking' : t('booking.addNew')}
+              {selectedBooking ? t('common.edit') : t('booking.addNew')}
             </DialogTitle>
           </DialogHeader>
           <BookingForm
@@ -342,45 +339,45 @@ export default function Bookings() {
       <AlertDialog open={confirmDialogOpen} onOpenChange={setConfirmDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Booking</AlertDialogTitle>
+            <AlertDialogTitle>{t('booking.confirmBooking')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Do you want to convert this booking into an active customer record?
+              {t('booking.confirmBookingMessage') || 'Do you want to convert this booking into an active customer record?'}
               <div className="mt-4 p-4 bg-muted rounded-lg">
                 <p className="font-semibold">{bookingToConfirm?.customerName}</p>
                 <p className="text-sm text-muted-foreground">{bookingToConfirm?.phone}</p>
                 <p className="text-sm mt-2">
-                  Booking Date: {bookingToConfirm && format(new Date(bookingToConfirm.bookingDate), 'dd/MM/yyyy')}
+                  {t('booking.date')}: {bookingToConfirm && format(new Date(bookingToConfirm.bookingDate), 'dd/MM/yyyy')}
                 </p>
                 <p className="text-sm">
-                  Amount: ₹{bookingToConfirm?.totalAmount.toLocaleString('en-IN')}
+                  {t('customer.totalAmount')}: ₹{bookingToConfirm?.totalAmount.toLocaleString('en-IN')}
                 </p>
               </div>
               <div className="mt-4 space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <CheckCircle className="h-4 w-4 text-green-600" />
-                  <span>Convert to Customer: Items will be marked as rented</span>
+                  <span>{t('booking.convertToCustomer')}: {t('booking.convertMessage') || 'Items will be marked as rented'}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <ArrowRight className="h-4 w-4 text-blue-600" />
-                  <span>Just Confirm: Keeps as booking only</span>
+                  <span>{t('booking.justConfirm')}: {t('booking.justConfirmMessage') || 'Keeps as booking only'}</span>
                 </div>
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
             <Button
               variant="outline"
               onClick={() => handleConfirmBooking(false)}
             >
-              Just Confirm
+              {t('booking.justConfirm')}
             </Button>
             <AlertDialogAction
               onClick={() => handleConfirmBooking(true)}
               className="bg-green-600 hover:bg-green-700"
             >
               <ArrowRight className="h-4 w-4 mr-2" />
-              Convert to Customer
+              {t('booking.convertToCustomer')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

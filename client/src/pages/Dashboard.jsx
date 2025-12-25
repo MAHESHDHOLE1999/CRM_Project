@@ -616,7 +616,7 @@ export default function Dashboard() {
     queryFn: () => customerService.getAnalytics(period)
   });
 
-  // FIX: Financial stats query - THIS IS THE KEY FIX
+  // Financial stats query
   const { data: financialStats, isLoading: financialLoading } = useQuery({
     queryKey: ['dashboard-financial-stats', period, startDate, endDate],
     queryFn: () => customerService.getFinancialStats({
@@ -631,10 +631,10 @@ export default function Dashboard() {
   const dailyBreakdown = financialStats?.data?.data?.dailyBreakdown || [];
   const recentCustomers = statsData.recentCustomers || [];
 
-  // Main cards with revenue data
+  // Main cards - NOW USING TRANSLATION KEYS
   const mainCards = [
     {
-      title: 'Total Bookings',
+      titleKey: 'dashboard.totalBookings',
       value: statsData.totalBookings || 0,
       icon: Calendar,
       color: 'text-blue-600',
@@ -643,14 +643,14 @@ export default function Dashboard() {
       trend: (analyticsData.growth?.bookings || 0) >= 0 ? 'up' : 'down'
     },
     {
-      title: 'Active Bookings',
+      titleKey: 'dashboard.activeBookings',
       value: statsData.activeBookings || 0,
       icon: Activity,
       color: 'text-green-600',
       bgColor: 'bg-green-100 dark:bg-green-900/20'
     },
     {
-      title: 'Total Revenue',
+      titleKey: 'dashboard.totalRevenue',
       value: `₹${(financialData.totalRevenue || 0).toLocaleString('en-IN')}`,
       icon: DollarSign,
       color: 'text-emerald-600',
@@ -659,7 +659,7 @@ export default function Dashboard() {
       trend: (analyticsData.growth?.revenue || 0) >= 0 ? 'up' : 'down'
     },
     {
-      title: 'Pending Payments',
+      titleKey: 'dashboard.pendingPayments',
       value: `₹${(financialData.pendingPayments || 0).toLocaleString('en-IN')}`,
       icon: TrendingUp,
       color: 'text-orange-600',
@@ -669,28 +669,28 @@ export default function Dashboard() {
 
   const statusCards = [
     {
-      title: 'Completed',
+      titleKey: 'customer.completed',
       value: statsData.completedBookings || 0,
       icon: CheckCircle,
       color: 'text-green-600',
       bgColor: 'bg-green-100 dark:bg-green-900/20'
     },
     {
-      title: 'Cancelled',
+      titleKey: 'customer.cancelled',
       value: statsData.cancelledBookings || 0,
       icon: XCircle,
       color: 'text-red-600',
       bgColor: 'bg-red-100 dark:bg-red-900/20'
     },
     {
-      title: "Today's Bookings",
+      titleKey: 'dashboard.todaysBookings',
       value: statsData.todaysBookings || 0,
       icon: Clock,
       color: 'text-purple-600',
       bgColor: 'bg-purple-100 dark:bg-purple-900/20'
     },
     {
-      title: 'Collection Rate',
+      titleKey: 'dashboard.collectionRate',
       value: `${financialData.collectionRate || 0}%`,
       icon: TrendingUp,
       color: 'text-cyan-600',
@@ -718,7 +718,7 @@ export default function Dashboard() {
   if (statsLoading || analyticsLoading || financialLoading) {
     return (
       <div className="flex items-center justify-center h-96">
-        <div className="text-lg">Loading dashboard...</div>
+        <div className="text-lg">{t('common.loading')}</div>
       </div>
     );
   }
@@ -729,7 +729,7 @@ export default function Dashboard() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{t('dashboard.title')}</h1>
           <p className="text-muted-foreground mt-2">
-            Welcome back! Here's an overview of your business.
+            {t('dashboard.welcomeMessage') || "Welcome back! Here's an overview of your business."}
           </p>
         </div>
 
@@ -738,12 +738,12 @@ export default function Dashboard() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="day">Today</SelectItem>
-            <SelectItem value="week">This Week</SelectItem>
-            <SelectItem value="month">This Month</SelectItem>
-            <SelectItem value="quarter">This Quarter</SelectItem>
-            <SelectItem value="year">This Year</SelectItem>
-            <SelectItem value="custom">Custom Range</SelectItem>
+            <SelectItem value="day">{t('dashboard.thisWeek')}</SelectItem>
+            <SelectItem value="week">{t('dashboard.thisWeek')}</SelectItem>
+            <SelectItem value="month">{t('dashboard.thisMonth')}</SelectItem>
+            <SelectItem value="quarter">{t('dashboard.thisQuarter')}</SelectItem>
+            <SelectItem value="year">{t('dashboard.thisYear')}</SelectItem>
+            <SelectItem value="custom">{t('dashboard.customRange')}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -753,7 +753,7 @@ export default function Dashboard() {
         <Card className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="text-sm font-medium mb-2 block">Start Date</label>
+              <label className="text-sm font-medium mb-2 block">{t('report.startDate')}</label>
               <Input
                 type="date"
                 value={startDate}
@@ -761,7 +761,7 @@ export default function Dashboard() {
               />
             </div>
             <div>
-              <label className="text-sm font-medium mb-2 block">End Date</label>
+              <label className="text-sm font-medium mb-2 block">{t('report.endDate')}</label>
               <Input
                 type="date"
                 value={endDate}
@@ -769,7 +769,7 @@ export default function Dashboard() {
               />
             </div>
             <div className="flex items-end">
-              <Button className="w-full">Apply Filter</Button>
+              <Button className="w-full">{t('report.applyFilter')}</Button>
             </div>
           </div>
         </Card>
@@ -783,7 +783,7 @@ export default function Dashboard() {
             <Card key={index} className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  {card.title}
+                  {t(card.titleKey)}
                 </CardTitle>
                 <div className={`p-2 rounded-lg ${card.bgColor}`}>
                   <Icon className={`h-5 w-5 ${card.color}`} />
@@ -813,7 +813,7 @@ export default function Dashboard() {
             <Card key={index} className="hover:shadow-lg transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  {card.title}
+                  {t(card.titleKey)}
                 </CardTitle>
                 <div className={`p-2 rounded-lg ${card.bgColor}`}>
                   <Icon className={`h-5 w-5 ${card.color}`} />
@@ -830,7 +830,7 @@ export default function Dashboard() {
       {/* Revenue Chart */}
       <Card>
         <CardHeader>
-          <CardTitle>Revenue Trend</CardTitle>
+          <CardTitle>{t('dashboard.revenueTrend')}</CardTitle>
         </CardHeader>
         <CardContent>
           {revenueChartData.length > 0 ? (
@@ -846,20 +846,20 @@ export default function Dashboard() {
                   dataKey="revenue" 
                   stroke="#10b981" 
                   strokeWidth={2}
-                  name="Revenue (₹)"
+                  name={t('report.revenue')}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="pending" 
                   stroke="#f59e0b" 
                   strokeWidth={2}
-                  name="Pending (₹)"
+                  name={t('report.pendingAmount')}
                 />
               </LineChart>
             </ResponsiveContainer>
           ) : (
             <div className="h-[300px] flex items-center justify-center text-muted-foreground">
-              No revenue data available for selected period
+              {t('common.noData')}
             </div>
           )}
         </CardContent>
@@ -868,13 +868,13 @@ export default function Dashboard() {
       {/* Recent Customers Table */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Recent Customers</CardTitle>
+          <CardTitle>{t('dashboard.recentCustomers')}</CardTitle>
           <Button 
             variant="outline" 
             size="sm"
             onClick={() => navigate('/customers')}
           >
-            View All
+            {t('common.viewAll')}
             <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         </CardHeader>
@@ -883,20 +883,20 @@ export default function Dashboard() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead>Paid</TableHead>
-                  <TableHead>Remaining</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>{t('customer.name')}</TableHead>
+                  <TableHead>{t('customer.phone')}</TableHead>
+                  <TableHead>{t('report.date')}</TableHead>
+                  <TableHead>{t('customer.totalAmount')}</TableHead>
+                  <TableHead>{t('customer.givenAmount')}</TableHead>
+                  <TableHead>{t('customer.remainingAmount')}</TableHead>
+                  <TableHead>{t('customer.status')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {recentCustomers.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
-                      No customers yet. Start by adding your first booking!
+                      {t('common.noData')}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -927,25 +927,25 @@ export default function Dashboard() {
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
+          <CardTitle>{t('dashboard.quickActions')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Button className="w-full" onClick={() => navigate('/customers')}>
               <Users className="h-4 w-4 mr-2" />
-              Add Customer
+              {t('customer.addNew')}
             </Button>
             <Button className="w-full" variant="outline" onClick={() => navigate('/bookings')}>
               <Calendar className="h-4 w-4 mr-2" />
-              New Booking
+              {t('booking.addNew')}
             </Button>
             <Button className="w-full" variant="outline" onClick={() => navigate('/items')}>
               <Package className="h-4 w-4 mr-2" />
-              Manage Items
+              {t('items.title')}
             </Button>
             <Button className="w-full" variant="outline" onClick={() => navigate('/reports')}>
               <TrendingUp className="h-4 w-4 mr-2" />
-              View Reports
+              {t('report.title')}
             </Button>
           </div>
         </CardContent>
