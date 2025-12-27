@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
@@ -47,7 +45,6 @@ export default function Reports() {
   const [fitterFilter, setFitterFilter] = useState("all");
   const [reportType, setReportType] = useState("fitter-wise");
 
-  // Get date ranges based on selection
   const getDateRange = () => {
     const today = new Date();
     let start, end;
@@ -93,7 +90,6 @@ export default function Reports() {
 
   const dates = getDateRange();
 
-  // Fetch reports
   const { data: customerReport, isLoading: customerLoading } = useQuery({
     queryKey: ["customer-report", dates, status, fitterFilter, reportType],
     queryFn: () =>
@@ -130,29 +126,29 @@ export default function Reports() {
   const dailyRevenue = financialReport?.data?.data?.dailyRevenue || [];
   const fitters = fittersData?.data?.data || [];
 
-  // Download Customer Report PDF
   const downloadCustomerPDF = () => {
     const doc = new jsPDF();
 
-    // Title
     doc.setFontSize(20);
     doc.setFont(undefined, "bold");
-    doc.text("Ajay Gadhi Bandar CRM", 105, 15, { align: "center" });
+    doc.text(t("app.title"), 105, 15, { align: "center" });
 
     doc.setFontSize(16);
-    doc.text("Customer Report", 105, 25, { align: "center" });
+    doc.text(t("report.customerReport"), 105, 25, { align: "center" });
 
-    // Date range
     doc.setFontSize(10);
     doc.setFont(undefined, "normal");
     doc.text(
-      `Period: ${dates.startDate || "All"} to ${dates.endDate || "All"}`,
+      `${t("report.dateRange")}: ${dates.startDate || t("common.noData")} ${t("report.to")} ${dates.endDate || t("common.noData")}`,
       14,
       35
     );
-    doc.text(`Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`, 14, 40);
+    doc.text(
+      `Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`,
+      14,
+      40
+    );
 
-    // Summary Box
     doc.setFillColor(240, 240, 240);
     doc.rect(14, 45, 182, 30, "F");
 
@@ -162,33 +158,38 @@ export default function Reports() {
 
     doc.setFontSize(9);
     doc.setFont(undefined, "normal");
-    doc.text(`Total Bookings: ${customerSummary.totalBookings || 0}`, 16, 58);
-    doc.text(`Active: ${customerSummary.activeBookings || 0}`, 16, 63);
-    doc.text(`Completed: ${customerSummary.completedBookings || 0}`, 16, 68);
+    doc.text(
+      `${t("dashboard.totalBookings")}: ${customerSummary.totalBookings || 0}`,
+      16,
+      58
+    );
+    doc.text(
+      `${t("customer.active")}: ${customerSummary.activeBookings || 0}`,
+      16,
+      63
+    );
+    doc.text(
+      `${t("customer.completed")}: ${customerSummary.completedBookings || 0}`,
+      16,
+      68
+    );
 
     doc.text(
-      `Total Revenue: ₹${(customerSummary.totalRevenue || 0).toLocaleString(
-        "en-IN"
-      )}`,
+      `${t("dashboard.totalRevenue")}: ₹${(customerSummary.totalRevenue || 0).toLocaleString("en-IN")}`,
       100,
       58
     );
     doc.text(
-      `Pending: ₹${(customerSummary.totalPending || 0).toLocaleString(
-        "en-IN"
-      )}`,
+      `${t("dashboard.pendingPayments")}: ₹${(customerSummary.totalPending || 0).toLocaleString("en-IN")}`,
       100,
       63
     );
     doc.text(
-      `Total Amount: ₹${(customerSummary.totalAmount || 0).toLocaleString(
-        "en-IN"
-      )}`,
+      `${t("customer.totalAmount")}: ₹${(customerSummary.totalAmount || 0).toLocaleString("en-IN")}`,
       100,
       68
     );
 
-    // Table
     const tableData = customers.map((c) => [
       c.name,
       c.phone,
@@ -204,14 +205,14 @@ export default function Reports() {
       startY: 80,
       head: [
         [
-          "Customer",
-          "Phone",
-          "Date",
-          "Total",
-          "Paid",
-          "Pending",
-          "Fitter",
-          "Status",
+          t("customer.name"),
+          t("customer.phone"),
+          t("report.date"),
+          t("customer.totalAmount"),
+          t("customer.givenAmount"),
+          t("customer.remainingAmount"),
+          t("customer.fitterName"),
+          t("customer.status"),
         ],
       ],
       body: tableData,
@@ -224,28 +225,46 @@ export default function Reports() {
     doc.save(`customer-report-${format(new Date(), "yyyy-MM-dd")}.pdf`);
   };
 
-  // Download Item Report PDF
   const downloadItemPDF = () => {
     const doc = new jsPDF();
 
     doc.setFontSize(20);
     doc.setFont(undefined, "bold");
-    doc.text("Inventory Report", 105, 15, { align: "center" });
+    doc.text(t("report.inventoryReport"), 105, 15, { align: "center" });
 
     doc.setFontSize(10);
     doc.setFont(undefined, "normal");
-    doc.text(`Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`, 14, 25);
+    doc.text(
+      `Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`,
+      14,
+      25
+    );
 
-    // Summary
     doc.setFillColor(240, 240, 240);
     doc.rect(14, 30, 182, 25, "F");
 
     doc.setFontSize(9);
-    doc.text(`Total Items: ${itemSummary.totalItems || 0}`, 16, 37);
-    doc.text(`Total Quantity: ${itemSummary.totalQuantity || 0}`, 16, 43);
-    doc.text(`Available: ${itemSummary.availableQuantity || 0}`, 16, 49);
+    doc.text(
+      `${t("items.title")}: ${itemSummary.totalItems || 0}`,
+      16,
+      37
+    );
+    doc.text(
+      `${t("items.totalQuantity")}: ${itemSummary.totalQuantity || 0}`,
+      16,
+      43
+    );
+    doc.text(
+      `${t("items.available")}: ${itemSummary.availableQuantity || 0}`,
+      16,
+      49
+    );
 
-    doc.text(`Rented: ${itemSummary.rentedQuantity || 0}`, 100, 37);
+    doc.text(
+      `${t("items.rentedQuantity")}: ${itemSummary.rentedQuantity || 0}`,
+      100,
+      37
+    );
     doc.text(
       `Total Value: ₹${(itemSummary.totalValue || 0).toLocaleString("en-IN")}`,
       100,
@@ -266,13 +285,13 @@ export default function Reports() {
       startY: 60,
       head: [
         [
-          "Item Name",
-          "Category",
-          "Total",
-          "Available",
-          "Rented",
-          "Price",
-          "Status",
+          t("items.name"),
+          t("items.category"),
+          t("items.totalQuantity"),
+          t("items.availableQuantity"),
+          t("items.rentedQuantity"),
+          t("items.price"),
+          t("items.status"),
         ],
       ],
       body: tableData,
@@ -284,24 +303,26 @@ export default function Reports() {
     doc.save(`inventory-report-${format(new Date(), "yyyy-MM-dd")}.pdf`);
   };
 
-  // Download Financial Report PDF
   const downloadFinancialPDF = () => {
     const doc = new jsPDF();
 
     doc.setFontSize(20);
     doc.setFont(undefined, "bold");
-    doc.text("Financial Report", 105, 15, { align: "center" });
+    doc.text(t("report.financialReport"), 105, 15, { align: "center" });
 
     doc.setFontSize(10);
     doc.setFont(undefined, "normal");
     doc.text(
-      `Period: ${dates.startDate || "All"} to ${dates.endDate || "All"}`,
+      `${t("report.dateRange")}: ${dates.startDate || t("common.noData")} ${t("report.to")} ${dates.endDate || t("common.noData")}`,
       14,
       25
     );
-    doc.text(`Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`, 14, 30);
+    doc.text(
+      `Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`,
+      14,
+      30
+    );
 
-    // Financial Summary
     doc.setFillColor(240, 240, 240);
     doc.rect(14, 35, 182, 40, "F");
 
@@ -312,51 +333,42 @@ export default function Reports() {
     doc.setFontSize(9);
     doc.setFont(undefined, "normal");
     doc.text(
-      `Total Revenue: ₹${(financial.totalRevenue || 0).toLocaleString(
-        "en-IN"
-      )}`,
+      `${t("dashboard.totalRevenue")}: ₹${(financial.totalRevenue || 0).toLocaleString("en-IN")}`,
       16,
       49
     );
     doc.text(
-      `Total Booking Amount: ₹${(
-        financial.totalBookingAmount || 0
-      ).toLocaleString("en-IN")}`,
+      `${t("customer.totalAmount")}: ₹${(financial.totalBookingAmount || 0).toLocaleString("en-IN")}`,
       16,
       55
     );
     doc.text(
-      `Pending Payments: ₹${(financial.pendingPayments || 0).toLocaleString(
-        "en-IN"
-      )}`,
+      `${t("dashboard.pendingPayments")}: ₹${(financial.pendingPayments || 0).toLocaleString("en-IN")}`,
       16,
       61
     );
-    doc.text(`Collection Rate: ${financial.collectionRate || 0}%`, 16, 67);
+    doc.text(
+      `${t("dashboard.collectionRate")}: ${financial.collectionRate || 0}%`,
+      16,
+      67
+    );
 
     doc.text(
-      `Deposit Collected: ₹${(financial.depositCollected || 0).toLocaleString(
-        "en-IN"
-      )}`,
+      `${t("customer.depositAmount")}: ₹${(financial.depositCollected || 0).toLocaleString("en-IN")}`,
       100,
       49
     );
     doc.text(
-      `Transport Revenue: ₹${(financial.transportRevenue || 0).toLocaleString(
-        "en-IN"
-      )}`,
+      `${t("customer.transport")}: ₹${(financial.transportRevenue || 0).toLocaleString("en-IN")}`,
       100,
       55
     );
     doc.text(
-      `Maintenance Charges: ₹${(
-        financial.maintenanceCharges || 0
-      ).toLocaleString("en-IN")}`,
+      `${t("customer.maintenanceCharges")}: ₹${(financial.maintenanceCharges || 0).toLocaleString("en-IN")}`,
       100,
       61
     );
 
-    // Daily Revenue Table
     if (dailyRevenue.length > 0) {
       const tableData = dailyRevenue.map((day) => [
         format(new Date(day._id), "dd/MM/yyyy"),
@@ -366,7 +378,13 @@ export default function Reports() {
 
       doc.autoTable({
         startY: 80,
-        head: [["Date", "Bookings", "Revenue"]],
+        head: [
+          [
+            t("report.date"),
+            t("report.bookings"),
+            t("report.revenue"),
+          ],
+        ],
         body: tableData,
         theme: "striped",
         styles: { fontSize: 9 },
@@ -377,22 +395,25 @@ export default function Reports() {
     doc.save(`financial-report-${format(new Date(), "yyyy-MM-dd")}.pdf`);
   };
 
-  // Download Fitter Report PDF
   const downloadFitterPDF = () => {
     const doc = new jsPDF();
 
     doc.setFontSize(20);
     doc.setFont(undefined, "bold");
-    doc.text("Fitter Performance Report", 105, 15, { align: "center" });
+    doc.text(t("report.fitterPerformance"), 105, 15, { align: "center" });
 
     doc.setFontSize(10);
     doc.setFont(undefined, "normal");
     doc.text(
-      `Period: ${dates.startDate || "All"} to ${dates.endDate || "All"}`,
+      `${t("report.dateRange")}: ${dates.startDate || t("common.noData")} ${t("report.to")} ${dates.endDate || t("common.noData")}`,
       14,
       25
     );
-    doc.text(`Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`, 14, 30);
+    doc.text(
+      `Generated: ${format(new Date(), "dd/MM/yyyy HH:mm")}`,
+      14,
+      30
+    );
 
     const tableData = fitterReport.map((fitter) => [
       fitter._id || "Unassigned",
@@ -408,13 +429,13 @@ export default function Reports() {
       startY: 40,
       head: [
         [
-          "Fitter",
-          "Total",
-          "Active",
-          "Completed",
-          "Revenue",
-          "Total Amt",
-          "Pending",
+          t("report.fitterName"),
+          t("dashboard.totalBookings"),
+          t("dashboard.activeBookings"),
+          t("customer.completed"),
+          t("report.revenue"),
+          t("customer.totalAmount"),
+          t("dashboard.pendingPayments"),
         ],
       ],
       body: tableData,
@@ -426,22 +447,22 @@ export default function Reports() {
     doc.save(`fitter-report-${format(new Date(), "yyyy-MM-dd")}.pdf`);
   };
 
-  // Download CSV
   const downloadCSV = () => {
     const headers = [
-      "Name",
-      "Phone",
-      "Date",
-      "Check-in",
-      "Check-out",
-      "Total Amount",
-      "Given Amount",
-      "Remaining",
-      "Transport",
-      "Maintenance",
-      "Status",
-      "Fitter",
+      t("customer.name"),
+      t("customer.phone"),
+      t("report.date"),
+      t("customer.checkInDate"),
+      t("customer.checkOutDate"),
+      t("customer.totalAmount"),
+      t("customer.givenAmount"),
+      t("customer.remainingAmount"),
+      t("customer.transport"),
+      t("customer.maintenanceCharges"),
+      t("customer.status"),
+      t("customer.fitterName"),
     ];
+
     const rows = customers.map((c) => [
       c.name,
       c.phone,
@@ -473,7 +494,6 @@ export default function Reports() {
     URL.revokeObjectURL(url);
   };
 
-  // Print Report
   const printReport = () => {
     window.print();
   };
@@ -486,7 +506,6 @@ export default function Reports() {
             {t("report.title")}
           </h1>
           <p className="text-muted-foreground mt-2">
-            {/* Generate and download comprehensive business reports */}
             {t("report.generateReports")}
           </p>
         </div>
@@ -494,24 +513,25 @@ export default function Reports() {
         <div className="flex gap-2">
           <Button onClick={printReport} variant="outline">
             <Printer className="h-4 w-4 mr-2" />
-            Print
+            {t("common.print")}
           </Button>
           <Button onClick={downloadCSV} variant="outline">
             <Download className="h-4 w-4 mr-2" />
-            CSV
+            {t("report.downloadCSV")}
           </Button>
           <Button onClick={downloadCustomerPDF}>
             <Download className="h-4 w-4 mr-2" />
-            PDF
+            {t("report.downloadPDF")}
           </Button>
         </div>
       </div>
 
-      {/* Filters */}
       <Card className="p-4 print:hidden">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           <div>
-            <label className="text-sm font-medium mb-2 block">Date Range</label>
+            <label className="text-sm font-medium mb-2 block">
+              {t("report.dateRange")}
+            </label>
             <Select value={dateRange} onValueChange={setDateRange}>
               <SelectTrigger>
                 <Calendar className="h-4 w-4 mr-2" />
@@ -519,11 +539,11 @@ export default function Reports() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="today">Today</SelectItem>
-                <SelectItem value="week">This Week</SelectItem>
-                <SelectItem value="month">This Month</SelectItem>
-                <SelectItem value="quarter">This Quarter</SelectItem>
-                <SelectItem value="year">This Year</SelectItem>
-                <SelectItem value="custom">Custom Range</SelectItem>
+                <SelectItem value="week">{t("dashboard.thisWeek")}</SelectItem>
+                <SelectItem value="month">{t("dashboard.thisMonth")}</SelectItem>
+                <SelectItem value="quarter">{t("dashboard.thisQuarter")}</SelectItem>
+                <SelectItem value="year">{t("dashboard.thisYear")}</SelectItem>
+                <SelectItem value="custom">{t("dashboard.customRange")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -532,7 +552,7 @@ export default function Reports() {
             <>
               <div>
                 <label className="text-sm font-medium mb-2 block">
-                  Start Date
+                  {t("report.startDate")}
                 </label>
                 <Input
                   type="date"
@@ -542,7 +562,7 @@ export default function Reports() {
               </div>
               <div>
                 <label className="text-sm font-medium mb-2 block">
-                  End Date
+                  {t("report.endDate")}
                 </label>
                 <Input
                   type="date"
@@ -554,7 +574,9 @@ export default function Reports() {
           )}
 
           <div>
-            <label className="text-sm font-medium mb-2 block">Status</label>
+            <label className="text-sm font-medium mb-2 block">
+              {t("customer.status")}
+            </label>
             <Select value={status} onValueChange={setStatus}>
               <SelectTrigger>
                 <Filter className="h-4 w-4 mr-2" />
@@ -562,15 +584,17 @@ export default function Reports() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="Active">Active</SelectItem>
-                <SelectItem value="Completed">Completed</SelectItem>
-                <SelectItem value="Cancelled">Cancelled</SelectItem>
+                <SelectItem value="Active">{t("customer.active")}</SelectItem>
+                <SelectItem value="Completed">{t("customer.completed")}</SelectItem>
+                <SelectItem value="Cancelled">{t("customer.cancelled")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div>
-            <label className="text-sm font-medium mb-2 block">Fitter</label>
+            <label className="text-sm font-medium mb-2 block">
+              {t("customer.fitterName")}
+            </label>
             <Select value={fitterFilter} onValueChange={setFitterFilter}>
               <SelectTrigger>
                 <Users className="h-4 w-4 mr-2" />
@@ -589,35 +613,32 @@ export default function Reports() {
         </div>
       </Card>
 
-      {/* Tabs for different reports */}
       <Tabs defaultValue="customers" className="space-y-4">
         <TabsList className="print:hidden">
           <TabsTrigger value="customers">
             <Users className="h-4 w-4 mr-2" />
-            Customer Report
+            {t("report.customerReport")}
           </TabsTrigger>
           <TabsTrigger value="items">
             <Package className="h-4 w-4 mr-2" />
-            Inventory Report
+            {t("report.inventoryReport")}
           </TabsTrigger>
           <TabsTrigger value="financial">
             <DollarSign className="h-4 w-4 mr-2" />
-            Financial Report
+            {t("report.financialReport")}
           </TabsTrigger>
           <TabsTrigger value="fitters">
             <TrendingUp className="h-4 w-4 mr-2" />
-            Fitter Performance
+            {t("report.fitterPerformance")}
           </TabsTrigger>
         </TabsList>
 
-        {/* Customer Report Tab */}
         <TabsContent value="customers" className="space-y-4">
-          {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Bookings
+                  {t("dashboard.totalBookings")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -630,7 +651,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Revenue
+                  {t("dashboard.totalRevenue")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -643,7 +664,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Pending Payments
+                  {t("dashboard.pendingPayments")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -656,7 +677,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Active Bookings
+                  {t("dashboard.activeBookings")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -667,37 +688,36 @@ export default function Reports() {
             </Card>
           </div>
 
-          {/* Customer Table */}
           <Card>
             <CardHeader>
-              <CardTitle>Customer Details</CardTitle>
+              <CardTitle>{t("report.customerDetails")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Customer</TableHead>
-                      <TableHead>Phone</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Total</TableHead>
-                      <TableHead>Paid</TableHead>
-                      <TableHead>Remaining</TableHead>
-                      <TableHead>Fitter</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead>{t("customer.name")}</TableHead>
+                      <TableHead>{t("customer.phone")}</TableHead>
+                      <TableHead>{t("report.date")}</TableHead>
+                      <TableHead>{t("customer.totalAmount")}</TableHead>
+                      <TableHead>{t("customer.givenAmount")}</TableHead>
+                      <TableHead>{t("customer.remainingAmount")}</TableHead>
+                      <TableHead>{t("customer.fitterName")}</TableHead>
+                      <TableHead>{t("customer.status")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {customerLoading ? (
                       <TableRow>
                         <TableCell colSpan={8} className="text-center py-8">
-                          Loading...
+                          {t("common.loading")}
                         </TableCell>
                       </TableRow>
                     ) : customers.length === 0 ? (
                       <TableRow>
                         <TableCell colSpan={8} className="text-center py-8">
-                          No data available for selected filters
+                          {t("common.noData")}
                         </TableCell>
                       </TableRow>
                     ) : (
@@ -708,10 +728,7 @@ export default function Reports() {
                           </TableCell>
                           <TableCell>{customer.phone}</TableCell>
                           <TableCell>
-                            {format(
-                              new Date(customer.registrationDate),
-                              "dd/MM/yyyy"
-                            )}
+                            {format(new Date(customer.registrationDate), "dd/MM/yyyy")}
                           </TableCell>
                           <TableCell>
                             ₹{customer.totalAmount.toLocaleString("en-IN")}
@@ -746,12 +763,11 @@ export default function Reports() {
           </Card>
         </TabsContent>
 
-        {/* Item Report Tab */}
         <TabsContent value="items" className="space-y-4">
           <div className="flex justify-end gap-2 print:hidden mb-4">
             <Button onClick={downloadItemPDF}>
               <Download className="h-4 w-4 mr-2" />
-              Download Item Report PDF
+              {t("report.downloadPDF")}
             </Button>
           </div>
 
@@ -759,7 +775,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Items
+                  {t("items.title")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -772,7 +788,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Quantity
+                  {t("items.totalQuantity")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -785,7 +801,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Available
+                  {t("items.available")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -798,7 +814,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Rented
+                  {t("items.rentedQuantity")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -824,33 +840,33 @@ export default function Reports() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Inventory Details</CardTitle>
+              <CardTitle>{t("report.inventoryDetails")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Item Name</TableHead>
-                      <TableHead>Category</TableHead>
-                      <TableHead>Total Qty</TableHead>
-                      <TableHead>Available</TableHead>
-                      <TableHead>Rented</TableHead>
-                      <TableHead>Price</TableHead>
-                      <TableHead>Status</TableHead>
+                      <TableHead>{t("items.name")}</TableHead>
+                      <TableHead>{t("items.category")}</TableHead>
+                      <TableHead>{t("items.totalQuantity")}</TableHead>
+                      <TableHead>{t("items.availableQuantity")}</TableHead>
+                      <TableHead>{t("items.rentedQuantity")}</TableHead>
+                      <TableHead>{t("items.price")}</TableHead>
+                      <TableHead>{t("items.status")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {itemLoading ? (
                       <TableRow>
                         <TableCell colSpan={7} className="text-center py-8">
-                          Loading...
+                          {t("common.loading")}
                         </TableCell>
                       </TableRow>
                     ) : items.length === 0 ? (
                       <TableRow>
                         <TableCell colSpan={7} className="text-center py-8">
-                          No items available
+                          {t("common.noData")}
                         </TableCell>
                       </TableRow>
                     ) : (
@@ -891,12 +907,11 @@ export default function Reports() {
           </Card>
         </TabsContent>
 
-        {/* Financial Report Tab */}
         <TabsContent value="financial" className="space-y-4">
           <div className="flex justify-end gap-2 print:hidden mb-4">
             <Button onClick={downloadFinancialPDF}>
               <Download className="h-4 w-4 mr-2" />
-              Download Financial Report PDF
+              {t("report.downloadPDF")}
             </Button>
           </div>
 
@@ -904,7 +919,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Revenue
+                  {t("dashboard.totalRevenue")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -917,7 +932,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Pending Payments
+                  {t("dashboard.pendingPayments")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -930,7 +945,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Collection Rate
+                  {t("dashboard.collectionRate")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -945,7 +960,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium">
-                  Transport Revenue
+                  {t("customer.transport")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -958,7 +973,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium">
-                  Maintenance Charges
+                  {t("customer.maintenanceCharges")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -971,7 +986,7 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium">
-                  Deposit Collected
+                  {t("customer.depositAmount")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -982,20 +997,19 @@ export default function Reports() {
             </Card>
           </div>
 
-          {/* Daily Revenue Table */}
           {dailyRevenue.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle>Daily Revenue Breakdown</CardTitle>
+                <CardTitle>{t("report.dailyRevenue")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Date</TableHead>
-                        <TableHead>Bookings</TableHead>
-                        <TableHead>Revenue</TableHead>
+                        <TableHead>{t("report.date")}</TableHead>
+                        <TableHead>{t("report.bookings")}</TableHead>
+                        <TableHead>{t("report.revenue")}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -1018,24 +1032,23 @@ export default function Reports() {
           )}
         </TabsContent>
 
-        {/* Fitter Performance Tab */}
         <TabsContent value="fitters" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Fitter-wise Performance</CardTitle>
+              <CardTitle>{t("report.fitterPerformance")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Fitter Name</TableHead>
-                      <TableHead>Total Bookings</TableHead>
-                      <TableHead>Active</TableHead>
-                      <TableHead>Completed</TableHead>
-                      <TableHead>Revenue</TableHead>
-                      <TableHead>Total Amount</TableHead>
-                      <TableHead>Pending</TableHead>
+                      <TableHead>{t("report.fitterName")}</TableHead>
+                      <TableHead>{t("dashboard.totalBookings")}</TableHead>
+                      <TableHead>{t("dashboard.activeBookings")}</TableHead>
+                      <TableHead>{t("customer.completed")}</TableHead>
+                      <TableHead>{t("report.revenue")}</TableHead>
+                      <TableHead>{t("customer.totalAmount")}</TableHead>
+                      <TableHead>{t("dashboard.pendingPayments")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1043,8 +1056,8 @@ export default function Reports() {
                       <TableRow>
                         <TableCell colSpan={7} className="text-center py-8">
                           {customerLoading
-                            ? "Loading..."
-                            : 'No fitter data available. Try changing report type to "Fitter-wise".'}
+                            ? t("common.loading")
+                            : t("common.noData")}
                         </TableCell>
                       </TableRow>
                     ) : (
@@ -1080,8 +1093,7 @@ export default function Reports() {
 
           <div className="bg-muted p-4 rounded-lg">
             <p className="text-sm text-muted-foreground">
-              💡 Tip: To see fitter-wise breakdown, make sure you have assigned
-              fitters to your bookings and select a date range above.
+              💡 Tip: {t("report.fitterPerformance")}
             </p>
           </div>
         </TabsContent>

@@ -9,7 +9,6 @@ import {
   Edit,
   Trash2,
   Download,
-  CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,10 +58,10 @@ export default function Customers() {
     mutationFn: (id) => customerService.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries(["customers"]);
-      toast.success("Customer deleted successfully");
+      toast.success(t("common.deleteSuccess"));
     },
     onError: () => {
-      toast.error("Failed to delete customer");
+      toast.error(t("common.deleteError"));
     },
   });
 
@@ -74,7 +73,7 @@ export default function Customers() {
   };
 
   const handleDelete = (id) => {
-    if (confirm("Are you sure you want to delete this customer?")) {
+    if (confirm(t("common.confirmDelete"))) {
       deleteMutation.mutate(id);
     }
   };
@@ -90,12 +89,16 @@ export default function Customers() {
       Completed: "secondary",
       Cancelled: "destructive",
     };
-    return <Badge variant={variants[status] || "default"}>{status}</Badge>;
+    return (
+      <Badge variant={variants[status] || "default"}>
+        {t(`customer.${status.toLowerCase()}`)}
+      </Badge>
+    );
   };
 
   const handleDownloadBill = (customer) => {
     if (!customer || !customer._id) {
-      toast.error("Invalid customer");
+      toast.error(t("common.deleteError"));
       return;
     }
 
@@ -119,11 +122,11 @@ export default function Customers() {
         a.click();
         window.URL.revokeObjectURL(url);
         document.body.removeChild(a);
-        toast.success("Bill downloaded successfully");
+        toast.success(t("common.savingSuccess"));
       })
       .catch((error) => {
         console.error("Download error:", error);
-        toast.error("Failed to download bill");
+        toast.error(t("common.deleteError"));
       });
   };
 
@@ -135,7 +138,7 @@ export default function Customers() {
             {t("customer.title")}
           </h1>
           <p className="text-muted-foreground mt-2">
-            Manage your customer bookings and information
+            {t("customer.manageCustomers")}
           </p>
         </div>
         <Button onClick={handleAddNew}>
@@ -161,7 +164,7 @@ export default function Customers() {
               <SelectValue placeholder={t("customer.filterByStatus")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
+              <SelectItem value="all">{t("common.selectOption")}</SelectItem>
               <SelectItem value="Active">{t("customer.active")}</SelectItem>
               <SelectItem value="Completed">
                 {t("customer.completed")}
@@ -203,7 +206,7 @@ export default function Customers() {
                 </TableRow>
               ) : (
                 customers.map((customer) => (
-                  <TableRow key={customer.id}>
+                  <TableRow key={customer._id}>
                     <TableCell className="font-medium">
                       {customer.name}
                     </TableCell>
@@ -234,6 +237,7 @@ export default function Customers() {
                         <Button
                           variant="ghost"
                           size="icon"
+                          title={t("common.edit")}
                           onClick={() => handleEdit(customer)}
                         >
                           <Edit className="h-4 w-4" />
@@ -241,17 +245,15 @@ export default function Customers() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => handleDelete(customer.id)}
+                          title={t("common.delete")}
+                          onClick={() => handleDelete(customer._id)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
-                        {/* <Button variant="ghost" size="icon">
-                          <Download className="h-4 w-4" />
-                        </Button> */}
                         <Button
                           variant="ghost"
                           size="icon"
-                          title="Download Bill"
+                          title={t("customer.downloadBill")}
                           onClick={() => handleDownloadBill(customer)}
                         >
                           <Download className="h-4 w-4" />

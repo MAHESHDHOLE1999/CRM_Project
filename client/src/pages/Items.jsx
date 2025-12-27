@@ -40,10 +40,10 @@ export default function Items() {
     mutationFn: (id) => itemService.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries(["items"]);
-      toast.success("Item deleted successfully");
+      toast.success(t("common.deleteSuccess"));
     },
     onError: () => {
-      toast.error("Failed to delete item");
+      toast.error(t("common.deleteError"));
     },
   });
 
@@ -55,7 +55,7 @@ export default function Items() {
   };
 
   const handleDelete = (id) => {
-    if (confirm("Are you sure you want to delete this item?")) {
+    if (confirm(t("common.confirmDelete"))) {
       deleteMutation.mutate(id);
     }
   };
@@ -99,7 +99,7 @@ export default function Items() {
             {t("items.title")}
           </h1>
           <p className="text-muted-foreground mt-2">
-            Manage your rental items inventory
+            {t("items.manageInventory")}
           </p>
         </div>
         <Button onClick={handleAddNew}>
@@ -113,7 +113,7 @@ export default function Items() {
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search items..."
+              placeholder={t("items.search")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10"
@@ -122,10 +122,10 @@ export default function Items() {
           <Select value={statusFilter} onValueChange={setStatusFilter}>
             <SelectTrigger className="w-full md:w-48">
               <Filter className="h-4 w-4 mr-2" />
-              <SelectValue placeholder="Filter by Status" />
+              <SelectValue placeholder={t("common.filter")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
+              <SelectItem value="all">{t("common.selectOption")}</SelectItem>
               <SelectItem value="Available">{t("items.available")}</SelectItem>
               <SelectItem value="InUse">{t("items.inUse")}</SelectItem>
               <SelectItem value="NotAvailable">
@@ -144,13 +144,15 @@ export default function Items() {
         <Card className="p-12">
           <div className="text-center">
             <Package className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No items found</h3>
+            <h3 className="text-lg font-semibold mb-2">
+              {t("common.noData")}
+            </h3>
             <p className="text-muted-foreground mb-4">
-              Get started by adding your first item
+              {t("items.getStarted")}
             </p>
             <Button onClick={handleAddNew}>
               <Plus className="h-4 w-4 mr-2" />
-              Add First Item
+              {t("items.addNew")}
             </Button>
           </div>
         </Card>
@@ -195,17 +197,23 @@ export default function Items() {
                 {/* Quantity Information */}
                 <div className="space-y-1 pt-2 border-t">
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Total:</span>
+                    <span className="text-muted-foreground">
+                      {t("items.totalQuantity")}:
+                    </span>
                     <span className="font-semibold">{item.totalQuantity}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Available:</span>
+                    <span className="text-muted-foreground">
+                      {t("items.availableQuantity")}:
+                    </span>
                     <span className="font-semibold text-green-600">
                       {item.availableQuantity}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Rented:</span>
+                    <span className="text-muted-foreground">
+                      {t("items.rentedQuantity")}:
+                    </span>
                     <span className="font-semibold text-orange-600">
                       {item.rentedQuantity}
                     </span>
@@ -213,7 +221,9 @@ export default function Items() {
                 </div>
 
                 <div className="flex items-center justify-between pt-2">
-                  <span className="text-lg font-bold">₹{item.price}/item</span>
+                  <span className="text-lg font-bold">
+                    ₹{item.price}{t("items.priceSuffix")}
+                  </span>
                   {getStatusBadge(item.status)}
                 </div>
 
@@ -225,7 +235,7 @@ export default function Items() {
                     onClick={() => handleEdit(item)}
                   >
                     <Edit className="h-4 w-4 mr-1" />
-                    Edit
+                    {t("common.edit")}
                   </Button>
                   <Button
                     variant="outline"
@@ -246,7 +256,7 @@ export default function Items() {
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {selectedItem ? "Edit Item" : t("items.addNew")}
+              {selectedItem ? t("common.edit") : t("items.addNew")}
             </DialogTitle>
           </DialogHeader>
           <ItemForm
