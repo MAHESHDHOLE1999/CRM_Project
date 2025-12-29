@@ -210,11 +210,12 @@ export default function Bookings() {
               placeholder={t('booking.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10"
+              className="pl-10 focus:outline-none focus:ring-0"
+              style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full md:w-48">
+            <SelectTrigger className="w-full md:w-48 focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}>
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue />
             </SelectTrigger>
@@ -266,7 +267,7 @@ export default function Bookings() {
                     <TableCell>
                       {booking.startTime} - {booking.endTime}
                     </TableCell>
-                    <TableCell>₹{booking.totalAmount.toLocaleString('en-IN')}</TableCell>
+                    <TableCell>{t("common.rs")}{booking.totalAmount.toLocaleString('en-IN')}</TableCell>
                     <TableCell>{getStatusBadge(booking.status)}</TableCell>
                     <TableCell>
                       <div className="flex gap-2">

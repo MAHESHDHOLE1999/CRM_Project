@@ -13,6 +13,10 @@ export default defineConfig({
   optimizeDeps: {
     include: ["recharts", "react-is"],
   },
+  server:{
+    host: "0.0.0.0",
+    port:5173
+  },
   // server: {
   //   host: true,
   //   allowedHosts: [

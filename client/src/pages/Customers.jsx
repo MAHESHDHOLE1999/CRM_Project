@@ -155,11 +155,12 @@ export default function Customers() {
               placeholder={t("customer.search")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10"
+              className="pl-10 focus:outline-none focus:ring-0"
+              style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full md:w-48">
+            <SelectTrigger className="w-full md:w-48 focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}>
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder={t("customer.filterByStatus")} />
             </SelectTrigger>
@@ -218,7 +219,7 @@ export default function Customers() {
                       )}
                     </TableCell>
                     <TableCell>
-                      ₹{customer.totalAmount.toLocaleString("en-IN")}
+                      {t("common.rs")}{customer.totalAmount.toLocaleString("en-IN")}
                     </TableCell>
                     <TableCell>
                       <span
@@ -228,7 +229,7 @@ export default function Customers() {
                             : "text-green-600"
                         }
                       >
-                        ₹{customer.remainingAmount.toLocaleString("en-IN")}
+                        {t("common.rs")}{customer.remainingAmount.toLocaleString("en-IN")}
                       </span>
                     </TableCell>
                     <TableCell>{getStatusBadge(customer.status)}</TableCell>

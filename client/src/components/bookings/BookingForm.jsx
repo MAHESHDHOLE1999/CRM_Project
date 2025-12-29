@@ -54,9 +54,9 @@ export default function BookingForm({ booking, onSuccess }) {
       bookingDate: new Date().toISOString().split('T')[0],
       startTime: '10:00',
       endTime: '18:00',
-      totalAmount: 0,
-      depositAmount: 0,
-      givenAmount: 0,
+      totalAmount: '',
+      depositAmount: '',
+      givenAmount: '',
       status: 'Pending',
       notes: ''
     }
@@ -111,7 +111,7 @@ export default function BookingForm({ booking, onSuccess }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label>Customer Name *</Label>
-            <Input {...register('customerName')} placeholder="John Doe" />
+            <Input {...register('customerName')} placeholder="John Doe" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
             {errors.customerName && (
               <p className="text-sm text-red-500 mt-1">{errors.customerName.message}</p>
             )}
@@ -119,7 +119,7 @@ export default function BookingForm({ booking, onSuccess }) {
 
           <div>
             <Label>Phone Number *</Label>
-            <Input {...register('phone')} placeholder="9876543210" />
+            <Input {...register('phone')} placeholder="9876543210" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
             {errors.phone && (
               <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>
             )}
@@ -127,7 +127,7 @@ export default function BookingForm({ booking, onSuccess }) {
 
           <div className="md:col-span-2">
             <Label>Email (Optional)</Label>
-            <Input {...register('email')} type="email" placeholder="customer@example.com" />
+            <Input {...register('email')} type="email" placeholder="customer@example.com" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}/>
             {errors.email && (
               <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
             )}
@@ -149,7 +149,7 @@ export default function BookingForm({ booking, onSuccess }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label>Booking Date *</Label>
-            <Input type="date" {...register('bookingDate')} />
+            <Input type="date" {...register('bookingDate')} className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}/>
             {errors.bookingDate && (
               <p className="text-sm text-red-500 mt-1">{errors.bookingDate.message}</p>
             )}
@@ -158,11 +158,11 @@ export default function BookingForm({ booking, onSuccess }) {
           <div className="grid grid-cols-2 gap-2">
             <div>
               <Label>Start Time *</Label>
-              <Input type="time" {...register('startTime')} />
+              <Input type="time" {...register('startTime')} className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
             </div>
             <div>
               <Label>End Time *</Label>
-              <Input type="time" {...register('endTime')} />
+              <Input type="time" {...register('endTime')} className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
             </div>
           </div>
         </div>
@@ -185,18 +185,20 @@ export default function BookingForm({ booking, onSuccess }) {
           <div>
             <Label>Deposit Amount</Label>
             <Input
-              type="number"
+              type="text"
               {...register('depositAmount', { valueAsNumber: true })}
               placeholder="0"
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
 
           <div>
             <Label>Amount Given</Label>
             <Input
-              type="number"
+              type="text"
               {...register('givenAmount', { valueAsNumber: true })}
               placeholder="0"
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
 
@@ -216,7 +218,7 @@ export default function BookingForm({ booking, onSuccess }) {
               value={watch('status')}
               onValueChange={(value) => setValue('status', value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -229,7 +231,7 @@ export default function BookingForm({ booking, onSuccess }) {
 
           <div className="md:col-span-2">
             <Label>Notes</Label>
-            <Input {...register('notes')} placeholder="Additional notes or requirements..." />
+            <Input {...register('notes')} placeholder="Additional notes or requirements..." className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
           </div>
         </div>
       </div>

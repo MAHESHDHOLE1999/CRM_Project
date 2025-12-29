@@ -71,7 +71,7 @@ export default function ItemForm({ item, onSuccess }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label>{t('items.name')} (English) *</Label>
-          <Input {...register('name')} placeholder="e.g., Tent 10x10" />
+          <Input {...register('name')} placeholder="e.g., Tent 10x10" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}/>
           {errors.name && (
             <p className="text-sm text-red-500 mt-1">{errors.name.message}</p>
           )}
@@ -79,17 +79,17 @@ export default function ItemForm({ item, onSuccess }) {
 
         <div>
           <Label>{t('items.name')} (Marathi)</Label>
-          <Input {...register('nameMarathi')} placeholder="e.g., तंबू 10x10" />
+          <Input {...register('nameMarathi')} placeholder="e.g., तंबू 10x10" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}/>
         </div>
 
         <div className="md:col-span-2">
           <Label>{t('items.description')}</Label>
-          <Input {...register('description')} placeholder="Item description..." />
+          <Input {...register('description')} placeholder="Item description..." className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}/>
         </div>
 
         <div>
           <Label>{t('items.category')}</Label>
-          <Input {...register('category')} placeholder="e.g., Tents, Chairs, Tables" />
+          <Input {...register('category')} placeholder="e.g., Tents, Chairs, Tables" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}/>
         </div>
 
         <div>
@@ -98,6 +98,7 @@ export default function ItemForm({ item, onSuccess }) {
             type="number"
             {...register('price', { valueAsNumber: true })}
             placeholder="0"
+            className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}
           />
           {errors.price && (
             <p className="text-sm text-red-500 mt-1">{errors.price.message}</p>
@@ -105,12 +106,13 @@ export default function ItemForm({ item, onSuccess }) {
         </div>
 
         <div>
-          <Label>Total Quantity *</Label>
+          <Label>{t('items.totalQuantity')} *</Label>
           <Input
             type="number"
             {...register('totalQuantity', { valueAsNumber: true })}
             placeholder="1"
             min="1"
+            className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}
           />
           {errors.totalQuantity && (
             <p className="text-sm text-red-500 mt-1">{errors.totalQuantity.message}</p>
@@ -146,8 +148,9 @@ export default function ItemForm({ item, onSuccess }) {
             value={watch('status')}
             onValueChange={(value) => setValue('status', value)}
             disabled={item && item.rentedQuantity > 0}
+            className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}
           >
-            <SelectTrigger>
+            <SelectTrigger className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

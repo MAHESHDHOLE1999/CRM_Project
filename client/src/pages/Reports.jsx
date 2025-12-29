@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import {
@@ -34,7 +34,8 @@ import { Badge } from "@/components/ui/badge";
 import { reportService } from "@/services/reportService";
 import { format } from "date-fns";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
+import robotoBase64 from "../utils/robotoBase64";
 
 export default function Reports() {
   const { t } = useTranslation();
@@ -99,45 +100,94 @@ export default function Reports() {
         fitterName: fitterFilter,
         reportType,
       }),
-    enabled: !!dates.startDate || !!dates.endDate || dateRange !== "custom",
+    // enabled: !!dates.startDate || !!dates.endDate || dateRange !== "custom",
+    enabled: dateRange !== "custome" ? true : Boolean(startDate && endDate),
+    onSuccess: (data) => {
+    console.log("✅ Customer Report API Response:", data);
+    console.log("✅ Raw customers data:", data?.data?.customers);
+    console.log("✅ Data structure:", Object.keys(data || {}));
+  },
+  onError: (error) => {
+    console.error("❌ Customer Report API Error:", error);
+  }
   });
 
   const { data: itemReport, isLoading: itemLoading } = useQuery({
     queryKey: ["item-report", dates],
     queryFn: () => reportService.getItemReport(dates),
+    enabled: dateRange !== "custome" ? true : Boolean(startDate && endDate),
+    onSuccess: (data) => {
+    console.log("✅ Items Report API Response:", data);
+    console.log("✅ Raw Items data:", data?.data?.customers);
+    console.log("✅ Data structure:", Object.keys(data || {}));
+  },
+  onError: (error) => {
+    console.error("❌ Items Report API Error:", error);
+  }
   });
 
   const { data: financialReport, isLoading: financialLoading } = useQuery({
     queryKey: ["financial-report", dates],
     queryFn: () => reportService.getFinancialReport(dates),
+    enabled: dateRange !== "custome" ? true : Boolean(startDate && endDate),
+    onSuccess: (data) => {
+    console.log("✅ financial Report API Response:", data);
+    console.log("✅ Raw financial data:", data?.data?.customers);
+    console.log("✅ Data structure:", Object.keys(data || {}));
+  },
+  onError: (error) => {
+    console.error("❌ Customer Report API Error:", error);
+  }
   });
 
   const { data: fittersData } = useQuery({
     queryKey: ["fitters-list"],
     queryFn: () => reportService.getAllFitters(),
+    onSuccess: (data) => {
+    console.log("✅ fittersData Report API Response:", data);
+    console.log("✅ Raw fittersData data:", data?.data?.customers);
+    console.log("✅ Data structure:", Object.keys(data || {}));
+  },
+  onError: (error) => {
+    console.error("❌ Customer Report API Error:", error);
+  }
   });
 
   const customers = customerReport?.data?.data?.customers || [];
   const customerSummary = customerReport?.data?.data?.summary || {};
+  // const fitterReport = Array.isArray(customerReport?.data?.fitterReport) ? customerReport.data.fitterReport: [];
   const fitterReport = customerReport?.data?.data?.fitterReport || [];
   const items = itemReport?.data?.data?.items || [];
   const itemSummary = itemReport?.data?.data?.summary || {};
   const financial = financialReport?.data?.data?.financial || {};
   const dailyRevenue = financialReport?.data?.data?.dailyRevenue || [];
-  const fitters = fittersData?.data?.data || [];
+  // const fitters = fittersData?.data?.data || [];
+  const fitters = Array.isArray(fittersData?.data?.data)? fittersData.data.data  : [];
+  
+  useEffect(() => {
+  console.log("Customer Report:", customerReport);
+  console.log("Item Report:", itemReport);
+  console.log("Financial Report:", financialReport);
+  console.log("Fitters:", fitters);
+}, [customerReport, itemReport, financialReport, fitters]);
+
 
   const downloadCustomerPDF = () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF("p", "mm", "a4");
+    console.log("autoTable exists?", typeof doc.autoTable);
 
+    doc.addFileToVFS("Roboto-Regular.ttf",robotoBase64);
+    doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
+    doc.setFont("Roboto");
     doc.setFontSize(20);
-    doc.setFont(undefined, "bold");
+    // doc.setFont(undefined, "bold");
     doc.text(t("app.title"), 105, 15, { align: "center" });
 
     doc.setFontSize(16);
     doc.text(t("report.customerReport"), 105, 25, { align: "center" });
 
     doc.setFontSize(10);
-    doc.setFont(undefined, "normal");
+    doc.setFont("Roboto", "normal");
     doc.text(
       `${t("report.dateRange")}: ${dates.startDate || t("common.noData")} ${t("report.to")} ${dates.endDate || t("common.noData")}`,
       14,
@@ -153,11 +203,11 @@ export default function Reports() {
     doc.rect(14, 45, 182, 30, "F");
 
     doc.setFontSize(11);
-    doc.setFont(undefined, "bold");
+    doc.setFont("Roboto", "bold");
     doc.text("Summary", 16, 52);
 
     doc.setFontSize(9);
-    doc.setFont(undefined, "normal");
+    doc.setFont("Roboto", "normal");
     doc.text(
       `${t("dashboard.totalBookings")}: ${customerSummary.totalBookings || 0}`,
       16,
@@ -175,17 +225,17 @@ export default function Reports() {
     );
 
     doc.text(
-      `${t("dashboard.totalRevenue")}: ₹${(customerSummary.totalRevenue || 0).toLocaleString("en-IN")}`,
+      `${t("dashboard.totalRevenue")}: Rs.${(customerSummary.totalRevenue || 0).toLocaleString("en-IN")}`,
       100,
       58
     );
     doc.text(
-      `${t("dashboard.pendingPayments")}: ₹${(customerSummary.totalPending || 0).toLocaleString("en-IN")}`,
+      `${t("dashboard.pendingPayments")}: Rs.${(customerSummary.totalPending || 0).toLocaleString("en-IN")}`,
       100,
       63
     );
     doc.text(
-      `${t("customer.totalAmount")}: ₹${(customerSummary.totalAmount || 0).toLocaleString("en-IN")}`,
+      `${t("customer.totalAmount")}: Rs.${(customerSummary.totalAmount || 0).toLocaleString("en-IN")}`,
       100,
       68
     );
@@ -201,7 +251,7 @@ export default function Reports() {
       c.status,
     ]);
 
-    doc.autoTable({
+    autoTable(doc,{
       startY: 80,
       head: [
         [
@@ -217,8 +267,8 @@ export default function Reports() {
       ],
       body: tableData,
       theme: "striped",
-      styles: { fontSize: 8, cellPadding: 2 },
-      headStyles: { fillColor: [66, 139, 202], fontStyle: "bold" },
+      styles: {font:"Roboto", fontSize: 8, cellPadding: 2 },
+      headStyles: { font:"Roboto",fillColor: [66, 139, 202], fontStyle: "bold" },
       alternateRowStyles: { fillColor: [245, 245, 245] },
     });
 
@@ -266,7 +316,7 @@ export default function Reports() {
       37
     );
     doc.text(
-      `Total Value: ₹${(itemSummary.totalValue || 0).toLocaleString("en-IN")}`,
+      `Total Value: Rs.${(itemSummary.totalValue || 0).toLocaleString("en-IN")}`,
       100,
       43
     );
@@ -277,11 +327,11 @@ export default function Reports() {
       item.totalQuantity,
       item.availableQuantity,
       item.rentedQuantity,
-      `₹${item.price}`,
+      `Rs.${item.price}`,
       item.status,
     ]);
 
-    doc.autoTable({
+    autoTable(doc,{
       startY: 60,
       head: [
         [
@@ -333,17 +383,17 @@ export default function Reports() {
     doc.setFontSize(9);
     doc.setFont(undefined, "normal");
     doc.text(
-      `${t("dashboard.totalRevenue")}: ₹${(financial.totalRevenue || 0).toLocaleString("en-IN")}`,
+      `${t("dashboard.totalRevenue")}: Rs.${(financial.totalRevenue || 0).toLocaleString("en-IN")}`,
       16,
       49
     );
     doc.text(
-      `${t("customer.totalAmount")}: ₹${(financial.totalBookingAmount || 0).toLocaleString("en-IN")}`,
+      `${t("customer.totalAmount")}: Rs.${(financial.totalBookingAmount || 0).toLocaleString("en-IN")}`,
       16,
       55
     );
     doc.text(
-      `${t("dashboard.pendingPayments")}: ₹${(financial.pendingPayments || 0).toLocaleString("en-IN")}`,
+      `${t("dashboard.pendingPayments")}: Rs.${(financial.pendingPayments || 0).toLocaleString("en-IN")}`,
       16,
       61
     );
@@ -354,17 +404,17 @@ export default function Reports() {
     );
 
     doc.text(
-      `${t("customer.depositAmount")}: ₹${(financial.depositCollected || 0).toLocaleString("en-IN")}`,
+      `${t("customer.depositAmount")}: Rs.${(financial.depositCollected || 0).toLocaleString("en-IN")}`,
       100,
       49
     );
     doc.text(
-      `${t("customer.transport")}: ₹${(financial.transportRevenue || 0).toLocaleString("en-IN")}`,
+      `${t("customer.transport")}: Rs.${(financial.transportRevenue || 0).toLocaleString("en-IN")}`,
       100,
       55
     );
     doc.text(
-      `${t("customer.maintenanceCharges")}: ₹${(financial.maintenanceCharges || 0).toLocaleString("en-IN")}`,
+      `${t("customer.maintenanceCharges")}: Rs.${(financial.maintenanceCharges || 0).toLocaleString("en-IN")}`,
       100,
       61
     );
@@ -376,7 +426,7 @@ export default function Reports() {
         `₹${day.revenue.toLocaleString("en-IN")}`,
       ]);
 
-      doc.autoTable({
+      autoTable(doc,{
         startY: 80,
         head: [
           [
@@ -425,7 +475,7 @@ export default function Reports() {
       `₹${fitter.pendingAmount.toLocaleString("en-IN")}`,
     ]);
 
-    doc.autoTable({
+    autoTable(doc,{
       startY: 40,
       head: [
         [
@@ -533,12 +583,12 @@ export default function Reports() {
               {t("report.dateRange")}
             </label>
             <Select value={dateRange} onValueChange={setDateRange}>
-              <SelectTrigger>
+              <SelectTrigger className="focus:outline-none focus:ring-0 focus:border-none">
                 <Calendar className="h-4 w-4 mr-2" />
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="today">Today</SelectItem>
+                <SelectItem value="today">{t("report.today")}</SelectItem>
                 <SelectItem value="week">{t("dashboard.thisWeek")}</SelectItem>
                 <SelectItem value="month">{t("dashboard.thisMonth")}</SelectItem>
                 <SelectItem value="quarter">{t("dashboard.thisQuarter")}</SelectItem>
@@ -558,6 +608,7 @@ export default function Reports() {
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
+                  className="focus:outline-none focus:ring-0 focus:border-none"
                 />
               </div>
               <div>
@@ -568,6 +619,7 @@ export default function Reports() {
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
+                  className="focus:outline-none focus:ring-0 focus:border-none"
                 />
               </div>
             </>
@@ -578,12 +630,12 @@ export default function Reports() {
               {t("customer.status")}
             </label>
             <Select value={status} onValueChange={setStatus}>
-              <SelectTrigger>
+              <SelectTrigger className="focus:outline-none focus:ring-0 focus:border-none">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
+                <SelectItem value="all">{t('report.allStatus')}</SelectItem>
                 <SelectItem value="Active">{t("customer.active")}</SelectItem>
                 <SelectItem value="Completed">{t("customer.completed")}</SelectItem>
                 <SelectItem value="Cancelled">{t("customer.cancelled")}</SelectItem>
@@ -596,12 +648,12 @@ export default function Reports() {
               {t("customer.fitterName")}
             </label>
             <Select value={fitterFilter} onValueChange={setFitterFilter}>
-              <SelectTrigger>
+              <SelectTrigger className="focus:outline-none focus:ring-0 focus:border-none">
                 <Users className="h-4 w-4 mr-2" />
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Fitters</SelectItem>
+                <SelectItem value="all">{t('report.allFitters')}</SelectItem>
                 {fitters.map((fitter) => (
                   <SelectItem key={fitter} value={fitter}>
                     {fitter}
@@ -626,10 +678,6 @@ export default function Reports() {
           <TabsTrigger value="financial">
             <DollarSign className="h-4 w-4 mr-2" />
             {t("report.financialReport")}
-          </TabsTrigger>
-          <TabsTrigger value="fitters">
-            <TrendingUp className="h-4 w-4 mr-2" />
-            {t("report.fitterPerformance")}
           </TabsTrigger>
         </TabsList>
 
@@ -656,7 +704,7 @@ export default function Reports() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-green-600">
-                  ₹{(customerSummary.totalRevenue || 0).toLocaleString("en-IN")}
+                  {t("common.rs")}{(customerSummary.totalRevenue || 0).toLocaleString("en-IN")}
                 </div>
               </CardContent>
             </Card>
@@ -669,7 +717,7 @@ export default function Reports() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-orange-600">
-                  ₹{(customerSummary.totalPending || 0).toLocaleString("en-IN")}
+                  {t("common.rs")}{(customerSummary.totalPending || 0).toLocaleString("en-IN")}
                 </div>
               </CardContent>
             </Card>
@@ -731,13 +779,13 @@ export default function Reports() {
                             {format(new Date(customer.registrationDate), "dd/MM/yyyy")}
                           </TableCell>
                           <TableCell>
-                            ₹{customer.totalAmount.toLocaleString("en-IN")}
+                            {t("common.rs")}{customer.totalAmount.toLocaleString("en-IN")}
                           </TableCell>
                           <TableCell className="text-green-600">
-                            ₹{customer.givenAmount.toLocaleString("en-IN")}
+                            {t("common.rs")}{customer.givenAmount.toLocaleString("en-IN")}
                           </TableCell>
                           <TableCell className="text-orange-600">
-                            ₹{customer.remainingAmount.toLocaleString("en-IN")}
+                            {t("common.rs")}{customer.remainingAmount.toLocaleString("en-IN")}
                           </TableCell>
                           <TableCell>{customer.fitterName || "-"}</TableCell>
                           <TableCell>
@@ -827,12 +875,12 @@ export default function Reports() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Value
+                  {t('report.totalValues')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-blue-600">
-                  ₹{(itemSummary.totalValue || 0).toLocaleString("en-IN")}
+                  {t("common.rs")}{(itemSummary.totalValue || 0).toLocaleString("en-IN")}
                 </div>
               </CardContent>
             </Card>
@@ -883,7 +931,7 @@ export default function Reports() {
                           <TableCell className="text-orange-600">
                             {item.rentedQuantity}
                           </TableCell>
-                          <TableCell>₹{item.price}</TableCell>
+                          <TableCell>{t("common.rs")}{item.price}</TableCell>
                           <TableCell>
                             <Badge
                               variant={
@@ -924,7 +972,7 @@ export default function Reports() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-green-600">
-                  ₹{(financial.totalRevenue || 0).toLocaleString("en-IN")}
+                  {t("common.rs")}{(financial.totalRevenue || 0).toLocaleString("en-IN")}
                 </div>
               </CardContent>
             </Card>
@@ -937,7 +985,7 @@ export default function Reports() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-orange-600">
-                  ₹{(financial.pendingPayments || 0).toLocaleString("en-IN")}
+                  {t("common.rs")}{(financial.pendingPayments || 0).toLocaleString("en-IN")}
                 </div>
               </CardContent>
             </Card>
@@ -965,7 +1013,7 @@ export default function Reports() {
               </CardHeader>
               <CardContent>
                 <div className="text-xl font-bold">
-                  ₹{(financial.transportRevenue || 0).toLocaleString("en-IN")}
+                  {t("common.rs")}{(financial.transportRevenue || 0).toLocaleString("en-IN")}
                 </div>
               </CardContent>
             </Card>
@@ -978,7 +1026,7 @@ export default function Reports() {
               </CardHeader>
               <CardContent>
                 <div className="text-xl font-bold">
-                  ₹{(financial.maintenanceCharges || 0).toLocaleString("en-IN")}
+                  {t("common.rs")}{(financial.maintenanceCharges || 0).toLocaleString("en-IN")}
                 </div>
               </CardContent>
             </Card>
@@ -991,7 +1039,7 @@ export default function Reports() {
               </CardHeader>
               <CardContent>
                 <div className="text-xl font-bold">
-                  ₹{(financial.depositCollected || 0).toLocaleString("en-IN")}
+                  {t("common.rs")}{(financial.depositCollected || 0).toLocaleString("en-IN")}
                 </div>
               </CardContent>
             </Card>
@@ -1020,7 +1068,7 @@ export default function Reports() {
                           </TableCell>
                           <TableCell>{day.bookings}</TableCell>
                           <TableCell className="font-semibold">
-                            ₹{day.revenue.toLocaleString("en-IN")}
+                            {t("common.rs")}{day.revenue.toLocaleString("en-IN")}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -1030,72 +1078,6 @@ export default function Reports() {
               </CardContent>
             </Card>
           )}
-        </TabsContent>
-
-        <TabsContent value="fitters" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("report.fitterPerformance")}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>{t("report.fitterName")}</TableHead>
-                      <TableHead>{t("dashboard.totalBookings")}</TableHead>
-                      <TableHead>{t("dashboard.activeBookings")}</TableHead>
-                      <TableHead>{t("customer.completed")}</TableHead>
-                      <TableHead>{t("report.revenue")}</TableHead>
-                      <TableHead>{t("customer.totalAmount")}</TableHead>
-                      <TableHead>{t("dashboard.pendingPayments")}</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {fitterReport.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={7} className="text-center py-8">
-                          {customerLoading
-                            ? t("common.loading")
-                            : t("common.noData")}
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      fitterReport.map((fitter, index) => (
-                        <TableRow key={index}>
-                          <TableCell className="font-medium">
-                            {fitter._id || "Unassigned"}
-                          </TableCell>
-                          <TableCell>{fitter.totalBookings}</TableCell>
-                          <TableCell className="text-blue-600">
-                            {fitter.activeBookings}
-                          </TableCell>
-                          <TableCell className="text-green-600">
-                            {fitter.completedBookings}
-                          </TableCell>
-                          <TableCell className="font-semibold text-green-600">
-                            ₹{fitter.totalRevenue.toLocaleString("en-IN")}
-                          </TableCell>
-                          <TableCell>
-                            ₹{fitter.totalAmount.toLocaleString("en-IN")}
-                          </TableCell>
-                          <TableCell className="text-orange-600">
-                            ₹{fitter.pendingAmount.toLocaleString("en-IN")}
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="bg-muted p-4 rounded-lg">
-            <p className="text-sm text-muted-foreground">
-              💡 Tip: {t("report.fitterPerformance")}
-            </p>
-          </div>
         </TabsContent>
       </Tabs>
     </div>

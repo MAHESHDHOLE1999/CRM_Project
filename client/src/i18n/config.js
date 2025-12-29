@@ -103,6 +103,7 @@ const resources = {
         search: "Search items...",
         manageInventory: "Manage your rental items inventory",
         getStarted: "Get started by adding your first item",
+        totalQuantity: "Total Quantity"
       },
       booking: {
         title: "Advanced Booking",
@@ -156,6 +157,10 @@ const resources = {
         totalRevenue: "Total Revenue",
         totalAmount: "Total Amount",
         pendingAmount: "Pending Amount",
+        today: "Today",
+        allStatus: "All Status",
+        allFitters: "All Fitters",
+        totalValues:"Total Values"
       },
       common: {
         save: "Save",
@@ -188,6 +193,7 @@ const resources = {
         selectOption: "Select an option",
         noResults: "No results found",
         unassigned: "Unassigned",
+        rs:"Rs."
       },
     },
   },
@@ -293,6 +299,7 @@ const resources = {
         search: "वस्तू शोधा...",
         manageInventory: "आपल्या किरायाच्या वस्तूंचा माल व्यवस्थापित करा",
         getStarted: "आपली पहिली वस्तू जोडून सुरुवात करा",
+        totalQuantity: "एकूण प्रमाण"
       },
       booking: {
         title: "आगाऊ बुकिंग",
@@ -346,6 +353,10 @@ const resources = {
         totalRevenue: "एकूण महसूल",
         totalAmount: "एकूण रक्कम",
         pendingAmount: "प्रलंबित रक्कम",
+        today: "आज",
+        allStatus: "सर्व स्थिती",
+        allFitters: "सर्व फिटर",
+        totalValues: "एकूण मूल्ये"
       },
       common: {
         save: "जतन करा",
@@ -378,6 +389,7 @@ const resources = {
         selectOption: "एक पर्याय निवडा",
         noResults: "कोणतेही परिणाम आढळले नाहीत",
         unassigned: "असंमत",
+        rs:"₹"
       },
     },
   },

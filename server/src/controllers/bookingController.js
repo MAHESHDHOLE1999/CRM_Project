@@ -1,11 +1,26 @@
+// =====================================================
+// FILE: backend/controllers/bookingController.js (UPDATED)
+// =====================================================
+
 import AdvancedBooking from '../models/AdvancedBooking.js';
-import Item from '../models/Item.js';
 import Customer from '../models/Customer.js';
+import Item from '../models/Item.js';
 
 export const createBooking = async (req, res) => {
   try {
     const bookingData = req.body;
-    
+    const items = JSON.parse(bookingData.items || '[]');
+
+    // ✅ Check availability before creating booking
+    const availabilityCheck = await checkItemsAvailability(items);
+    if (!availabilityCheck.allAvailable) {
+      return res.status(400).json({
+        success: false,
+        message: 'Some items are not available in requested quantity',
+        unavailableItems: availabilityCheck.unavailable
+      });
+    }
+
     // Calculate remaining amount
     const remainingAmount = 
       bookingData.totalAmount - (bookingData.givenAmount || 0);
@@ -25,7 +40,8 @@ export const createBooking = async (req, res) => {
     console.error('Create booking error:', error);
     res.status(500).json({
       success: false,
-      message: 'Error creating booking'
+      message: 'Error creating booking',
+      error: error.message
     });
   }
 };
@@ -192,36 +208,7 @@ export const deleteBooking = async (req, res) => {
   }
 };
 
-// export const confirmBooking = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const booking = await AdvancedBooking.findByIdAndUpdate(
-//       id,
-//       { status: 'Confirmed' },
-//       { new: true }
-//     );
-
-//     if (!booking) {
-//       return res.status(404).json({
-//         success: false,
-//         message: 'Booking not found'
-//       });
-//     }
-
-//     res.json({
-//       success: true,
-//       message: 'Booking confirmed successfully',
-//       data: booking
-//     });
-//   } catch (error) {
-//     console.error('Confirm booking error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error confirming booking'
-//     });
-//   }
-// };
+// ✅ UPDATED: Confirm booking with item renting
 export const confirmBooking = async (req, res) => {
   try {
     const { id } = req.params;
@@ -243,7 +230,20 @@ export const confirmBooking = async (req, res) => {
     // If convertToCustomer is true, create a customer record
     if (convertToCustomer) {
       const items = JSON.parse(booking.items || '[]');
-      
+
+      // ✅ Check availability before renting
+      const availabilityCheck = await checkItemsAvailability(items);
+      if (!availabilityCheck.allAvailable) {
+        return res.status(400).json({
+          success: false,
+          message: 'Some items are no longer available',
+          unavailableItems: availabilityCheck.unavailable
+        });
+      }
+
+      // ✅ Rent the items
+      await rentItems(items);
+
       // Create customer from booking
       const customer = await Customer.create({
         name: booking.customerName,
@@ -261,8 +261,9 @@ export const confirmBooking = async (req, res) => {
         transportRequired: false,
         transportCost: 0,
         maintenanceCharges: 0,
+        hourlyRate: 0,
         status: 'Active',
-        notes: `Converted from Advanced Booking. Original booking date: ${booking.bookingDate}. ${booking.notes || ''}`,
+        notes: `Converted from Advanced Booking (ID: ${booking._id}). Original booking date: ${booking.bookingDate}. ${booking.notes || ''}`,
         items: items.map(item => ({
           itemId: item.itemId,
           itemName: item.itemName,
@@ -271,14 +272,6 @@ export const confirmBooking = async (req, res) => {
         })),
         userId: booking.userId
       });
-
-      // Update item quantities - rent the items
-      for (const item of items) {
-        const itemDoc = await Item.findById(item.itemId);
-        if (itemDoc) {
-          await itemDoc.rentItem(item.quantity);
-        }
-      }
 
       return res.json({
         success: true,
@@ -304,36 +297,6 @@ export const confirmBooking = async (req, res) => {
   }
 };
 
-// export const cancelBooking = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const booking = await AdvancedBooking.findByIdAndUpdate(
-//       id,
-//       { status: 'Cancelled' },
-//       { new: true }
-//     );
-
-//     if (!booking) {
-//       return res.status(404).json({
-//         success: false,
-//         message: 'Booking not found'
-//       });
-//     }
-
-//     res.json({
-//       success: true,
-//       message: 'Booking cancelled successfully',
-//       data: booking
-//     });
-//   } catch (error) {
-//     console.error('Cancel booking error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error cancelling booking'
-//     });
-//   }
-// };
 export const cancelBooking = async (req, res) => {
   try {
     const { id } = req.params;
@@ -393,3 +356,68 @@ export const getBookingStats = async (req, res) => {
     });
   }
 };
+
+// =====================================================
+// HELPER FUNCTIONS
+// =====================================================
+
+// Check if all items are available in requested quantity
+async function checkItemsAvailability(items) {
+  const unavailable = [];
+  let allAvailable = true;
+
+  for (const item of items) {
+    const itemDoc = await Item.findById(item.itemId);
+    if (!itemDoc || itemDoc.availableQuantity < item.quantity) {
+      allAvailable = false;
+      unavailable.push({
+        itemId: item.itemId,
+        itemName: item.itemName,
+        requestedQuantity: item.quantity,
+        availableQuantity: itemDoc?.availableQuantity || 0
+      });
+    }
+  }
+
+  return { allAvailable, unavailable };
+}
+
+// Rent items and update quantities
+async function rentItems(items) {
+  for (const item of items) {
+    const itemDoc = await Item.findById(item.itemId);
+    if (itemDoc) {
+      itemDoc.availableQuantity -= item.quantity;
+      itemDoc.rentedQuantity += item.quantity;
+      
+      // Auto-update status
+      if (itemDoc.availableQuantity === 0) {
+        itemDoc.status = 'NotAvailable';
+      } else if (itemDoc.rentedQuantity > 0) {
+        itemDoc.status = 'InUse';
+      }
+      
+      await itemDoc.save();
+    }
+  }
+}
+
+// Return items and update quantities
+async function returnItems(items) {
+  for (const item of items) {
+    const itemDoc = await Item.findById(item.itemId);
+    if (itemDoc) {
+      itemDoc.availableQuantity += item.quantity;
+      itemDoc.rentedQuantity -= item.quantity;
+      
+      // Auto-update status
+      if (itemDoc.rentedQuantity === 0) {
+        itemDoc.status = 'Available';
+      } else {
+        itemDoc.status = 'InUse';
+      }
+      
+      await itemDoc.save();
+    }
+  }
+}

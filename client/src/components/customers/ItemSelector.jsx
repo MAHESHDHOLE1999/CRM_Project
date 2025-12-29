@@ -93,7 +93,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                       value={item.itemId}
                       onValueChange={(value) => updateItem(index, 'itemId', value)}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger style={{outline: 'none', boxShadow: 'none'}}>
                         <SelectValue placeholder="Select item" />
                       </SelectTrigger>
                       <SelectContent>
@@ -123,6 +123,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                       max={item.availableQty || 999}
                       value={item.quantity}
                       onChange={(e) => updateItem(index, 'quantity', parseInt(e.target.value) || 1)}
+                      style={{outline: 'none', boxShadow: 'none'}}
                     />
                     {item.availableQty > 0 && (
                       <p className="text-xs text-muted-foreground mt-1">
@@ -137,6 +138,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                       type="number"
                       value={item.price}
                       onChange={(e) => updateItem(index, 'price', parseFloat(e.target.value) || 0)}
+                      style={{outline: 'none', boxShadow: 'none'}}
                     />
                   </div>
 

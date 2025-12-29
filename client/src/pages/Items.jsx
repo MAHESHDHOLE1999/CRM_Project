@@ -116,11 +116,12 @@ export default function Items() {
               placeholder={t("items.search")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10"
+              className="pl-10 focus:outline-none focus:ring-0"
+              style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full md:w-48">
+            <SelectTrigger className="w-full md:w-48 focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}>
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder={t("common.filter")} />
             </SelectTrigger>
@@ -222,7 +223,7 @@ export default function Items() {
 
                 <div className="flex items-center justify-between pt-2">
                   <span className="text-lg font-bold">
-                    ₹{item.price}{t("items.priceSuffix")}
+                    {t("common.rs")}{item.price}{t("items.priceSuffix")}
                   </span>
                   {getStatusBadge(item.status)}
                 </div>

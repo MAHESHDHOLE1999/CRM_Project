@@ -1,29 +1,59 @@
+// import api from './api';
+
+// export const reportService = {
+//   // ✅ FIXED: Customer Reports
+//   getCustomerReport: (params) =>
+//     api.get('/reports/customers', { params }),  // Changed from /customers/fitter-report
+  
+//   // ✅ FIXED: Item Reports
+//   getItemReport: (params) =>
+//     api.get('/reports/items', { params }),      // Changed from /items/report
+  
+//   // ✅ FIXED: Financial Reports
+//   getFinancialReport: (params) =>
+//     api.get('/reports/financial', { params }),  // Changed from /customers/financial-stats
+  
+//   // ✅ FIXED: Fitter Reports - Returns array directly
+//   getAllFitters: () =>
+//     api.get('/reports/fitters'),
+  
+//   // Export Reports
+//   exportCustomerReportCSV: (params) =>
+//     api.get('/reports/customers/export/csv', { params, responseType: 'blob' }),
+  
+//   exportCustomerReportPDF: (params) =>
+//     api.get('/reports/customers/export/pdf', { params, responseType: 'blob' }),
+  
+//   exportFinancialReportPDF: (params) =>
+//     api.get('/reports/financial/export/pdf', { params, responseType: 'blob' })
+// };
+
 import api from './api';
 
 export const reportService = {
-  // Customer Reports - Using customers endpoint
+  // ✅ Customer Reports
   getCustomerReport: (params) =>
-    api.get('/customers/fitter-report', { params }),
+    api.get('/reports/customers', { params }),
   
-  // Item Reports (if you have item reports)
+  // ✅ Item/Inventory Reports
   getItemReport: (params) =>
-    api.get('/items/report', { params }),
+    api.get('/reports/items', { params }),
   
-  // Financial Reports
+  // ✅ Financial Reports
   getFinancialReport: (params) =>
-    api.get('/customers/financial-stats', { params }),
+    api.get('/reports/financial', { params }),
   
-  // Fitter Reports
+  // ✅ Get all fitters (returns simple array)
   getAllFitters: () =>
-    api.get('/customers/fitter-report'),
+    api.get('/reports/fitters'),
   
-  // Export Reports (if you have export endpoints)
+  // Export functionality (optional)
   exportCustomerReportCSV: (params) =>
-    api.get('/customers/export/csv', { params, responseType: 'blob' }),
+    api.get('/reports/customers/export/csv', { params, responseType: 'blob' }),
   
   exportCustomerReportPDF: (params) =>
-    api.get('/customers/export/pdf', { params, responseType: 'blob' }),
+    api.get('/reports/customers/export/pdf', { params, responseType: 'blob' }),
   
   exportFinancialReportPDF: (params) =>
-    api.get('/customers/financial-export/pdf', { params, responseType: 'blob' })
+    api.get('/reports/financial/export/pdf', { params, responseType: 'blob' })
 };

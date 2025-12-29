@@ -2,6 +2,7 @@ import express from 'express';
 import { 
   createCustomer, 
   getCustomers, 
+  getCustomerById,
   updateCustomer, 
   deleteCustomer,
   checkoutCustomer,
@@ -35,6 +36,7 @@ router.get('/analytics', getAnalytics);
 router.get('/financial-stats', getFinancialStats);
 router.get('/fitter-report', getFitterReport);
 router.get('/:id/bill', generateBill);
+router.get('/:id', getCustomerById);
 
 // ========================================
 // GET GENERIC ROUTES (LAST!)

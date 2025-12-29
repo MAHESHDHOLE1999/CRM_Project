@@ -1,8 +1,14 @@
-// import Item from '../models/Item.js';
+import Item from '../models/Item.js';
 
 // export const createItem = async (req, res) => {
 //   try {
 //     const itemData = req.body;
+    
+//     // Set availableQuantity equal to totalQuantity initially
+//     if (itemData.totalQuantity) {
+//       itemData.availableQuantity = itemData.totalQuantity;
+//       itemData.rentedQuantity = 0;
+//     }
     
 //     const item = await Item.create(itemData);
 
@@ -20,12 +26,38 @@
 //   }
 // };
 
+export const createItem = async (req, res) => {
+  try {
+    const itemData = req.body;
+    
+    if (itemData.totalQuantity) {
+      itemData.availableQuantity = itemData.totalQuantity;
+      itemData.rentedQuantity = 0;
+    }
+    
+    const item = await Item.create(itemData);
+
+    res.status(201).json({
+      success: true,
+      message: 'Item created successfully',
+      data: item
+    });
+  } catch (error) {
+    console.error('Create item error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating item'
+    });
+  }
+};
+
 // export const getItems = async (req, res) => {
 //   try {
 //     const { 
 //       status, 
 //       search, 
 //       category,
+//       inStock,
 //       page = 1,
 //       limit = 50
 //     } = req.query;
@@ -46,6 +78,13 @@
     
 //     if (category && category !== 'all') {
 //       query.category = category;
+//     }
+
+//     // Filter by stock availability
+//     if (inStock === 'true') {
+//       query.availableQuantity = { $gt: 0 };
+//     } else if (inStock === 'false') {
+//       query.availableQuantity = 0;
 //     }
 
 //     const skip = (Number(page) - 1) * Number(limit);
@@ -80,135 +119,6 @@
 //   }
 // };
 
-// export const getItemById = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-    
-//     const item = await Item.findById(id);
-
-//     if (!item) {
-//       return res.status(404).json({
-//         success: false,
-//         message: 'Item not found'
-//       });
-//     }
-
-//     res.json({
-//       success: true,
-//       data: item
-//     });
-//   } catch (error) {
-//     console.error('Get item error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error fetching item'
-//     });
-//   }
-// };
-
-// export const updateItem = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const updateData = req.body;
-
-//     const item = await Item.findByIdAndUpdate(
-//       id,
-//       updateData,
-//       { new: true, runValidators: true }
-//     );
-
-//     if (!item) {
-//       return res.status(404).json({
-//         success: false,
-//         message: 'Item not found'
-//       });
-//     }
-
-//     res.json({
-//       success: true,
-//       message: 'Item updated successfully',
-//       data: item
-//     });
-//   } catch (error) {
-//     console.error('Update item error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error updating item'
-//     });
-//   }
-// };
-
-// export const deleteItem = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-    
-//     const item = await Item.findByIdAndDelete(id);
-
-//     if (!item) {
-//       return res.status(404).json({
-//         success: false,
-//         message: 'Item not found'
-//       });
-//     }
-
-//     res.json({
-//       success: true,
-//       message: 'Item deleted successfully'
-//     });
-//   } catch (error) {
-//     console.error('Delete item error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error deleting item'
-//     });
-//   }
-// };
-
-// export const getCategories = async (req, res) => {
-//   try {
-//     const categories = await Item.distinct('category');
-    
-//     res.json({
-//       success: true,
-//       data: categories.filter(cat => cat) // Filter out null/undefined
-//     });
-//   } catch (error) {
-//     console.error('Get categories error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error fetching categories'
-//     });
-//   }
-// };
-
-import Item from '../models/Item.js';
-
-export const createItem = async (req, res) => {
-  try {
-    const itemData = req.body;
-    
-    // Set availableQuantity equal to totalQuantity initially
-    if (itemData.totalQuantity) {
-      itemData.availableQuantity = itemData.totalQuantity;
-      itemData.rentedQuantity = 0;
-    }
-    
-    const item = await Item.create(itemData);
-
-    res.status(201).json({
-      success: true,
-      message: 'Item created successfully',
-      data: item
-    });
-  } catch (error) {
-    console.error('Create item error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error creating item'
-    });
-  }
-};
-
 export const getItems = async (req, res) => {
   try {
     const { 
@@ -238,7 +148,6 @@ export const getItems = async (req, res) => {
       query.category = category;
     }
 
-    // Filter by stock availability
     if (inStock === 'true') {
       query.availableQuantity = { $gt: 0 };
     } else if (inStock === 'false') {
@@ -487,6 +396,240 @@ export const getInventoryStats = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error fetching inventory statistics'
+    });
+  }
+};
+
+// ✅ NEW: Bulk rent items (called when creating booking/customer)
+export const bulkRentItems = async (req, res) => {
+  try {
+    const { items } = req.body;
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Items array is required'
+      });
+    }
+
+    const results = [];
+    const errors = [];
+
+    for (const item of items) {
+      try {
+        const itemDoc = await Item.findById(item.itemId);
+        
+        if (!itemDoc) {
+          errors.push({
+            itemId: item.itemId,
+            error: 'Item not found'
+          });
+          continue;
+        }
+
+        if (itemDoc.availableQuantity < item.quantity) {
+          errors.push({
+            itemId: item.itemId,
+            itemName: itemDoc.name,
+            error: `Insufficient quantity. Available: ${itemDoc.availableQuantity}, Requested: ${item.quantity}`
+          });
+          continue;
+        }
+
+        // Update quantities
+        itemDoc.availableQuantity -= item.quantity;
+        itemDoc.rentedQuantity += item.quantity;
+        
+        // Update status automatically
+        if (itemDoc.availableQuantity === 0) {
+          itemDoc.status = 'NotAvailable';
+        } else if (itemDoc.rentedQuantity > 0) {
+          itemDoc.status = 'InUse';
+        }
+
+        await itemDoc.save();
+
+        results.push({
+          itemId: item.itemId,
+          itemName: itemDoc.name,
+          quantityRented: item.quantity,
+          availableNow: itemDoc.availableQuantity,
+          rentedNow: itemDoc.rentedQuantity
+        });
+      } catch (err) {
+        errors.push({
+          itemId: item.itemId,
+          error: err.message
+        });
+      }
+    }
+
+    res.json({
+      success: errors.length === 0,
+      message: `${results.length} items rented successfully${errors.length > 0 ? `, ${errors.length} failed` : ''}`,
+      data: {
+        rented: results,
+        failed: errors
+      }
+    });
+  } catch (error) {
+    console.error('Bulk rent items error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error renting items',
+      error: error.message
+    });
+  }
+};
+
+// ✅ NEW: Bulk return items (called when customer status = Completed)
+export const bulkReturnItems = async (req, res) => {
+  try {
+    const { items } = req.body;
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Items array is required'
+      });
+    }
+
+    const results = [];
+    const errors = [];
+
+    for (const item of items) {
+      try {
+        const itemDoc = await Item.findById(item.itemId);
+        
+        if (!itemDoc) {
+          errors.push({
+            itemId: item.itemId,
+            error: 'Item not found'
+          });
+          continue;
+        }
+
+        if (itemDoc.rentedQuantity < item.quantity) {
+          errors.push({
+            itemId: item.itemId,
+            itemName: itemDoc.name,
+            error: `Cannot return more than rented. Rented: ${itemDoc.rentedQuantity}, Returning: ${item.quantity}`
+          });
+          continue;
+        }
+
+        // Return quantities
+        itemDoc.availableQuantity += item.quantity;
+        itemDoc.rentedQuantity -= item.quantity;
+        
+        // Update status automatically
+        if (itemDoc.availableQuantity === 0) {
+          itemDoc.status = 'NotAvailable';
+        } else if (itemDoc.rentedQuantity === 0) {
+          itemDoc.status = 'Available';
+        } else {
+          itemDoc.status = 'InUse';
+        }
+
+        await itemDoc.save();
+
+        results.push({
+          itemId: item.itemId,
+          itemName: itemDoc.name,
+          quantityReturned: item.quantity,
+          availableNow: itemDoc.availableQuantity,
+          rentedNow: itemDoc.rentedQuantity
+        });
+      } catch (err) {
+        errors.push({
+          itemId: item.itemId,
+          error: err.message
+        });
+      }
+    }
+
+    res.json({
+      success: errors.length === 0,
+      message: `${results.length} items returned successfully${errors.length > 0 ? `, ${errors.length} failed` : ''}`,
+      data: {
+        returned: results,
+        failed: errors
+      }
+    });
+  } catch (error) {
+    console.error('Bulk return items error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error returning items',
+      error: error.message
+    });
+  }
+};
+
+// ✅ NEW: Check item availability before adding to booking
+export const checkAvailability = async (req, res) => {
+  try {
+    const { items } = req.body;
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Items array is required'
+      });
+    }
+
+    const availability = [];
+    let allAvailable = true;
+
+    for (const item of items) {
+      try {
+        const itemDoc = await Item.findById(item.itemId);
+        
+        if (!itemDoc) {
+          availability.push({
+            itemId: item.itemId,
+            available: false,
+            reason: 'Item not found'
+          });
+          allAvailable = false;
+          continue;
+        }
+
+        const isAvailable = itemDoc.availableQuantity >= item.quantity;
+        availability.push({
+          itemId: item.itemId,
+          itemName: itemDoc.name,
+          requestedQuantity: item.quantity,
+          availableQuantity: itemDoc.availableQuantity,
+          available: isAvailable,
+          reason: isAvailable ? 'OK' : `Insufficient quantity. Available: ${itemDoc.availableQuantity}`
+        });
+
+        if (!isAvailable) allAvailable = false;
+      } catch (err) {
+        availability.push({
+          itemId: item.itemId,
+          available: false,
+          reason: err.message
+        });
+        allAvailable = false;
+      }
+    }
+
+    res.json({
+      success: allAvailable,
+      message: allAvailable ? 'All items available' : 'Some items not available',
+      data: {
+        allAvailable,
+        items: availability
+      }
+    });
+  } catch (error) {
+    console.error('Check availability error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error checking availability',
+      error: error.message
     });
   }
 };
