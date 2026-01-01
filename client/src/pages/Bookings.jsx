@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
-import { Plus, Search, Filter, Edit, Trash2, CheckCircle, XCircle, Calendar, ArrowRight } from 'lucide-react';
+import { Plus, Search, Filter, Edit, Trash2, CheckCircle, XCircle, Calendar, ArrowRight, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -53,6 +53,9 @@ export default function Bookings() {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [bookingToConfirm, setBookingToConfirm] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [bookingToDelete, setBookingToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ['bookings', { search, status: statusFilter }],
@@ -70,6 +73,13 @@ export default function Bookings() {
       queryClient.invalidateQueries(['bookings']);
       queryClient.invalidateQueries(['booking-stats']);
       toast.success(t('common.deleteSuccess'));
+      setDeleteDialogOpen(false);
+      setBookingToDelete(null);
+      setIsDeleting(false);
+    },
+    onError: () => {
+      toast.error(t('common.deleteError'));
+      setIsDeleting(false);
     }
   });
 
@@ -111,9 +121,15 @@ export default function Bookings() {
     setDialogOpen(true);
   };
 
-  const handleDelete = (id) => {
-    if (confirm(t('common.confirmDelete'))) {
-      deleteMutation.mutate(id);
+  const handleDeleteClick = (booking) => {
+    setBookingToDelete(booking);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (bookingToDelete) {
+      setIsDeleting(true);
+      deleteMutation.mutate(bookingToDelete._id);
     }
   };
 
@@ -302,7 +318,7 @@ export default function Bookings() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => handleDelete(booking._id)}
+                          onClick={() => handleDeleteClick(booking)}
                           title={t('common.delete')}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -317,7 +333,9 @@ export default function Bookings() {
         </div>
       </Card>
 
-      {/* Booking Form Dialog */}
+      {/* =====================================================
+          Booking Form Dialog
+          ===================================================== */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -336,7 +354,9 @@ export default function Bookings() {
         </DialogContent>
       </Dialog>
 
-      {/* Confirm Booking Dialog */}
+      {/* =====================================================
+          Confirm Booking Dialog
+          ===================================================== */}
       <AlertDialog open={confirmDialogOpen} onOpenChange={setConfirmDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -379,6 +399,79 @@ export default function Bookings() {
             >
               <ArrowRight className="h-4 w-4 mr-2" />
               {t('booking.convertToCustomer')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* =====================================================
+          Professional Delete Confirmation Dialog
+          ===================================================== */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent className="max-w-sm">
+          <AlertDialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+                <AlertCircle className="h-6 w-6 text-red-600" />
+              </div>
+              <AlertDialogTitle className="text-lg">{t('common.deleteConfirmation')}</AlertDialogTitle>
+            </div>
+            <AlertDialogDescription className="mt-4">
+              <div className="space-y-4">
+                <p>{t('common.deleteWarning') || 'This action cannot be undone. Please be certain.'}</p>
+                
+                {bookingToDelete && (
+                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-xs text-muted-foreground">{t('booking.customerName')}</p>
+                        <p className="font-semibold text-slate-900">{bookingToDelete.customerName}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">{t('booking.date')}</p>
+                        <p className="font-semibold text-slate-900">
+                          {format(new Date(bookingToDelete.bookingDate), 'dd/MM/yyyy')}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">{t('customer.totalAmount')}</p>
+                        <p className="font-semibold text-slate-900">
+                          ₹{bookingToDelete.totalAmount.toLocaleString('en-IN')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-start gap-2 text-sm text-red-600 bg-red-50 p-3 rounded-lg">
+                  <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <p>
+                    {t('common.deleteWarning2') || 'Once deleted, this booking cannot be recovered.'}
+                  </p>
+                </div>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-2">
+            <AlertDialogCancel>
+              {t('common.cancel')}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              disabled={isDeleting}
+              className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+            >
+              {isDeleting ? (
+                <>
+                  <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                  {t('common.deleting') || 'Deleting...'}
+                </>
+              ) : (
+                <>
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  {t('common.delete')}
+                </>
+              )}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

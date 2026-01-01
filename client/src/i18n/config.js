@@ -40,7 +40,7 @@ const resources = {
         customRange: "Custom Range",
         bookingStatusDistribution: "Booking Status Distribution",
         dailyBookingsTrend: "Daily Bookings Trend",
-        booking:"Bookings"
+        booking: "Bookings",
       },
       customer: {
         title: "Customers",
@@ -103,7 +103,7 @@ const resources = {
         search: "Search items...",
         manageInventory: "Manage your rental items inventory",
         getStarted: "Get started by adding your first item",
-        totalQuantity: "Total Quantity"
+        totalQuantity: "Total Quantity",
       },
       booking: {
         title: "Advanced Booking",
@@ -126,7 +126,8 @@ const resources = {
         bookingCancelled: "Booking cancelled",
         totalBookings: "Total Bookings",
         manageBookings: "Manage future bookings and reservations",
-        confirmBookingMessage: "Do you want to convert this booking into an active customer record?",
+        confirmBookingMessage:
+          "Do you want to convert this booking into an active customer record?",
         convertMessage: "Items will be marked as rented",
         justConfirmMessage: "Keeps as booking only",
       },
@@ -160,7 +161,7 @@ const resources = {
         today: "Today",
         allStatus: "All Status",
         allFitters: "All Fitters",
-        totalValues:"Total Values"
+        totalValues: "Total Values",
       },
       common: {
         save: "Save",
@@ -193,7 +194,11 @@ const resources = {
         selectOption: "Select an option",
         noResults: "No results found",
         unassigned: "Unassigned",
-        rs:"Rs."
+        rs: "Rs.",
+        deleteConfirmation: "Delete Confirmation",
+        deleteWarning: "This action cannot be undone. Please be certain.",
+        deleteWarning2: "Once deleted, this customer cannot be recovered.",
+        deleting: "Deleting...",
       },
     },
   },
@@ -213,7 +218,8 @@ const resources = {
       dashboard: {
         title: "डॅशबोर्ड",
         overview: "पुन्हा स्वागत आहे! आपल्या व्यवसायाचा विहंगावलोकन येथे आहे.",
-        welcomeMessage: "पुन्हा स्वागत आहे! आपल्या व्यवसायाचा विहंगावलोकन येथे आहे.",
+        welcomeMessage:
+          "पुन्हा स्वागत आहे! आपल्या व्यवसायाचा विहंगावलोकन येथे आहे.",
         totalBookings: "एकूण बुकिंग",
         activeBookings: "सक्रिय बुकिंग",
         totalIncome: "एकूण उत्पन्न",
@@ -236,7 +242,7 @@ const resources = {
         customRange: "कस्टम श्रेणी",
         bookingStatusDistribution: "बुकिंग स्थिती वितरण",
         dailyBookingsTrend: "दैनिक बुकिंग प्रवृत्ती",
-        booking:"बुकिंग",
+        booking: "बुकिंग",
       },
       customer: {
         title: "ग्राहक",
@@ -299,7 +305,7 @@ const resources = {
         search: "वस्तू शोधा...",
         manageInventory: "आपल्या किरायाच्या वस्तूंचा माल व्यवस्थापित करा",
         getStarted: "आपली पहिली वस्तू जोडून सुरुवात करा",
-        totalQuantity: "एकूण प्रमाण"
+        totalQuantity: "एकूण प्रमाण",
       },
       booking: {
         title: "आगाऊ बुकिंग",
@@ -318,11 +324,13 @@ const resources = {
         confirmBooking: "बुकिंग पुष्टी करा",
         convertToCustomer: "ग्राहकामध्ये रूपांतरित करा",
         justConfirm: "फक्त पुष्टी करा",
-        bookingConfirmed: "बुकिंग पुष्टी झाली आणि सक्रिय ग्राहकामध्ये रूपांतरित झाली!",
+        bookingConfirmed:
+          "बुकिंग पुष्टी झाली आणि सक्रिय ग्राहकामध्ये रूपांतरित झाली!",
         bookingCancelled: "बुकिंग रद्द झाली",
         totalBookings: "एकूण बुकिंग",
         manageBookings: "भविष्यातील बुकिंग आणि आरक्षण व्यवस्थापित करा",
-        confirmBookingMessage: "क्या आपण हे बुकिंग सक्रिय ग्राहक रेकॉर्डमध्ये रूपांतरित करू इच्छिता?",
+        confirmBookingMessage:
+          "क्या आपण हे बुकिंग सक्रिय ग्राहक रेकॉर्डमध्ये रूपांतरित करू इच्छिता?",
         convertMessage: "वस्तू किराया म्हणून चिन्हांकित केली जाईल",
         justConfirmMessage: "फक्त बुकिंग म्हणून ठेवते",
       },
@@ -356,7 +364,7 @@ const resources = {
         today: "आज",
         allStatus: "सर्व स्थिती",
         allFitters: "सर्व फिटर",
-        totalValues: "एकूण मूल्ये"
+        totalValues: "एकूण मूल्ये",
       },
       common: {
         save: "जतन करा",
@@ -389,7 +397,12 @@ const resources = {
         selectOption: "एक पर्याय निवडा",
         noResults: "कोणतेही परिणाम आढळले नाहीत",
         unassigned: "असंमत",
-        rs:"₹"
+        rs: "₹",
+        deleteConfirmation: "हटवणे पुष्टीकरण",
+        deleteWarning: "हे क्रिया पूर्ववत करू शकत नाही. कृपया सुनिश्चित व्हा.",
+        deleteWarning2:
+          "एकदा हटविल्यानंतर, हा ग्राहक पुनर्प्राप्त केला जाऊ शकत नाही.",
+        deleting: "हटवत आहे...",
       },
     },
   },
