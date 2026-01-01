@@ -1,191 +1,243 @@
 import mongoose from 'mongoose';
 
-const customerItemSchema = new mongoose.Schema({
+const itemUsageSchema = new mongoose.Schema({
   itemId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Item'
   },
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Item'
+  },
   itemName: String,
+  name: String,
   quantity: {
     type: Number,
-    default: 1
+    required: true
   },
   price: {
     type: Number,
     default: 0
   }
-});
+}, { _id: false });
 
-const customerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  phone: {
-    type: String,
-    required: true
-  },
-  address: {
-    type: String,
-    trim: true
-  },
-  registrationDate: {
+const rentalHistorySchema = new mongoose.Schema({
+  date: {
     type: Date,
     default: Date.now
   },
-  checkInDate: {
-    type: Date,
+  action: {
+    type: String,
+    enum: ['created', 'updated', 'completed', 'cancelled', 'deleted'],
     required: true
   },
-  checkOutDate: {
-    type: Date
-  },
-  checkInTime: {
-    type: String,
-    required: true,
-    default: '10:00'
-  },
-  checkOutTime: {
-    type: String
-  },
-  totalAmount: {
-    type: Number,
-    default: 0
-  },
-  depositAmount: {
-    type: Number,
-    default: 0
-  },
-  givenAmount: {
-    type: Number,
-    default: 0
-  },
-  remainingAmount: {
-    type: Number,
-    default: 0
-  },
-  transportRequired: {
-    type: Boolean,
-    default: false
-  },
-  transportCost: {
-    type: Number,
-    default: 0
-  },
-  transportLocation: {
-    type: String
-  },
-  maintenanceCharges: {
-    type: Number,
-    default: 0
-  },
-  // NEW FIELDS for 24-hour cycle
-  rentalDays: {
-    type: Number,
-    default: 1
-  },
-  extraHours: {
-    type: Number,
-    default: 0
-  },
-  extraCharges: {
-    type: Number,
-    default: 0
-  },
-  hourlyRate: {
-    type: Number,
-    default: 0
-  },
+  itemsUsed: [itemUsageSchema],
+  totalQuantityUsed: Number,
+  totalValueUsed: Number,
   status: {
     type: String,
-    enum: ['Active', 'Completed', 'Cancelled', 'Pending'],
-    default: 'Active'
-  },
-  fitterName: {
-    type: String
-  },
-  notes: {
-    type: String
-  },
-  items: [customerItemSchema],
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    enum: ['Active', 'Completed', 'Cancelled'],
     required: true
+  },
+  rentalDays: Number,
+  extraHours: Number,
+  extraCharges: Number,
+  notes: String
+}, { _id: false });
+
+const customerSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    name: {
+      type: String,
+      required: [true, 'Customer name is required'],
+      trim: true
+    },
+    phone: {
+      type: String,
+      required: [true, 'Phone number is required'],
+      trim: true
+    },
+    address: {
+      type: String,
+      trim: true
+    },
+    checkInDate: {
+      type: Date,
+      required: true
+    },
+    checkInTime: {
+      type: String,
+      default: '10:00'
+    },
+    checkOutDate: Date,
+    checkOutTime: String,
+    
+    // ✅ Items used during rental
+    items: [itemUsageSchema],
+    
+    // ✅ Financial Information
+    totalAmount: {
+      type: Number,
+      default: 0
+    },
+    depositAmount: {
+      type: Number,
+      default: 0
+    },
+    givenAmount: {
+      type: Number,
+      default: 0
+    },
+    remainingAmount: {
+      type: Number,
+      default: 0
+    },
+    
+    // ✅ Extra Charges (Hourly Rate)
+    hourlyRate: {
+      type: Number,
+      default: 0
+    },
+    extraCharges: {
+      type: Number,
+      default: 0
+    },
+    rentalDays: {
+      type: Number,
+      default: 0
+    },
+    extraHours: {
+      type: Number,
+      default: 0
+    },
+    
+    // ✅ Transport Information
+    transportRequired: {
+      type: Boolean,
+      default: false
+    },
+    transportCost: {
+      type: Number,
+      default: 0
+    },
+    transportLocation: String,
+    
+    // ✅ Maintenance & Additional Charges
+    maintenanceCharges: {
+      type: Number,
+      default: 0
+    },
+    
+    // ✅ Status & Additional Info
+    status: {
+      type: String,
+      enum: ['Active', 'Completed', 'Cancelled'],
+      default: 'Active'
+    },
+    fitterName: String,
+    notes: String,
+    
+    // ✅ RENTAL HISTORY - Track all status changes
+    rentalHistory: [rentalHistorySchema],
+    
+    registrationDate: {
+      type: Date,
+      default: Date.now
+    }
+  },
+  {
+    timestamps: true
   }
-}, {
-  timestamps: true
+);
+
+// ✅ INDEX for faster queries
+customerSchema.index({ userId: 1, status: 1 });
+customerSchema.index({ userId: 1, registrationDate: -1 });
+customerSchema.index({ phone: 1 });
+customerSchema.index({ fitterName: 1 });
+
+// ✅ VIRTUAL for total items used
+customerSchema.virtual('totalItemsUsed').get(function() {
+  return (this.items || []).reduce((sum, item) => sum + item.quantity, 0);
 });
 
-// Method to calculate rental duration and charges
-customerSchema.methods.calculateRentalCharges = function() {
-  if (!this.checkInDate || !this.checkInTime) {
-    return { days: 0, hours: 0, extraCharges: 0 };
+// ✅ VIRTUAL for rental status display
+customerSchema.virtual('rentalStatus').get(function() {
+  const statuses = {
+    'Active': '🟢 Active (In Progress)',
+    'Completed': '🟢 Completed (Returned)',
+    'Cancelled': '🔴 Cancelled (Returned)'
+  };
+  return statuses[this.status] || this.status;
+});
+
+// ✅ METHOD to add rental history entry
+customerSchema.methods.addRentalHistory = function(historyEntry) {
+  try {
+    if (!this.rentalHistory) {
+      this.rentalHistory = [];
+    }
+
+    const entry = {
+      date: new Date(),
+      action: historyEntry.action,
+      itemsUsed: historyEntry.itemsUsed || this.items || [],
+      totalQuantityUsed: historyEntry.totalQuantityUsed || (this.items || []).reduce((sum, item) => sum + item.quantity, 0),
+      totalValueUsed: historyEntry.totalValueUsed || (this.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+      status: historyEntry.status || this.status,
+      rentalDays: historyEntry.rentalDays || this.rentalDays || 0,
+      extraHours: historyEntry.extraHours || this.extraHours || 0,
+      extraCharges: historyEntry.extraCharges || this.extraCharges || 0,
+      notes: historyEntry.notes || ''
+    };
+
+    this.rentalHistory.push(entry);
+    console.log(`✅ Added rental history entry: ${entry.action}`);
+    return this;
+  } catch (error) {
+    console.error('❌ Error adding rental history:', error.message);
+    throw error;
   }
+};
 
-  const checkInDateTime = this.getCheckInDateTime();
-  let checkOutDateTime;
-
-  if (this.checkOutDate && this.checkOutTime) {
-    checkOutDateTime = this.getCheckOutDateTime();
-  } else {
-    // If not checked out yet, calculate till now
-    checkOutDateTime = new Date();
-  }
-
-  // Calculate total hours difference
-  const totalHours = Math.ceil((checkOutDateTime - checkInDateTime) / (1000 * 60 * 60));
-  
-  // 24-hour cycle calculation
-  const fullDays = Math.floor(totalHours / 24);
-  const extraHours = totalHours % 24;
-
-  // Calculate extra charges if there's an hourly rate
-  let extraCharges = 0;
-  if (extraHours > 0 && this.hourlyRate > 0) {
-    extraCharges = extraHours * this.hourlyRate;
-  }
-
+// ✅ METHOD to get rental summary
+customerSchema.methods.getRentalSummary = function() {
   return {
-    days: fullDays,
-    hours: extraHours,
-    extraCharges: extraCharges
+    name: this.name,
+    phone: this.phone,
+    status: this.status,
+    checkInDate: this.checkInDate,
+    checkOutDate: this.checkOutDate,
+    rentalDays: this.rentalDays,
+    extraHours: this.extraHours,
+    itemsRented: this.items || [],
+    totalItemsUsed: (this.items || []).reduce((sum, item) => sum + item.quantity, 0),
+    totalValueUsed: (this.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+    extraCharges: this.extraCharges,
+    totalAmount: this.totalAmount,
+    givenAmount: this.givenAmount,
+    remainingAmount: this.remainingAmount,
+    rentalHistory: this.rentalHistory || []
   };
 };
 
-// Method to get check-in date-time
-customerSchema.methods.getCheckInDateTime = function() {
-  const [hours, minutes] = this.checkInTime.split(':');
-  const checkInDateTime = new Date(this.checkInDate);
-  checkInDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-  return checkInDateTime;
+// ✅ METHOD to format dates
+customerSchema.methods.formatDates = function() {
+  if (this.checkInDate) {
+    this.checkInDate = new Date(this.checkInDate).toISOString().split('T')[0];
+  }
+  if (this.checkOutDate) {
+    this.checkOutDate = new Date(this.checkOutDate).toISOString().split('T')[0];
+  }
+  return this;
 };
 
-// Method to get check-out date-time
-customerSchema.methods.getCheckOutDateTime = function() {
-  if (!this.checkOutDate || !this.checkOutTime) {
-    return null;
-  }
-  const [hours, minutes] = this.checkOutTime.split(':');
-  const checkOutDateTime = new Date(this.checkOutDate);
-  checkOutDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-  return checkOutDateTime;
-};
-
-// Pre-save hook to calculate rental charges
-customerSchema.pre('save', function() {
-  if (this.checkOutDate && this.checkOutTime) {
-    const charges = this.calculateRentalCharges();
-    this.rentalDays = charges.days;
-    this.extraHours = charges.hours;
-    this.extraCharges = charges.extraCharges;
-  }
-});
-
-// Index for faster queries
-customerSchema.index({ userId: 1, status: 1 });
-customerSchema.index({ registrationDate: -1 });
-customerSchema.index({ name: 'text', phone: 'text' });
+// ✅ Ensure virtuals are included in JSON
+customerSchema.set('toJSON', { virtuals: true });
 
 export default mongoose.model('Customer', customerSchema);

@@ -65,6 +65,23 @@ export default function Items() {
     setDialogOpen(true);
   };
 
+  // Determine actual status based on quantities (NOT stored status field)
+  const getActualStatus = (item) => {
+    if (item.totalQuantity === 0) {
+      return "NotAvailable";
+    }
+    
+    if (item.availableQuantity === 0) {
+      return "NotAvailable"; // All items are rented
+    }
+    
+    if (item.rentedQuantity > 0) {
+      return "InUse"; // Some items are rented, some are available
+    }
+    
+    return "Available"; // All items are available for rent
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
       case "Available":
@@ -117,11 +134,11 @@ export default function Items() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10 focus:outline-none focus:ring-0"
-              style={{outline: 'none', boxShadow: 'none'}}
+              style={{ outline: 'none', boxShadow: 'none' }}
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full md:w-48 focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}>
+            <SelectTrigger className="w-full md:w-48 focus:outline-none focus:ring-0" style={{ outline: 'none', boxShadow: 'none' }}>
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder={t("common.filter")} />
             </SelectTrigger>
@@ -159,97 +176,134 @@ export default function Items() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {items.map((item) => (
-            <Card key={item._id} className="hover:shadow-lg transition-shadow">
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Package className="h-6 w-6 text-primary" />
+          {items.map((item) => {
+            const actualStatus = getActualStatus(item);
+            
+            return (
+              <Card key={item._id} className="hover:shadow-lg transition-shadow">
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <Package className="h-6 w-6 text-primary" />
+                    </div>
+                    <div
+                      className={`w-3 h-3 rounded-full ${getStatusColor(
+                        actualStatus
+                      )}`}
+                    />
                   </div>
-                  <div
-                    className={`w-3 h-3 rounded-full ${getStatusColor(
-                      item.status
-                    )}`}
-                  />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div>
-                  <CardTitle className="text-lg mb-1">{item.name}</CardTitle>
-                  {item.nameMarathi && (
-                    <p className="text-sm text-muted-foreground">
-                      {item.nameMarathi}
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div>
+                    <CardTitle className="text-lg mb-1">{item.name}</CardTitle>
+                    {item.nameMarathi && (
+                      <p className="text-sm text-muted-foreground">
+                        {item.nameMarathi}
+                      </p>
+                    )}
+                  </div>
+
+                  {item.description && (
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {item.description}
                     </p>
                   )}
-                </div>
 
-                {item.description && (
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {item.description}
-                  </p>
-                )}
+                  {item.category && (
+                    <Badge variant="outline" className="text-xs">
+                      {item.category}
+                    </Badge>
+                  )}
 
-                {item.category && (
-                  <Badge variant="outline" className="text-xs">
-                    {item.category}
-                  </Badge>
-                )}
+                  {/* Quantity Information */}
+                  <div className="space-y-1 pt-2 border-t">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        {t("items.totalQuantity")}:
+                      </span>
+                      <span className="font-semibold">{item.totalQuantity}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        {t("items.availableQuantity")}:
+                      </span>
+                      <span className={`font-semibold ${
+                        item.availableQuantity > 0 
+                          ? 'text-green-600' 
+                          : 'text-red-600'
+                      }`}>
+                        {item.availableQuantity}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        {t("items.rentedQuantity")}:
+                      </span>
+                      <span className={`font-semibold ${
+                        item.rentedQuantity > 0 
+                          ? 'text-orange-600' 
+                          : 'text-gray-500'
+                      }`}>
+                        {item.rentedQuantity}
+                      </span>
+                    </div>
 
-                {/* Quantity Information */}
-                <div className="space-y-1 pt-2 border-t">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {t("items.totalQuantity")}:
-                    </span>
-                    <span className="font-semibold">{item.totalQuantity}</span>
+                    {/* Utilization Bar */}
+                    <div className="pt-2">
+                      <div className="flex justify-between items-center mb-1">
+                        <span className="text-xs text-muted-foreground">
+                          Utilization
+                        </span>
+                        <span className="text-xs font-semibold">
+                          {item.totalQuantity > 0 
+                            ? Math.round((item.rentedQuantity / item.totalQuantity) * 100)
+                            : 0}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className="bg-orange-500 h-2 rounded-full transition-all"
+                          style={{
+                            width: item.totalQuantity > 0 
+                              ? `${(item.rentedQuantity / item.totalQuantity) * 100}%`
+                              : '0%'
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {t("items.availableQuantity")}:
-                    </span>
-                    <span className="font-semibold text-green-600">
-                      {item.availableQuantity}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">
-                      {t("items.rentedQuantity")}:
-                    </span>
-                    <span className="font-semibold text-orange-600">
-                      {item.rentedQuantity}
-                    </span>
-                  </div>
-                </div>
 
-                <div className="flex items-center justify-between pt-2">
-                  <span className="text-lg font-bold">
-                    {t("common.rs")}{item.price}{t("items.priceSuffix")}
-                  </span>
-                  {getStatusBadge(item.status)}
-                </div>
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-lg font-bold">
+                      {t("common.rs")}{item.price}{t("items.priceSuffix")}
+                    </span>
+                    {getStatusBadge(actualStatus)}
+                  </div>
 
-                <div className="flex gap-2 pt-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => handleEdit(item)}
-                  >
-                    <Edit className="h-4 w-4 mr-1" />
-                    {t("common.edit")}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDelete(item._id)}
-                    disabled={item.rentedQuantity > 0}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <div className="flex gap-2 pt-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => handleEdit(item)}
+                    >
+                      <Edit className="h-4 w-4 mr-1" />
+                      {t("common.edit")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleDelete(item._id)}
+                      disabled={item.rentedQuantity > 0}
+                      title={item.rentedQuantity > 0 ? "Cannot delete items that are currently rented" : "Delete item"}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
 

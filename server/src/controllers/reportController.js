@@ -436,6 +436,8 @@ export const getItemReport = async (req, res) => {
 
     logDebug('ITEM REPORT', 'MongoDB Query', { query });
 
+    // ✅ FIX #3: Query with proper debugging
+    console.log('🔍 Querying Item model with:', JSON.stringify(query, null, 2));
     // ✅ Get items
     const items = await Item.find(query).lean();
 
@@ -444,7 +446,8 @@ export const getItemReport = async (req, res) => {
     if (items.length > 0) {
       logDebug('ITEM REPORT', 'Sample Item Data', {
         sample: items[0],
-        totalCount: items.length
+        totalCount: items.length,
+        allItemIds: items.map(i => i._id)
       });
     } else {
       logDebug('ITEM REPORT', '⚠️ WARNING: No items found!', { query });
@@ -472,7 +475,8 @@ export const getItemReport = async (req, res) => {
 
     logDebug('ITEM REPORT', 'Final Response Data Ready', {
       itemsCount: items.length,
-      summary
+      summary,
+      responseStructure: Object.keys(responseData)
     });
 
     // ✅ Send response
@@ -486,7 +490,8 @@ export const getItemReport = async (req, res) => {
   } catch (error) {
     logDebug('ITEM REPORT', '❌ ERROR OCCURRED', {
       message: error.message,
-      stack: error.stack
+      stack: error.stack,
+      errorType: error.name
     });
 
     res.status(500).json({

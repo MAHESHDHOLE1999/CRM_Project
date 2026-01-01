@@ -1,169 +1,118 @@
-import Item from '../models/Item.js';
+import Item from "../models/Item.js";
 
-// export const createItem = async (req, res) => {
-//   try {
-//     const itemData = req.body;
-    
-//     // Set availableQuantity equal to totalQuantity initially
-//     if (itemData.totalQuantity) {
-//       itemData.availableQuantity = itemData.totalQuantity;
-//       itemData.rentedQuantity = 0;
-//     }
-    
-//     const item = await Item.create(itemData);
+// Helper function to determine correct status based on quantities
+const determineStatus = (totalQuantity, availableQuantity, rentedQuantity) => {
+  if (totalQuantity === 0) {
+    return "NotAvailable";
+  }
 
-//     res.status(201).json({
-//       success: true,
-//       message: 'Item created successfully',
-//       data: item
-//     });
-//   } catch (error) {
-//     console.error('Create item error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error creating item'
-//     });
-//   }
-// };
+  if (availableQuantity === 0) {
+    return "NotAvailable"; // All items are rented
+  }
 
+  if (rentedQuantity > 0) {
+    return "InUse"; // Some items are rented, some are available
+  }
+
+  return "Available"; // All items are available for rent
+};
+
+// Create new item
 export const createItem = async (req, res) => {
   try {
     const itemData = req.body;
-    
+
+    // Set availableQuantity equal to totalQuantity initially
     if (itemData.totalQuantity) {
       itemData.availableQuantity = itemData.totalQuantity;
       itemData.rentedQuantity = 0;
+      itemData.status = "Available";
+      itemData.quantityHistory = [
+        {
+          date: new Date(),
+          action: "created",
+          quantityAdded: itemData.totalQuantity,
+          totalQuantity: itemData.totalQuantity,
+          notes: "Item created",
+        },
+      ];
     }
-    
+
+    itemData.userId = req.userId;
     const item = await Item.create(itemData);
 
     res.status(201).json({
       success: true,
-      message: 'Item created successfully',
-      data: item
+      message: "Item created successfully",
+      data: item,
     });
   } catch (error) {
-    console.error('Create item error:', error);
+    console.error("Create item error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error creating item'
+      message: "Error creating item",
+      error: error.message,
     });
   }
 };
 
-// export const getItems = async (req, res) => {
-//   try {
-//     const { 
-//       status, 
-//       search, 
-//       category,
-//       inStock,
-//       page = 1,
-//       limit = 50
-//     } = req.query;
-    
-//     const query = {};
-    
-//     if (status && status !== 'all') {
-//       query.status = status;
-//     }
-    
-//     if (search) {
-//       query.$or = [
-//         { name: { $regex: search, $options: 'i' } },
-//         { nameMarathi: { $regex: search, $options: 'i' } },
-//         { description: { $regex: search, $options: 'i' } }
-//       ];
-//     }
-    
-//     if (category && category !== 'all') {
-//       query.category = category;
-//     }
-
-//     // Filter by stock availability
-//     if (inStock === 'true') {
-//       query.availableQuantity = { $gt: 0 };
-//     } else if (inStock === 'false') {
-//       query.availableQuantity = 0;
-//     }
-
-//     const skip = (Number(page) - 1) * Number(limit);
-
-//     const [items, total] = await Promise.all([
-//       Item.find(query)
-//         .sort({ createdAt: -1 })
-//         .skip(skip)
-//         .limit(Number(limit))
-//         .lean(),
-//       Item.countDocuments(query)
-//     ]);
-
-//     res.json({
-//       success: true,
-//       data: {
-//         items,
-//         pagination: {
-//           total,
-//           page: Number(page),
-//           limit: Number(limit),
-//           totalPages: Math.ceil(total / Number(limit))
-//         }
-//       }
-//     });
-//   } catch (error) {
-//     console.error('Get items error:', error);
-//     res.status(500).json({
-//       success: false,
-//       message: 'Error fetching items'
-//     });
-//   }
-// };
-
+// Get items with filters
 export const getItems = async (req, res) => {
   try {
-    const { 
-      status, 
-      search, 
+    const {
+      status,
+      search,
       category,
       inStock,
       page = 1,
-      limit = 50
+      limit = 50,
     } = req.query;
-    
-    const query = {};
-    
-    if (status && status !== 'all') {
+
+    const query = { userId: req.userId };
+
+    // Note: Status filter is applied, but frontend recalculates actual status
+    if (status && status !== "all") {
+      // We still filter by stored status, but frontend will show correct status
       query.status = status;
     }
-    
+
     if (search) {
       query.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { nameMarathi: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } }
+        { name: { $regex: search, $options: "i" } },
+        { nameMarathi: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
       ];
     }
-    
-    if (category && category !== 'all') {
+
+    if (category && category !== "all") {
       query.category = category;
     }
 
-    if (inStock === 'true') {
+    if (inStock === "true") {
       query.availableQuantity = { $gt: 0 };
-    } else if (inStock === 'false') {
+    } else if (inStock === "false") {
       query.availableQuantity = 0;
     }
 
     const skip = (Number(page) - 1) * Number(limit);
 
-    const [items, total] = await Promise.all([
-      Item.find(query)
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(Number(limit))
-        .lean(),
-      Item.countDocuments(query)
-    ]);
+    let items = await Item.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(Number(limit))
+      .lean();
+
+    // Sync status based on actual quantities
+    items = items.map((item) => ({
+      ...item,
+      status: determineStatus(
+        item.totalQuantity,
+        item.availableQuantity,
+        item.rentedQuantity
+      ),
+    }));
+
+    const total = await Item.countDocuments(query);
 
     res.json({
       success: true,
@@ -173,96 +122,159 @@ export const getItems = async (req, res) => {
           total,
           page: Number(page),
           limit: Number(limit),
-          totalPages: Math.ceil(total / Number(limit))
-        }
-      }
+          totalPages: Math.ceil(total / Number(limit)),
+        },
+      },
     });
   } catch (error) {
-    console.error('Get items error:', error);
+    console.error("Get items error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching items'
+      message: "Error fetching items",
+      error: error.message,
     });
   }
 };
 
+// Get item by ID
 export const getItemById = async (req, res) => {
   try {
     const { id } = req.params;
-    
-    const item = await Item.findById(id);
+
+    // let item = await Item.findById(id);
+    let item = await Item.findOne({
+      _id: id,
+      userId: req.userId,
+    });
 
     if (!item) {
       return res.status(404).json({
         success: false,
-        message: 'Item not found'
+        message: "Item not found",
       });
     }
 
+    // Sync status before returning
+    item.status = determineStatus(
+      item.totalQuantity,
+      item.availableQuantity,
+      item.rentedQuantity
+    );
+    item = await item.save();
+
     res.json({
       success: true,
-      data: item
+      data: item,
     });
   } catch (error) {
-    console.error('Get item error:', error);
+    console.error("Get item error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching item'
+      message: "Error fetching item",
+      error: error.message,
     });
   }
 };
 
+// Update item with proper quantity management
 export const updateItem = async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
 
-    // If totalQuantity is updated, adjust availableQuantity
-    if (updateData.totalQuantity !== undefined) {
-      const item = await Item.findById(id);
-      if (item) {
-        const difference = updateData.totalQuantity - item.totalQuantity;
-        updateData.availableQuantity = Math.max(0, item.availableQuantity + difference);
-      }
-    }
-
-    const item = await Item.findByIdAndUpdate(
-      id,
-      updateData,
-      { new: true, runValidators: true }
-    );
+    // let item = await Item.findById(id);
+    let item = await Item.findOne({
+      _id: id,
+      userId: req.userId,
+    });
 
     if (!item) {
       return res.status(404).json({
         success: false,
-        message: 'Item not found'
+        message: "Item not found",
       });
     }
 
+    // Handle quantity addition (not replacement)
+    if (
+      updateData.quantityToAdd !== undefined &&
+      updateData.quantityToAdd > 0
+    ) {
+      const quantityToAdd = Number(updateData.quantityToAdd);
+      const previousTotal = item.totalQuantity;
+      const newTotal = previousTotal + quantityToAdd;
+
+      // Update quantities
+      item.totalQuantity = newTotal;
+      item.availableQuantity += quantityToAdd;
+
+      // Initialize quantityHistory if it doesn't exist
+      if (!item.quantityHistory) {
+        item.quantityHistory = [];
+      }
+
+      // Add to history
+      item.quantityHistory.push({
+        date: new Date(),
+        action: "added",
+        quantityAdded: quantityToAdd,
+        previousTotal: previousTotal,
+        totalQuantity: newTotal,
+        notes: `Added ${quantityToAdd} unit(s) to existing stock`,
+      });
+
+      // Remove quantityToAdd from update data so it doesn't get saved as a field
+      delete updateData.quantityToAdd;
+    }
+
+    // Update other fields
+    if (updateData.name) item.name = updateData.name;
+    if (updateData.nameMarathi !== undefined)
+      item.nameMarathi = updateData.nameMarathi;
+    if (updateData.description !== undefined)
+      item.description = updateData.description;
+    if (updateData.category !== undefined) item.category = updateData.category;
+    if (updateData.price !== undefined) item.price = updateData.price;
+
+    // Auto-sync status based on quantities (not manual status update)
+    item.status = determineStatus(
+      item.totalQuantity,
+      item.availableQuantity,
+      item.rentedQuantity
+    );
+
+    const updatedItem = await item.save();
+
     res.json({
       success: true,
-      message: 'Item updated successfully',
-      data: item
+      message: "Item updated successfully",
+      data: updatedItem,
     });
   } catch (error) {
-    console.error('Update item error:', error);
+    console.error("Update item error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error updating item'
+      message: "Error updating item",
+      error: error.message,
     });
   }
 };
 
+// Delete item
 export const deleteItem = async (req, res) => {
   try {
     const { id } = req.params;
-    
-    const item = await Item.findById(id);
+
+    // const item = await Item.findById(id);
+    const item = await Item.findOne({
+      _id: id,
+      userId: req.userId,
+    });
 
     if (!item) {
       return res.status(404).json({
         success: false,
-        message: 'Item not found'
+        message: "Item not found",
       });
     }
 
@@ -270,7 +282,7 @@ export const deleteItem = async (req, res) => {
     if (item.rentedQuantity > 0) {
       return res.status(400).json({
         success: false,
-        message: 'Cannot delete item that is currently rented'
+        message: "Cannot delete item that is currently rented",
       });
     }
 
@@ -278,107 +290,173 @@ export const deleteItem = async (req, res) => {
 
     res.json({
       success: true,
-      message: 'Item deleted successfully'
+      message: "Item deleted successfully",
     });
   } catch (error) {
-    console.error('Delete item error:', error);
+    console.error("Delete item error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error deleting item'
+      message: "Error deleting item",
+      error: error.message,
     });
   }
 };
 
+// Get all categories
 export const getCategories = async (req, res) => {
   try {
-    const categories = await Item.distinct('category');
-    
+    const categories = await Item.distinct("category");
+
     res.json({
       success: true,
-      data: categories.filter(cat => cat)
+      data: categories.filter((cat) => cat),
     });
   } catch (error) {
-    console.error('Get categories error:', error);
+    console.error("Get categories error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching categories'
+      message: "Error fetching categories",
     });
   }
 };
 
+// Rent item
 export const rentItem = async (req, res) => {
   try {
     const { id } = req.params;
     const { quantity } = req.body;
 
-    const item = await Item.findById(id);
+    let item = await Item.findById(id);
 
     if (!item) {
       return res.status(404).json({
         success: false,
-        message: 'Item not found'
+        message: "Item not found",
       });
     }
 
-    await item.rentItem(quantity);
+    if (item.availableQuantity < quantity) {
+      return res.status(400).json({
+        success: false,
+        message: `Insufficient quantity. Available: ${item.availableQuantity}`,
+      });
+    }
+
+    item.availableQuantity -= quantity;
+    item.rentedQuantity += quantity;
+
+    // Auto-sync status
+    item.status = determineStatus(
+      item.totalQuantity,
+      item.availableQuantity,
+      item.rentedQuantity
+    );
+
+    if (!item.quantityHistory) {
+      item.quantityHistory = [];
+    }
+
+    item.quantityHistory.push({
+      date: new Date(),
+      action: "rented",
+      quantityChanged: quantity,
+      availableQuantity: item.availableQuantity,
+      rentedQuantity: item.rentedQuantity,
+      notes: `Rented ${quantity} unit(s)`,
+    });
+
+    await item.save();
 
     res.json({
       success: true,
-      message: 'Item rented successfully',
-      data: item
+      message: "Item rented successfully",
+      data: item,
     });
   } catch (error) {
-    console.error('Rent item error:', error);
+    console.error("Rent item error:", error);
     res.status(500).json({
       success: false,
-      message: error.message || 'Error renting item'
+      message: error.message || "Error renting item",
     });
   }
 };
 
+// Return item
 export const returnItem = async (req, res) => {
   try {
     const { id } = req.params;
     const { quantity } = req.body;
 
-    const item = await Item.findById(id);
+    let item = await Item.findById(id);
 
     if (!item) {
       return res.status(404).json({
         success: false,
-        message: 'Item not found'
+        message: "Item not found",
       });
     }
 
-    await item.returnItem(quantity);
+    if (item.rentedQuantity < quantity) {
+      return res.status(400).json({
+        success: false,
+        message: `Cannot return more than rented. Rented: ${item.rentedQuantity}`,
+      });
+    }
+
+    item.availableQuantity += quantity;
+    item.rentedQuantity -= quantity;
+
+    // Auto-sync status
+    item.status = determineStatus(
+      item.totalQuantity,
+      item.availableQuantity,
+      item.rentedQuantity
+    );
+
+    if (!item.quantityHistory) {
+      item.quantityHistory = [];
+    }
+
+    item.quantityHistory.push({
+      date: new Date(),
+      action: "returned",
+      quantityChanged: quantity,
+      availableQuantity: item.availableQuantity,
+      rentedQuantity: item.rentedQuantity,
+      notes: `Returned ${quantity} unit(s)`,
+    });
+
+    await item.save();
 
     res.json({
       success: true,
-      message: 'Item returned successfully',
-      data: item
+      message: "Item returned successfully",
+      data: item,
     });
   } catch (error) {
-    console.error('Return item error:', error);
+    console.error("Return item error:", error);
     res.status(500).json({
       success: false,
-      message: error.message || 'Error returning item'
+      message: error.message || "Error returning item",
     });
   }
 };
 
+// Get inventory stats
 export const getInventoryStats = async (req, res) => {
   try {
     const stats = await Item.aggregate([
+      { $match: { userId: req.userId} },
       {
         $group: {
           _id: null,
           totalItems: { $sum: 1 },
-          totalQuantity: { $sum: '$totalQuantity' },
-          availableQuantity: { $sum: '$availableQuantity' },
-          rentedQuantity: { $sum: '$rentedQuantity' },
-          totalValue: { $sum: { $multiply: ['$totalQuantity', '$price'] } }
-        }
-      }
+          totalQuantity: { $sum: "$totalQuantity" },
+          availableQuantity: { $sum: "$availableQuantity" },
+          rentedQuantity: { $sum: "$rentedQuantity" },
+          totalValue: { $sum: { $multiply: ["$totalQuantity", "$price"] } },
+        },
+      },
     ]);
 
     res.json({
@@ -388,19 +466,19 @@ export const getInventoryStats = async (req, res) => {
         totalQuantity: 0,
         availableQuantity: 0,
         rentedQuantity: 0,
-        totalValue: 0
-      }
+        totalValue: 0,
+      },
     });
   } catch (error) {
-    console.error('Get inventory stats error:', error);
+    console.error("Get inventory stats error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching inventory statistics'
+      message: "Error fetching inventory statistics",
     });
   }
 };
 
-// ✅ NEW: Bulk rent items (called when creating booking/customer)
+// Bulk rent items
 export const bulkRentItems = async (req, res) => {
   try {
     const { items } = req.body;
@@ -408,7 +486,7 @@ export const bulkRentItems = async (req, res) => {
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'Items array is required'
+        message: "Items array is required",
       });
     }
 
@@ -417,12 +495,16 @@ export const bulkRentItems = async (req, res) => {
 
     for (const item of items) {
       try {
-        const itemDoc = await Item.findById(item.itemId);
-        
+        // const itemDoc = await Item.findById(item.itemId);
+        const itemDoc = await Item.findOne({
+          _id: item.itemId,
+          userId: req.userId
+        });
+
         if (!itemDoc) {
           errors.push({
             itemId: item.itemId,
-            error: 'Item not found'
+            error: "Item not found",
           });
           continue;
         }
@@ -431,21 +513,20 @@ export const bulkRentItems = async (req, res) => {
           errors.push({
             itemId: item.itemId,
             itemName: itemDoc.name,
-            error: `Insufficient quantity. Available: ${itemDoc.availableQuantity}, Requested: ${item.quantity}`
+            error: `Insufficient quantity. Available: ${itemDoc.availableQuantity}`,
           });
           continue;
         }
 
-        // Update quantities
         itemDoc.availableQuantity -= item.quantity;
         itemDoc.rentedQuantity += item.quantity;
-        
-        // Update status automatically
-        if (itemDoc.availableQuantity === 0) {
-          itemDoc.status = 'NotAvailable';
-        } else if (itemDoc.rentedQuantity > 0) {
-          itemDoc.status = 'InUse';
-        }
+
+        // Auto-sync status
+        itemDoc.status = determineStatus(
+          itemDoc.totalQuantity,
+          itemDoc.availableQuantity,
+          itemDoc.rentedQuantity
+        );
 
         await itemDoc.save();
 
@@ -454,35 +535,36 @@ export const bulkRentItems = async (req, res) => {
           itemName: itemDoc.name,
           quantityRented: item.quantity,
           availableNow: itemDoc.availableQuantity,
-          rentedNow: itemDoc.rentedQuantity
+          rentedNow: itemDoc.rentedQuantity,
         });
       } catch (err) {
         errors.push({
           itemId: item.itemId,
-          error: err.message
+          error: err.message,
         });
       }
     }
 
     res.json({
       success: errors.length === 0,
-      message: `${results.length} items rented successfully${errors.length > 0 ? `, ${errors.length} failed` : ''}`,
+      message: `${results.length} items rented${
+        errors.length > 0 ? `, ${errors.length} failed` : ""
+      }`,
       data: {
         rented: results,
-        failed: errors
-      }
+        failed: errors,
+      },
     });
   } catch (error) {
-    console.error('Bulk rent items error:', error);
+    console.error("Bulk rent items error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error renting items',
-      error: error.message
+      message: "Error renting items",
     });
   }
 };
 
-// ✅ NEW: Bulk return items (called when customer status = Completed)
+// Bulk return items
 export const bulkReturnItems = async (req, res) => {
   try {
     const { items } = req.body;
@@ -490,7 +572,7 @@ export const bulkReturnItems = async (req, res) => {
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'Items array is required'
+        message: "Items array is required",
       });
     }
 
@@ -500,11 +582,11 @@ export const bulkReturnItems = async (req, res) => {
     for (const item of items) {
       try {
         const itemDoc = await Item.findById(item.itemId);
-        
+
         if (!itemDoc) {
           errors.push({
             itemId: item.itemId,
-            error: 'Item not found'
+            error: "Item not found",
           });
           continue;
         }
@@ -513,23 +595,20 @@ export const bulkReturnItems = async (req, res) => {
           errors.push({
             itemId: item.itemId,
             itemName: itemDoc.name,
-            error: `Cannot return more than rented. Rented: ${itemDoc.rentedQuantity}, Returning: ${item.quantity}`
+            error: `Cannot return more than rented. Rented: ${itemDoc.rentedQuantity}`,
           });
           continue;
         }
 
-        // Return quantities
         itemDoc.availableQuantity += item.quantity;
         itemDoc.rentedQuantity -= item.quantity;
-        
-        // Update status automatically
-        if (itemDoc.availableQuantity === 0) {
-          itemDoc.status = 'NotAvailable';
-        } else if (itemDoc.rentedQuantity === 0) {
-          itemDoc.status = 'Available';
-        } else {
-          itemDoc.status = 'InUse';
-        }
+
+        // Auto-sync status
+        itemDoc.status = determineStatus(
+          itemDoc.totalQuantity,
+          itemDoc.availableQuantity,
+          itemDoc.rentedQuantity
+        );
 
         await itemDoc.save();
 
@@ -538,35 +617,36 @@ export const bulkReturnItems = async (req, res) => {
           itemName: itemDoc.name,
           quantityReturned: item.quantity,
           availableNow: itemDoc.availableQuantity,
-          rentedNow: itemDoc.rentedQuantity
+          rentedNow: itemDoc.rentedQuantity,
         });
       } catch (err) {
         errors.push({
           itemId: item.itemId,
-          error: err.message
+          error: err.message,
         });
       }
     }
 
     res.json({
       success: errors.length === 0,
-      message: `${results.length} items returned successfully${errors.length > 0 ? `, ${errors.length} failed` : ''}`,
+      message: `${results.length} items returned${
+        errors.length > 0 ? `, ${errors.length} failed` : ""
+      }`,
       data: {
         returned: results,
-        failed: errors
-      }
+        failed: errors,
+      },
     });
   } catch (error) {
-    console.error('Bulk return items error:', error);
+    console.error("Bulk return items error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error returning items',
-      error: error.message
+      message: "Error returning items",
     });
   }
 };
 
-// ✅ NEW: Check item availability before adding to booking
+// Check availability
 export const checkAvailability = async (req, res) => {
   try {
     const { items } = req.body;
@@ -574,7 +654,7 @@ export const checkAvailability = async (req, res) => {
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'Items array is required'
+        message: "Items array is required",
       });
     }
 
@@ -584,12 +664,12 @@ export const checkAvailability = async (req, res) => {
     for (const item of items) {
       try {
         const itemDoc = await Item.findById(item.itemId);
-        
+
         if (!itemDoc) {
           availability.push({
             itemId: item.itemId,
             available: false,
-            reason: 'Item not found'
+            reason: "Item not found",
           });
           allAvailable = false;
           continue;
@@ -602,7 +682,7 @@ export const checkAvailability = async (req, res) => {
           requestedQuantity: item.quantity,
           availableQuantity: itemDoc.availableQuantity,
           available: isAvailable,
-          reason: isAvailable ? 'OK' : `Insufficient quantity. Available: ${itemDoc.availableQuantity}`
+          reason: isAvailable ? "OK" : `Insufficient quantity`,
         });
 
         if (!isAvailable) allAvailable = false;
@@ -610,7 +690,7 @@ export const checkAvailability = async (req, res) => {
         availability.push({
           itemId: item.itemId,
           available: false,
-          reason: err.message
+          reason: err.message,
         });
         allAvailable = false;
       }
@@ -618,18 +698,19 @@ export const checkAvailability = async (req, res) => {
 
     res.json({
       success: allAvailable,
-      message: allAvailable ? 'All items available' : 'Some items not available',
+      message: allAvailable
+        ? "All items available"
+        : "Some items not available",
       data: {
         allAvailable,
-        items: availability
-      }
+        items: availability,
+      },
     });
   } catch (error) {
-    console.error('Check availability error:', error);
+    console.error("Check availability error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error checking availability',
-      error: error.message
+      message: "Error checking availability",
     });
   }
 };
