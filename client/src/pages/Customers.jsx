@@ -66,6 +66,7 @@ export default function Customers() {
   const [customerToDelete, setCustomerToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const { token } = useAuthStore();
+  const [isDownloadingBill, setIsDownloadingBill] = useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["customers", { search, status: statusFilter }],
@@ -132,40 +133,101 @@ export default function Customers() {
   };
 
   // ✅ Download bill with selected language
-  const handleDownloadBill = () => {
+  // const handleDownloadBill = () => {
+  //   if (!selectedCustomerForBill || !selectedCustomerForBill._id) {
+  //     toast.error(t("common.deleteError"));
+  //     return;
+  //   }
+
+  //   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  //   const downloadUrl = `${apiUrl}/customers/${selectedCustomerForBill._id}/bill?language=${billLanguage}`;
+
+  //   fetch(downloadUrl, {
+  //     method: "GET",
+  //     credentials: true,
+  //     // headers: {
+  //     //   Authorization: `Bearer ${token}`,
+  //     //   // "Content-Type": "application/json",
+  //     // },
+  //   })
+  //     .then((response) => response.blob())
+  //     .then((blob) => {
+  //       const url = window.URL.createObjectURL(blob);
+  //       const a = document.createElement("a");
+  //       a.href = url;
+  //       const languageLabel = billLanguage === 'mr' ? 'Marathi' : 'English';
+  //       a.download = `Bill_${selectedCustomerForBill.name}_${billLanguage.toUpperCase()}_${new Date().getTime()}.pdf`;
+  //       document.body.appendChild(a);
+  //       a.click();
+  //       window.URL.revokeObjectURL(url);
+  //       document.body.removeChild(a);
+  //       toast.success(t("common.savingSuccess"));
+  //       setBillLanguageDialogOpen(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Download error:", error);
+  //       toast.error(t("common.deleteError"));
+  //     });
+  // };
+
+  const handleDownloadBill = async () => {
     if (!selectedCustomerForBill || !selectedCustomerForBill._id) {
       toast.error(t("common.deleteError"));
       return;
     }
 
-    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-    const downloadUrl = `${apiUrl}/customers/${selectedCustomerForBill._id}/bill?language=${billLanguage}`;
+    try {
+      setIsDownloadingBill(true);
+      const apiUrl =
+        import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const downloadUrl = `${apiUrl}/customers/${selectedCustomerForBill._id}/bill?language=${billLanguage}`;
 
-    fetch(downloadUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        const languageLabel = billLanguage === 'mr' ? 'Marathi' : 'English';
-        a.download = `Bill_${selectedCustomerForBill.name}_${billLanguage.toUpperCase()}_${new Date().getTime()}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-        toast.success(t("common.savingSuccess"));
-        setBillLanguageDialogOpen(false);
-      })
-      .catch((error) => {
-        console.error("Download error:", error);
-        toast.error(t("common.deleteError"));
+      const response = await fetch(downloadUrl, {
+        method: "GET",
+        credentials: "include",
+        // headers: {
+
+        // Authorization: `Bearer ${token}`, // ✅ keep auth
+        // ❌ DO NOT set Content-Type here
+        // },
       });
+
+      // ✅ VERY IMPORTANT
+      if (!response.ok) {
+        const text = await response.text();
+        console.error("Server error:", text);
+        throw new Error("Failed to download PDF");
+      }
+
+      const blob = await response.blob();
+
+      // ✅ Validate PDF
+      if (blob.type !== "application/pdf") {
+        console.error("Invalid file type:", blob.type);
+        throw new Error("Invalid PDF file");
+      }
+
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Bill_${
+        selectedCustomerForBill.name
+      }_${billLanguage.toUpperCase()}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      toast.success(t("common.savingSuccess"));
+      setBillLanguageDialogOpen(false);
+    } catch (error) {
+      console.error("Download error:", error);
+      toast.error(t("common.deleteError"));
+    } finally {
+      setIsDownloadingBill(false);
+    }
   };
 
   return (
@@ -194,11 +256,14 @@ export default function Customers() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10 focus:outline-none focus:ring-0"
-              style={{ outline: 'none', boxShadow: 'none' }}
+              style={{ outline: "none", boxShadow: "none" }}
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full md:w-48 focus:outline-none focus:ring-0" style={{ outline: 'none', boxShadow: 'none' }}>
+            <SelectTrigger
+              className="w-full md:w-48 focus:outline-none focus:ring-0"
+              style={{ outline: "none", boxShadow: "none" }}
+            >
               <Filter className="h-4 w-4 mr-2" />
               <SelectValue placeholder={t("customer.filterByStatus")} />
             </SelectTrigger>
@@ -257,7 +322,8 @@ export default function Customers() {
                       )}
                     </TableCell>
                     <TableCell>
-                      {t("common.rs")}{customer.totalAmount.toLocaleString("en-IN")}
+                      {t("common.rs")}
+                      {customer.totalAmount.toLocaleString("en-IN")}
                     </TableCell>
                     <TableCell>
                       <span
@@ -267,7 +333,8 @@ export default function Customers() {
                             : "text-green-600"
                         }
                       >
-                        {t("common.rs")}{customer.remainingAmount.toLocaleString("en-IN")}
+                        {t("common.rs")}
+                        {customer.remainingAmount.toLocaleString("en-IN")}
                       </span>
                     </TableCell>
                     <TableCell>{getStatusBadge(customer.status)}</TableCell>
@@ -326,7 +393,10 @@ export default function Customers() {
       </Dialog>
 
       {/* Bill Language Selection Dialog */}
-      <Dialog open={billLanguageDialogOpen} onOpenChange={setBillLanguageDialogOpen}>
+      <Dialog
+        open={billLanguageDialogOpen}
+        onOpenChange={setBillLanguageDialogOpen}
+      >
         <DialogContent className="max-w-sm">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
@@ -334,7 +404,7 @@ export default function Customers() {
               Select Bill Language / बिल भाषा निवडा
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-4 py-4">
             <p className="text-sm text-muted-foreground">
               Choose the language for the bill / बिलासाठी भाषा निवडा
@@ -344,21 +414,23 @@ export default function Customers() {
               {/* English Option */}
               <div
                 className={`p-4 border-2 rounded-lg cursor-pointer transition ${
-                  billLanguage === 'en'
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                  billLanguage === "en"
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-200 hover:border-gray-300"
                 }`}
-                onClick={() => setBillLanguage('en')}
+                onClick={() => setBillLanguage("en")}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center">
-                    {billLanguage === 'en' && (
+                    {billLanguage === "en" && (
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     )}
                   </div>
                   <div>
                     <p className="font-semibold text-gray-900">English</p>
-                    <p className="text-sm text-gray-600">Download bill in English</p>
+                    <p className="text-sm text-gray-600">
+                      Download bill in English
+                    </p>
                   </div>
                 </div>
               </div>
@@ -366,21 +438,25 @@ export default function Customers() {
               {/* Marathi Option */}
               <div
                 className={`p-4 border-2 rounded-lg cursor-pointer transition ${
-                  billLanguage === 'mr'
-                    ? 'border-orange-500 bg-orange-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                  billLanguage === "mr"
+                    ? "border-orange-500 bg-orange-50"
+                    : "border-gray-200 hover:border-gray-300"
                 }`}
-                onClick={() => setBillLanguage('mr')}
+                onClick={() => setBillLanguage("mr")}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full border-2 border-orange-500 flex items-center justify-center">
-                    {billLanguage === 'mr' && (
+                    {billLanguage === "mr" && (
                       <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                     )}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">मराठी (Marathi)</p>
-                    <p className="text-sm text-gray-600">बिल मराठीमध्ये डाउनलोड करा</p>
+                    <p className="font-semibold text-gray-900">
+                      मराठी (Marathi)
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      बिल मराठीमध्ये डाउनलोड करा
+                    </p>
                   </div>
                 </div>
               </div>
@@ -394,12 +470,18 @@ export default function Customers() {
               >
                 Cancel / रद्द करा
               </Button>
-              <Button
-                onClick={handleDownloadBill}
-                className="flex-1"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Download / डाउनलोड करा
+              <Button onClick={handleDownloadBill} className="flex-1">
+                {isDownloadingBill ? (
+                  <>
+                    <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                    Downloading...
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download / डाउनलोड करा
+                  </>
+                )}
               </Button>
             </div>
           </div>
@@ -414,29 +496,43 @@ export default function Customers() {
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
                 <AlertCircle className="h-6 w-6 text-red-600" />
               </div>
-              <AlertDialogTitle className="text-lg">{t("common.deleteConfirmation")}</AlertDialogTitle>
+              <AlertDialogTitle className="text-lg">
+                {t("common.deleteConfirmation")}
+              </AlertDialogTitle>
             </div>
             <AlertDialogDescription className="mt-4">
               <div className="space-y-4">
-                <p>{t("common.deleteWarning") || "This action cannot be undone. Please be certain."}</p>
-                
+                <p>
+                  {t("common.deleteWarning") ||
+                    "This action cannot be undone. Please be certain."}
+                </p>
+
                 {customerToDelete && (
                   <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
                     <div className="space-y-2">
                       <div>
-                        <p className="text-xs text-muted-foreground">{t("customer.name")}</p>
-                        <p className="font-semibold text-slate-900">{customerToDelete.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {t("customer.name")}
+                        </p>
+                        <p className="font-semibold text-slate-900">
+                          {customerToDelete.name}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground">{t("customer.phone")}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {t("customer.phone")}
+                        </p>
                         <p className="font-semibold text-slate-900">
                           {customerToDelete.phone}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground">{t("customer.totalAmount")}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {t("customer.totalAmount")}
+                        </p>
                         <p className="font-semibold text-slate-900">
-                          ₹{customerToDelete.totalAmount.toLocaleString("en-IN")}
+                          ₹
+                          {customerToDelete.totalAmount.toLocaleString("en-IN")}
                         </p>
                       </div>
                     </div>
@@ -446,16 +542,15 @@ export default function Customers() {
                 <div className="flex items-start gap-2 text-sm text-red-600 bg-red-50 p-3 rounded-lg">
                   <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <p>
-                    {t("common.deleteWarning2") || "Once deleted, this customer cannot be recovered."}
+                    {t("common.deleteWarning2") ||
+                      "Once deleted, this customer cannot be recovered."}
                   </p>
                 </div>
               </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2">
-            <AlertDialogCancel>
-              {t("common.cancel")}
-            </AlertDialogCancel>
+            <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
               disabled={isDeleting}
