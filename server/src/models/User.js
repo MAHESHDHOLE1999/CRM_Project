@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  phone: {
+    type: String,
+    default: '',
+    trim: true
+  },
   role: {
     type: String,
     default: 'user',
@@ -32,19 +37,19 @@ const userSchema = new mongoose.Schema({
   // ✅ Fields for forgot password flow
   resetOTP: {
     type: String,
-    select: false // Don't return OTP by default
+    // select: false // Don't return OTP by default
   },
   resetOTPExpiry: {
     type: Date,
-    select: false
+    // select: false
   },
   resetToken: {
     type: String,
-    select: false
+    // select: false
   },
   resetTokenExpiry: {
     type: Date,
-    select: false
+    // select: false
   },
   lastLogin: {
     type: Date,
@@ -55,7 +60,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // ✅ Index for faster queries
-// userSchema.index({ email: 1, username: 1 });
-// userSchema.index({ role: 1 });
+userSchema.index({ email: 1, username: 1 });
+userSchema.index({ role: 1 });
 
 export default mongoose.model('User', userSchema);

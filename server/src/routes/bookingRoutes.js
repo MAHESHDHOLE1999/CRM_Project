@@ -1,3 +1,4 @@
+// File: routes/bookingRoutes.js
 import express from 'express';
 import { 
   createBooking, 
@@ -9,6 +10,7 @@ import {
   cancelBooking,
   getBookingStats
 } from '../controllers/bookingController.js';
+import { generateBookingBill } from '../controllers/billController.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -23,5 +25,12 @@ router.put('/:id', updateBooking);
 router.delete('/:id', deleteBooking);
 router.post('/:id/confirm', confirmBooking);
 router.post('/:id/cancel', cancelBooking);
+
+// Bill generation routes
+router.get('/:id/bill/generate', generateBookingBill);
+router.get('/:id/bill/marathi', (req, res, next) => {
+  req.query.language = 'mr';
+  return generateBookingBill(req, res);
+});
 
 export default router;

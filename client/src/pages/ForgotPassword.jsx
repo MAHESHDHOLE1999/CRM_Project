@@ -49,7 +49,7 @@ export default function ForgotPassword() {
   const onEmailSubmit = async (data) => {
     try {
       setLoading(true);
-      await api.post('/auth/forgot-password', { email: data.email });
+      await api.post('/users/forgot-password', { email: data.email });
       setEmail(data.email);
       setStep('otp');
       setCountdown(300); // 5 minutes
@@ -76,10 +76,11 @@ export default function ForgotPassword() {
   const onOtpSubmit = async (data) => {
     try {
       setLoading(true);
-      const response = await api.post('/auth/verify-otp', {
+      const response = await api.post('/users/verify-otp', {
         email,
         otp: data.otp
       });
+      console.log(response);
       
       sessionStorage.setItem('resetToken', response.data.data.resetToken);
       setStep('password');
@@ -97,7 +98,7 @@ export default function ForgotPassword() {
       setLoading(true);
       const resetToken = sessionStorage.getItem('resetToken');
       
-      await api.post('/auth/reset-password', {
+      await api.post('/users/reset-password', {
         email,
         newPassword: data.password,
         resetToken
@@ -122,7 +123,7 @@ export default function ForgotPassword() {
   const handleResendOtp = async () => {
     try {
       setLoading(true);
-      await api.post('/auth/forgot-password', { email });
+      await api.post('/users/forgot-password', { email });
       setCountdown(300);
       toast.success('OTP resent to your email');
       

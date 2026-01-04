@@ -20,15 +20,15 @@ export const authService = {
   
   // Forgot password - Send OTP
   forgotPassword: (email) => 
-    api.post('/auth/forgot-password', { email }),
+    api.post('/users/forgot-password', { email }),
   
   // Verify OTP
   verifyOtp: (email, otp) => 
-    api.post('/auth/verify-otp', { email, otp }),
+    api.post('/users/verify-otp', { email, otp }),
   
   // Reset password
   resetPassword: (email, newPassword, resetToken) => 
-    api.post('/auth/reset-password', { email, newPassword, resetToken }),
+    api.post('/users/reset-password', { email, newPassword, resetToken }),
   
   // Change password (for logged-in users)
   changePassword: (oldPassword, newPassword) => 

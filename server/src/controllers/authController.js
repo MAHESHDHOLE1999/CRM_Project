@@ -225,6 +225,10 @@ export const login = async (req, res) => {
       { expiresIn: '7d' }
     );
 
+    // Update last login
+    user.lastLogin = new Date();
+    await user.save();
+
     res
       .cookie('token', token, cookieOptions)
       .json({
@@ -263,13 +267,36 @@ export const logout = (req, res) => {
     });
 };
 
-export const me = async (req,res)=>{
-  const user = await User.findById(req.userId).select('-password');
+export const me = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select('-password');
 
-  res.json({
-    success: true,
-    data: {
-      user
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
     }
-  });
+
+    res.json({
+      success: true,
+      data: {
+        user: {
+          _id: user._id,
+          username: user.username,
+          email: user.email,
+          phone: user.phone,
+          role: user.role,
+          isInactive: user.isInactive,
+          lastLogin: user.lastLogin
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Me error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching user'
+    });
+  }
 };

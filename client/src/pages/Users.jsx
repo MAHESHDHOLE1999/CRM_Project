@@ -9,13 +9,13 @@ import {
   Filter,
   Edit,
   Trash2,
-  Users as UsersIcon,
   Mail,
   Phone,
   AlertCircle,
-  CheckCircle,
   Eye,
-  EyeOff
+  EyeOff,
+  Copy,
+  Check
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -60,9 +60,9 @@ import { z } from 'zod';
 const userSchema = z.object({
   username: z.string().min(3, 'Username must be at least 3 characters'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().min(10, 'Phone number must be at least 10 digits').optional(),
-  password: z.string().min(6, 'Password must be at least 6 characters').optional(),
-  role: z.enum(['Admin', 'User', 'Manager']),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits').optional().or(z.literal('')),
+  password: z.string().min(6, 'Password must be at least 6 characters').optional().or(z.literal('')),
+  role: z.enum(['admin', 'user']),
 });
 
 export const userService = {
@@ -77,12 +77,16 @@ function UserForm({ user, onSuccess, onClose }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
+    reset
   } = useForm({
     resolver: zodResolver(userSchema),
     defaultValues: user
@@ -90,29 +94,41 @@ function UserForm({ user, onSuccess, onClose }) {
           username: user.username,
           email: user.email,
           phone: user.phone || '',
-          role: user.role || 'User',
+          password: '', // Don't show existing password
+          role: user.role || 'user',
         }
       : {
           username: '',
           email: '',
           phone: '',
           password: '',
-          role: 'User',
+          role: 'user',
         },
   });
 
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+      
+      const submitData = { ...data };
+      
+      // If editing and password is empty, don't send it
+      if (user && !data.password) {
+        delete submitData.password;
+      }
+      
+      // If creating and password is empty, show error
+      if (!user && !data.password) {
+        toast.error('Password is required for new users');
+        setLoading(false);
+        return;
+      }
+
       if (user) {
-        // Update existing user
-        const updateData = { ...data };
-        if (!data.password) delete updateData.password;
-        await userService.update(user._id, updateData);
+        await userService.update(user._id, submitData);
         toast.success('User updated successfully');
       } else {
-        // Create new user
-        await userService.create(data);
+        await userService.create(submitData);
         toast.success('User created successfully');
       }
       onSuccess();
@@ -124,8 +140,14 @@ function UserForm({ user, onSuccess, onClose }) {
     }
   };
 
+  const copyToClipboard = (text, field) => {
+    navigator.clipboard.writeText(text);
+    setCopyFeedback(field);
+    setTimeout(() => setCopyFeedback(false), 2000);
+  };
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-h-[80vh] overflow-y-auto">
       {/* Username */}
       <div>
         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
@@ -135,6 +157,7 @@ function UserForm({ user, onSuccess, onClose }) {
           {...register('username')}
           placeholder="john.doe"
           className={`border ${errors.username ? 'border-red-500' : 'border-gray-300'}`}
+          disabled={loading}
         />
         {errors.username && (
           <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
@@ -146,12 +169,32 @@ function UserForm({ user, onSuccess, onClose }) {
         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
           Email Address *
         </label>
-        <Input
-          type="email"
-          {...register('email')}
-          placeholder="john@example.com"
-          className={`border ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-        />
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <Input
+              type="email"
+              {...register('email')}
+              placeholder="john@example.com"
+              className={`border ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+              disabled={loading}
+            />
+          </div>
+          {user && (
+            <Button
+              type="button"
+              size="icon"
+              variant="outline"
+              onClick={() => copyToClipboard(user.email, 'email')}
+              title="Copy email"
+            >
+              {copyFeedback === 'email' ? (
+                <Check className="h-4 w-4 text-green-600" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </Button>
+          )}
+        </div>
         {errors.email && (
           <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
         )}
@@ -166,56 +209,63 @@ function UserForm({ user, onSuccess, onClose }) {
           {...register('phone')}
           placeholder="9876543210"
           className="border border-gray-300"
+          disabled={loading}
         />
         {errors.phone && (
           <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
         )}
       </div>
 
-      {/* Password - Only for new users */}
-      {!user && (
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-            Password *
-          </label>
-          <div className="relative">
-            <Input
-              type={showPassword ? 'text' : 'password'}
-              {...register('password')}
-              placeholder="Create a strong password"
-              className={`border pr-10 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-2.5"
-            >
-              {showPassword ? (
-                <EyeOff className="w-4 h-4 text-slate-400" />
-              ) : (
-                <Eye className="w-4 h-4 text-slate-400" />
-              )}
-            </button>
-          </div>
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-          )}
+      {/* Password */}
+      <div>
+        <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+          Password {!user && '*'}
+        </label>
+        <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+          {user ? 'Leave empty to keep existing password' : 'Required for new users'}
+        </p>
+        <div className="relative">
+          <Input
+            type={showPassword ? 'text' : 'password'}
+            {...register('password')}
+            placeholder={user ? 'Leave empty to keep existing password' : 'Create a strong password'}
+            className={`border pr-10 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+            disabled={loading}
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-2.5"
+            disabled={loading}
+          >
+            {showPassword ? (
+              <EyeOff className="w-4 h-4 text-slate-400" />
+            ) : (
+              <Eye className="w-4 h-4 text-slate-400" />
+            )}
+          </button>
         </div>
-      )}
+        {errors.password && (
+          <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+        )}
+      </div>
 
       {/* Role */}
       <div>
         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
           Role *
         </label>
-        <Select defaultValue={watch('role')} onValueChange={(value) => register('role').onChange({ target: { value } })}>
+        <Select 
+          defaultValue={watch('role')} 
+          onValueChange={(value) => setValue('role', value)}
+          disabled={loading}
+        >
           <SelectTrigger className="border border-gray-300">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="User">User</SelectItem>
-            <SelectItem value="Manager">Manager</SelectItem>
-            <SelectItem value="Admin">Admin</SelectItem>
+            <SelectItem value="user">User</SelectItem>
+            <SelectItem value="admin">Admin</SelectItem>
           </SelectContent>
         </Select>
         {errors.role && (
@@ -225,7 +275,7 @@ function UserForm({ user, onSuccess, onClose }) {
 
       {/* Submit Button */}
       <div className="flex justify-end gap-2 pt-4 border-t">
-        <Button variant="outline" onClick={onClose}>
+        <Button variant="outline" onClick={onClose} disabled={loading}>
           Cancel
         </Button>
         <Button onClick={handleSubmit(onSubmit)} disabled={loading}>
@@ -247,7 +297,7 @@ export default function Users() {
   const [userToDelete, setUserToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['users', { search, role: roleFilter }],
     queryFn: () => userService.getAll({ search, role: roleFilter }),
   });
@@ -256,22 +306,29 @@ export default function Users() {
     mutationFn: (id) => userService.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries(['users']);
-      toast.success(t('common.deleteSuccess'));
+      toast.success('User deleted successfully');
       setDeleteDialogOpen(false);
       setUserToDelete(null);
       setIsDeleting(false);
     },
     onError: () => {
-      toast.error(t('common.deleteError'));
+      toast.error('Failed to delete user');
       setIsDeleting(false);
     },
   });
 
   const users = data?.data?.data?.users || [];
+  console.log("Users Data ", users);
 
-  const handleEdit = (user) => {
-    setSelectedUser(user);
-    setDialogOpen(true);
+  const handleEdit = async (user) => {
+    try {
+      // Fetch full user data
+      const response = await userService.getById(user._id);
+      setSelectedUser(response.data.data.user);
+      setDialogOpen(true);
+    } catch (error) {
+      toast.error('Failed to load user details');
+    }
   };
 
   const handleDeleteClick = (user) => {
@@ -293,11 +350,10 @@ export default function Users() {
 
   const getRoleBadgeColor = (role) => {
     const colors = {
-      Admin: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
-      Manager: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-      User: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+      admin: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+      user: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
     };
-    return colors[role] || colors.User;
+    return colors[role] || colors.user;
   };
 
   return (
@@ -337,7 +393,7 @@ export default function Users() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-red-600">
-              {users.filter((u) => u.role === 'Admin').length}
+              {users.filter((u) => u.role === 'admin').length}
             </div>
           </CardContent>
         </Card>
@@ -375,9 +431,8 @@ export default function Users() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Roles</SelectItem>
-              <SelectItem value="Admin">Admin</SelectItem>
-              <SelectItem value="Manager">Manager</SelectItem>
-              <SelectItem value="User">User</SelectItem>
+              <SelectItem value="admin">Admin</SelectItem>
+              <SelectItem value="user">User</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -389,7 +444,7 @@ export default function Users() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
+                <TableHead>Username</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Phone</TableHead>
                 <TableHead>Role</TableHead>
@@ -419,7 +474,7 @@ export default function Users() {
                     <TableCell>{user.phone || '-'}</TableCell>
                     <TableCell>
                       <Badge className={getRoleBadgeColor(user.role)}>
-                        {user.role}
+                        {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -476,11 +531,19 @@ export default function Users() {
               {selectedUser ? 'Edit User' : 'Add New User'}
             </DialogTitle>
           </DialogHeader>
-          <UserForm
-            user={selectedUser}
-            onSuccess={() => queryClient.invalidateQueries(['users'])}
-            onClose={() => setDialogOpen(false)}
-          />
+          {dialogOpen && (
+            <UserForm
+              user={selectedUser}
+              onSuccess={() => {
+                queryClient.invalidateQueries(['users']);
+                setSelectedUser(null);
+              }}
+              onClose={() => {
+                setDialogOpen(false);
+                setSelectedUser(null);
+              }}
+            />
+          )}
         </DialogContent>
       </Dialog>
 
