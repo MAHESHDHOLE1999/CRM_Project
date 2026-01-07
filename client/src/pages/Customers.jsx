@@ -196,35 +196,60 @@ export default function Customers() {
       if (!response.ok) {
         const text = await response.text();
         console.error("Server error:", text);
-        throw new Error("Failed to download PDF");
+        let errorMessage = "Failed to download PDF";
+        try {
+          const errorData = JSON.parse(text);
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          // If not JSON, use the text as error message
+          if (text) errorMessage = text.substring(0, 100);
+        }
+        throw new Error(errorMessage);
       }
 
       const blob = await response.blob();
 
-      // ✅ Validate PDF
-      if (blob.type !== "application/pdf") {
-        console.error("Invalid file type:", blob.type);
-        throw new Error("Invalid PDF file");
+      // ✅ Validate PDF - check both content-type and size
+      if (blob.size === 0) {
+        console.error("Empty blob received");
+        throw new Error("Received empty file from server");
       }
 
-      const url = window.URL.createObjectURL(blob);
+      // Check if it's a PDF (some servers don't set content-type correctly)
+      const contentType = response.headers.get("content-type") || blob.type;
+      if (contentType && !contentType.includes("application/pdf") && !contentType.includes("application/octet-stream")) {
+        // If it's not a PDF, try to read as text to see the error
+        const text = await blob.text();
+        console.error("Invalid file type:", contentType, "Response:", text.substring(0, 200));
+        throw new Error("Server returned an error instead of PDF");
+      }
 
+      // Sanitize filename to remove invalid characters
+      const sanitizedName = (selectedCustomerForBill.name || "Customer")
+        .replace(/[^a-zA-Z0-9_-]/g, "_")
+        .substring(0, 50);
+      const fileName = `Bill_${sanitizedName}_${billLanguage.toUpperCase()}.pdf`;
+
+      const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `Bill_${
-        selectedCustomerForBill.name
-      }_${billLanguage.toUpperCase()}.pdf`;
+      a.download = fileName;
+      a.style.display = "none";
       document.body.appendChild(a);
       a.click();
 
-      a.remove();
-      window.URL.revokeObjectURL(url);
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 100);
 
       toast.success(t("common.savingSuccess"));
       setBillLanguageDialogOpen(false);
     } catch (error) {
       console.error("Download error:", error);
-      toast.error(t("common.deleteError"));
+      const errorMessage = error.message || t("common.deleteError") || "Failed to download bill";
+      toast.error(errorMessage);
     } finally {
       setIsDownloadingBill(false);
     }

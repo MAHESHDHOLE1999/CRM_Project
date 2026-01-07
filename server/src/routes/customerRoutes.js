@@ -14,8 +14,7 @@ import {
   getFitterReport
 } from '../controllers/customerController.js';
 import { authenticate } from '../middleware/auth.js';
-// import { generateBill } from '../controllers/billController.js';
-import { generateBookingBill } from '../controllers/billController.js';
+import { generateCustomerBill } from '../controllers/billController.js';
 
 const router = express.Router();
 
@@ -36,8 +35,7 @@ router.get('/enhanced-stats', getEnhancedDashboardStats);
 router.get('/analytics', getAnalytics);
 router.get('/financial-stats', getFinancialStats);
 router.get('/fitter-report', getFitterReport);
-// router.get('/:id/bill', generateBill);
-router.get('/:id/bill', generateBookingBill);
+router.get('/:id/bill', generateCustomerBill);
 router.get('/:id', getCustomerById);
 
 // ========================================
