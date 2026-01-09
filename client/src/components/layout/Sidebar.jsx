@@ -120,7 +120,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
   // Admin-only items
   const adminMenuItems = [
-    { path: '/users', icon: Settings, label: 'User Management' }
+    { path: '/users', icon: Settings, label: t('common.userManagement') }
   ];
 
   const allMenuItems = isAdmin ? [...menuItems, ...adminMenuItems] : menuItems;
@@ -185,7 +185,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
               {/* Admin label */}
               <p className="text-xs font-semibold text-muted-foreground px-4 mb-2 uppercase">
-                Administration
+                {t("common.administration")}
               </p>
 
               {/* Admin menu items */}

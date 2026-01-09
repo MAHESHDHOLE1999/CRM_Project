@@ -11,6 +11,7 @@ import itemRoutes from './routes/itemRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 import cookieParser from 'cookie-parser';
 import userRoutes from './routes/userRoutes.js';
+import requestLogger from './middleware/requestLogger.js';
 
 dotenv.config();
 
@@ -57,6 +58,7 @@ app.use('/api/', limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(requestLogger);
 
 // Routes
 app.use('/api/auth', authRoutes);

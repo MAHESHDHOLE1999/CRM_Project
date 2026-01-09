@@ -1,5 +1,6 @@
+// // File: backend/controllers/bookingBillController.js
 // import puppeteer from 'puppeteer';
-// import Customer from '../models/Customer.js';
+// import AdvancedBooking from '../models/AdvancedBooking.js';
 // import fs from 'fs';
 // import path from 'path';
 // import { fileURLToPath } from 'url';
@@ -9,12 +10,14 @@
 
 // const translations = {
 //   en: {
+//     billTitle: 'ADVANCE BOOKING INVOICE',
 //     invoiceDetails: 'Invoice Details',
-//     invoiceNumber: 'Invoice #',
-//     date: 'Date',
-//     dueDate: 'Due Date',
-//     billTo: 'Bill To',
+//     invoiceNumber: 'Booking #',
+//     date: 'Booking Date',
+//     dueDate: 'Event Date',
+//     billTo: 'Customer Details',
 //     phone: 'Phone',
+//     email: 'Email',
 //     address: 'Address',
 //     itemDescription: 'Item Description',
 //     qty: 'Qty',
@@ -22,22 +25,24 @@
 //     amount: 'Amount',
 //     sNo: 'S.No',
 //     subtotal: 'Subtotal',
-//     transport: 'Transport',
-//     maintenance: 'Maintenance',
-//     extraCharges: 'Extra Charges',
-//     totalDue: 'TOTAL DUE',
+//     depositAmount: 'Deposit Amount',
+//     totalDue: 'TOTAL AMOUNT',
 //     paymentInformation: 'Payment Information',
 //     depositReceived: 'Deposit Received',
 //     amountGiven: 'Amount Given',
 //     balanceDue: 'Balance Due',
 //     termsConditions: 'Terms & Conditions',
-//     term1: 'Items must be returned in original condition within agreed timeframe',
-//     term2: 'Lost or damaged items will be charged at full replacement cost',
-//     term3: 'Payment must be settled within 7 days of invoice date',
-//     term4: 'Any disputes must be reported immediately',
+//     term1: 'This is an advance booking confirmation.',
+//     term2: 'Items will be reserved until the booked date.',
+//     term3: 'Full payment must be settled before the event date.',
+//     term4: 'Cancellation must be done 7 days in advance.',
+//     bookingStatus: 'Booking Status',
+//     startTime: 'Start Time',
+//     endTime: 'End Time',
+//     notes: 'Notes',
 //     customerSignature: 'Customer Signature',
 //     authorizedSignature: 'Authorized Signature',
-//     thankYou: 'Thank you for your business!',
+//     thankYou: 'Thank you for booking with us!',
 //     generatedOn: 'Generated on',
 //     companyName: 'AJAY GADHI BHANDAR',
 //     tagline: 'Premium Event Rental Solutions',
@@ -45,15 +50,18 @@
 //     address2: 'District Nashik, Maharashtra',
 //     email: 'info@ajaygadhibhandar.com',
 //     phone1: '+91 9226472249',
-//     phone2: '+91 9405557668'
+//     phone2: '+91 9405557668',
+//     status: 'Status'
 //   },
 //   mr: {
+//     billTitle: 'अग्रिम बुकिंग बिल',
 //     invoiceDetails: 'बिल तपशील',
-//     invoiceNumber: 'बिल क्रमांक #',
-//     date: 'तारीख',
-//     dueDate: 'देय तारीख',
-//     billTo: 'चलन पत्ता',
+//     invoiceNumber: 'बुकिंग क्र. #',
+//     date: 'बुकिंग तारीख',
+//     dueDate: 'इव्हेंट तारीख',
+//     billTo: 'ग्राहक तपशील',
 //     phone: 'फोन',
+//     email: 'ईमेल',
 //     address: 'पता',
 //     itemDescription: 'वस्तूचे वर्णन',
 //     qty: 'प्रमाण',
@@ -61,22 +69,24 @@
 //     amount: 'रक्कम',
 //     sNo: 'क्र.',
 //     subtotal: 'उप-एकूण',
-//     transport: 'वाहतूक',
-//     maintenance: 'देखभाल',
-//     extraCharges: 'अतिरिक्त शुल्क',
-//     totalDue: 'एकूण देय',
+//     depositAmount: 'जमा रक्कम',
+//     totalDue: 'एकूण रक्कम',
 //     paymentInformation: 'भुगतान माहिती',
 //     depositReceived: 'जमा केलेली रक्कम',
 //     amountGiven: 'दिलेली रक्कम',
 //     balanceDue: 'शिल्लक देय',
 //     termsConditions: 'अटी व शर्ती',
-//     term1: 'वस्तू सहमत कालावधीत मूळ स्थितीत परत केल्या पाहिजेत',
-//     term2: 'हरवलेल्या किंवा खराब झालेल्या वस्तूंचा पूर्ण प्रतिस्थापन खर्च आकारला जाईल',
-//     term3: 'बिलाच्या तारखेपासून 7 दिवसांत भुगतान केले जाणे आवश्यक आहे',
-//     term4: 'कोणतेही विवाद तातडीने कळविणे आवश्यक आहे',
+//     term1: 'हे अग्रिम बुकिंग पुष्टीकरण आहे.',
+//     term2: 'वस्तू बुक केलेल्या तारखेपर्यंत राखीव असतील.',
+//     term3: 'इव्हेंटच्या तारखेपूर्वी संपूर्ण भुगतान करणे आवश्यक आहे.',
+//     term4: 'रद्दीकरण ७ दिवसांचा फेरबदल सूचना आवश्यक आहे.',
+//     bookingStatus: 'बुकिंग स्थिती',
+//     startTime: 'सुरुवाती वेळ',
+//     endTime: 'समाप्ती वेळ',
+//     notes: 'टिप्पणी',
 //     customerSignature: 'ग्राहकाची स्वाक्षरी',
 //     authorizedSignature: 'अधिकृत स्वाक्षरी',
-//     thankYou: 'आपल्या व्यवसायाबद्दल धन्यवाद!',
+//     thankYou: 'आमच्याकडे बुकिंग केल्याबद्दल धन्यवाद!',
 //     generatedOn: 'निर्माण केलेले',
 //     companyName: 'अजय घडी भंडार',
 //     tagline: 'प्रीमियम इव्हेंट किराया समाधान',
@@ -84,11 +94,12 @@
 //     address2: 'जिल्हा नाशिक, महाराष्ट्र',
 //     email: 'info@ajaygadhibhandar.com',
 //     phone1: '+९१ ९२२६४७२२४९',
-//     phone2: '+९१ ९४०५५५७६६८'
+//     phone2: '+९१ ९४०५५५७६६८',
+//     status: 'स्थिती'
 //   }
 // };
 
-// export const generateBill = async (req, res) => {
+// export const generateBookingBill = async (req, res) => {
 //   let browser;
 //   try {
 //     const { id } = req.params;
@@ -102,26 +113,32 @@
 //     }
 
 //     const t = translations[language];
-//     const customer = await Customer.findById(id).lean();
+//     const booking = await AdvancedBooking.findById(id).lean();
 
-//     if (!customer) {
+//     if (!booking) {
 //       return res.status(404).json({
 //         success: false,
-//         message: 'Customer not found'
+//         message: 'Booking not found'
 //       });
 //     }
 
-//     const billNo = customer._id.toString().slice(-6);
-//     const today = new Date();
-//     const dateStr = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
-    
-//     const dueDate = new Date();
-//     dueDate.setDate(dueDate.getDate() + 7);
-//     const dueDateStr = `${dueDate.getDate()}/${dueDate.getMonth() + 1}/${dueDate.getFullYear()}`;
+//     const billNo = booking._id.toString().slice(-6);
+//     const bookingDate = new Date(booking.bookingDate);
+//     const dateStr = `${bookingDate.getDate()}/${bookingDate.getMonth() + 1}/${bookingDate.getFullYear()}`;
+//     const dueDateStr = dateStr; // Event date is the booking date
 
-//     const itemsTotal = (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0);
-//     const totalAmount = itemsTotal + (customer.transportCost || 0) + (customer.maintenanceCharges || 0) + (customer.extraCharges || 0);
+//     // Parse items
+//     let items = [];
+//     try {
+//       items = typeof booking.items === 'string' ? JSON.parse(booking.items) : booking.items || [];
+//     } catch (e) {
+//       items = [];
+//     }
 
+//     const itemsTotal = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+//     const totalAmount = booking.totalAmount || itemsTotal;
+
+//     // Load logo
 //     let logoImg = '';
 //     const logoPath = path.join(__dirname, '../images/logo.png');
 //     if (fs.existsSync(logoPath)) {
@@ -135,7 +152,7 @@
 // <head>
 //   <meta charset="UTF-8">
 //   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//   <title>Invoice ${billNo}</title>
+//   <title>${t.billTitle} ${billNo}</title>
 //   <style>
 //     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
     
@@ -179,11 +196,13 @@
 //       margin-bottom: 10px;
 //     }
     
-//     .company-name {
-//       font-size: 22px;
+//     .bill-title {
+//       font-size: 18px;
 //       font-weight: bold;
 //       color: #8B4513;
-//       margin: 5px 0;
+//       margin: 8px 0;
+//       text-transform: uppercase;
+//       letter-spacing: 1px;
 //     }
     
 //     .company-tagline {
@@ -238,6 +257,33 @@
 //       font-size: 9px;
 //       margin: 2px 0;
 //       color: #555;
+//     }
+    
+//     .booking-details {
+//       display: flex;
+//       gap: 15px;
+//       margin-bottom: 15px;
+//       font-size: 9px;
+//     }
+    
+//     .detail-box {
+//       flex: 1;
+//       padding: 8px;
+//       background: #f0f8ff;
+//       border: 1px solid #87ceeb;
+//     }
+    
+//     .detail-label {
+//       color: #8B4513;
+//       font-weight: bold;
+//       font-size: 8px;
+//       text-transform: uppercase;
+//       margin-bottom: 2px;
+//     }
+    
+//     .detail-value {
+//       font-size: 10px;
+//       color: #333;
 //     }
     
 //     table {
@@ -393,6 +439,24 @@
 //     .empty-row {
 //       height: 15px;
 //     }
+    
+//     .status-badge {
+//       display: inline-block;
+//       padding: 2px 8px;
+//       background: #4CAF50;
+//       color: white;
+//       font-size: 8px;
+//       border-radius: 3px;
+//       font-weight: bold;
+//     }
+    
+//     .status-badge.pending {
+//       background: #FF9800;
+//     }
+    
+//     .status-badge.cancelled {
+//       background: #F44336;
+//     }
 //   </style>
 // </head>
 // <body>
@@ -400,6 +464,7 @@
 //     <div class="header">
 //       <div class="phone-header">📞 ${t.phone1}<br>${t.phone2}</div>
 //       <div class="logo-section">${logoImg}</div>
+//       <div class="bill-title">${t.billTitle}</div>
 //       <div class="company-tagline">${t.tagline}</div>
 //       <div class="company-address">${t.address1}<br>${t.address2}</div>
 //       <div class="contact-info">📧 ${t.email}</div>
@@ -415,9 +480,26 @@
       
 //       <div class="bill-to">
 //         <div class="section-title">${t.billTo}</div>
-//         <div class="info-row"><strong>${customer.name || 'N/A'}</strong></div>
-//         <div class="info-row"><strong>${t.phone}:</strong> ${customer.phone || 'N/A'}</div>
-//         <div class="info-row"><strong>${t.address}:</strong> ${customer.address || 'N/A'}</div>
+//         <div class="info-row"><strong>${booking.customerName || 'N/A'}</strong></div>
+//         <div class="info-row"><strong>${t.phone}:</strong> ${booking.phone || 'N/A'}</div>
+//         <div class="info-row"><strong>${t.email}:</strong> ${booking.email || 'N/A'}</div>
+//       </div>
+//     </div>
+    
+//     <div class="booking-details">
+//       <div class="detail-box">
+//         <div class="detail-label">${t.bookingStatus}</div>
+//         <div class="detail-value">
+//           <span class="status-badge ${booking.status?.toLowerCase()}">${booking.status || 'Pending'}</span>
+//         </div>
+//       </div>
+//       <div class="detail-box">
+//         <div class="detail-label">${t.startTime}</div>
+//         <div class="detail-value">${booking.startTime || 'N/A'}</div>
+//       </div>
+//       <div class="detail-box">
+//         <div class="detail-label">${t.endTime}</div>
+//         <div class="detail-value">${booking.endTime || 'N/A'}</div>
 //       </div>
 //     </div>
     
@@ -432,7 +514,7 @@
 //         </tr>
 //       </thead>
 //       <tbody>
-//         ${(customer.items || []).map((item, index) => {
+//         ${items.map((item, index) => {
 //           const amount = (item.quantity || 0) * (item.price || 0);
 //           return `<tr>
 //             <td class="text-center">${index + 1}</td>
@@ -453,17 +535,9 @@
 //           <span class="summary-label">${t.subtotal}:</span>
 //           <span>Rs. ${itemsTotal.toLocaleString('en-IN')}</span>
 //         </div>
-//         ${customer.transportCost && customer.transportCost > 0 ? `<div class="summary-row">
-//           <span class="summary-label">${t.transport}:</span>
-//           <span>Rs. ${customer.transportCost.toLocaleString('en-IN')}</span>
-//         </div>` : ''}
-//         ${customer.maintenanceCharges && customer.maintenanceCharges > 0 ? `<div class="summary-row">
-//           <span class="summary-label">${t.maintenance}:</span>
-//           <span>Rs. ${customer.maintenanceCharges.toLocaleString('en-IN')}</span>
-//         </div>` : ''}
-//         ${customer.extraCharges && customer.extraCharges > 0 ? `<div class="summary-row">
-//           <span class="summary-label">${t.extraCharges}:</span>
-//           <span>Rs. ${customer.extraCharges.toLocaleString('en-IN')}</span>
+//         ${booking.depositAmount && booking.depositAmount > 0 ? `<div class="summary-row">
+//           <span class="summary-label">${t.depositAmount}:</span>
+//           <span>Rs. ${booking.depositAmount.toLocaleString('en-IN')}</span>
 //         </div>` : ''}
 //         <div class="summary-row total">
 //           <span class="summary-label">${t.totalDue}:</span>
@@ -477,18 +551,22 @@
 //         <div class="section-title">${t.paymentInformation}</div>
 //         <div class="payment-row">
 //           <span>${t.depositReceived}:</span>
-//           <span>Rs. ${(customer.depositAmount || 0).toLocaleString('en-IN')}</span>
+//           <span>Rs. ${(booking.depositAmount || 0).toLocaleString('en-IN')}</span>
 //         </div>
 //         <div class="payment-row">
 //           <span>${t.amountGiven}:</span>
-//           <span>Rs. ${(customer.givenAmount || 0).toLocaleString('en-IN')}</span>
+//           <span>Rs. ${(booking.givenAmount || 0).toLocaleString('en-IN')}</span>
 //         </div>
 //         <div class="payment-row">
 //           <span>${t.balanceDue}:</span>
-//           <span class="balance-value">Rs. ${(customer.remainingAmount || 0).toLocaleString('en-IN')}</span>
+//           <span class="balance-value">Rs. ${(booking.remainingAmount || 0).toLocaleString('en-IN')}</span>
 //         </div>
 //       </div>
 //     </div>
+    
+//     ${booking.notes ? `<div style="background: #fffacd; padding: 10px; border: 1px solid #ddd; margin-bottom: 15px; font-size: 9px;">
+//       <strong>${t.notes}:</strong> ${booking.notes}
+//     </div>` : ''}
     
 //     <div class="terms-section">
 //       <h3>${t.termsConditions}</h3>
@@ -519,7 +597,7 @@
 // </body>
 // </html>`;
 
-//     console.log('📄 Starting PDF generation...');
+//     console.log('📄 Starting Booking PDF generation...');
 
 //     browser = await puppeteer.launch({
 //       headless: 'new',
@@ -543,9 +621,9 @@
 //       return res.status(500).json({ success: false, message: 'PDF generation failed' });
 //     }
 
-//     console.log(`✅ PDF generated: ${pdfBuffer.length} bytes`);
+//     console.log(`✅ Booking PDF generated: ${pdfBuffer.length} bytes`);
 
-//     const fileName = `Invoice_${customer.name}_${billNo}_${language.toUpperCase()}.pdf`;
+//     const fileName = `BookingBill_${booking.customerName}_${billNo}_${language.toUpperCase()}.pdf`;
     
 //     res.setHeader('Content-Type', 'application/pdf');
 //     res.setHeader('Content-Length', pdfBuffer.length);
@@ -560,12 +638,13 @@
 //   }
 // };
 
-// File: backend/controllers/bookingBillController.js
+// File: backend/controllers/billController.js
 import puppeteer from 'puppeteer';
 import AdvancedBooking from '../models/AdvancedBooking.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import logger from '../../utils/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1159,7 +1238,8 @@ export const generateBookingBill = async (req, res) => {
 </body>
 </html>`;
 
-    console.log('📄 Starting Booking PDF generation...');
+    // console.log('📄 Starting Booking PDF generation...');
+    logger.info('📄 Starting Booking PDF generation...');
 
     browser = await puppeteer.launch({
       headless: 'new',
@@ -1179,11 +1259,13 @@ export const generateBookingBill = async (req, res) => {
     await browser.close();
 
     if (!pdfBuffer || pdfBuffer.length === 0) {
-      console.error('❌ PDF buffer is empty');
+      // console.error('❌ PDF buffer is empty');
+      logger.error('❌ PDF buffer is empty');
       return res.status(500).json({ success: false, message: 'PDF generation failed' });
     }
 
-    console.log(`✅ Booking PDF generated: ${pdfBuffer.length} bytes`);
+    // console.log(`✅ Booking PDF generated: ${pdfBuffer.length} bytes`);
+    logger.info(`✅ Booking PDF generated: ${pdfBuffer.length} bytes`);
 
     const fileName = `BookingBill_${booking.customerName}_${billNo}_${language.toUpperCase()}.pdf`;
     
@@ -1194,7 +1276,8 @@ export const generateBookingBill = async (req, res) => {
     res.send(pdfBuffer);
 
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    // console.error('❌ Error:', error.message);
+    logger.error('❌ Error:', error.message);
     if (browser) await browser.close();
     res.status(500).json({ success: false, message: 'Error generating bill', error: error.message });
   }

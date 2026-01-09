@@ -77,7 +77,6 @@ function UserForm({ user, onSuccess, onClose }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [copyFeedback, setCopyFeedback] = useState(false);
 
   const {
@@ -94,7 +93,7 @@ function UserForm({ user, onSuccess, onClose }) {
           username: user.username,
           email: user.email,
           phone: user.phone || '',
-          password: '', // Don't show existing password
+          password: '',
           role: user.role || 'user',
         }
       : {
@@ -112,29 +111,27 @@ function UserForm({ user, onSuccess, onClose }) {
       
       const submitData = { ...data };
       
-      // If editing and password is empty, don't send it
       if (user && !data.password) {
         delete submitData.password;
       }
       
-      // If creating and password is empty, show error
       if (!user && !data.password) {
-        toast.error('Password is required for new users');
+        toast.error(t('users.passwordRequired'));
         setLoading(false);
         return;
       }
 
       if (user) {
         await userService.update(user._id, submitData);
-        toast.success('User updated successfully');
+        toast.success(t('users.userUpdated'));
       } else {
         await userService.create(submitData);
-        toast.success('User created successfully');
+        toast.success(t('users.userCreated'));
       }
       onSuccess();
       onClose();
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to save user');
+      toast.error(error.response?.data?.message || t('users.failedSave'));
     } finally {
       setLoading(false);
     }
@@ -151,7 +148,7 @@ function UserForm({ user, onSuccess, onClose }) {
       {/* Username */}
       <div>
         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-          Username *
+          {t('users.username')} *
         </label>
         <Input
           {...register('username')}
@@ -167,7 +164,7 @@ function UserForm({ user, onSuccess, onClose }) {
       {/* Email */}
       <div>
         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-          Email Address *
+          {t('users.email')} *
         </label>
         <div className="flex gap-2">
           <div className="flex-1">
@@ -185,7 +182,7 @@ function UserForm({ user, onSuccess, onClose }) {
               size="icon"
               variant="outline"
               onClick={() => copyToClipboard(user.email, 'email')}
-              title="Copy email"
+              title={t('users.copyEmail')}
             >
               {copyFeedback === 'email' ? (
                 <Check className="h-4 w-4 text-green-600" />
@@ -203,7 +200,7 @@ function UserForm({ user, onSuccess, onClose }) {
       {/* Phone */}
       <div>
         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-          Phone Number
+          {t('users.phone')}
         </label>
         <Input
           {...register('phone')}
@@ -219,16 +216,16 @@ function UserForm({ user, onSuccess, onClose }) {
       {/* Password */}
       <div>
         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-          Password {!user && '*'}
+          {t('users.password')} {!user && '*'}
         </label>
         <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
-          {user ? 'Leave empty to keep existing password' : 'Required for new users'}
+          {user ? t('users.leaveEmpty') : t('users.requiredNew')}
         </p>
         <div className="relative">
           <Input
             type={showPassword ? 'text' : 'password'}
             {...register('password')}
-            placeholder={user ? 'Leave empty to keep existing password' : 'Create a strong password'}
+            placeholder={user ? t('users.leaveEmpty') : t('users.createStrong')}
             className={`border pr-10 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
             disabled={loading}
           />
@@ -253,7 +250,7 @@ function UserForm({ user, onSuccess, onClose }) {
       {/* Role */}
       <div>
         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-          Role *
+          {t('users.role')} *
         </label>
         <Select 
           defaultValue={watch('role')} 
@@ -264,8 +261,8 @@ function UserForm({ user, onSuccess, onClose }) {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="user">User</SelectItem>
-            <SelectItem value="admin">Admin</SelectItem>
+            <SelectItem value="user">{t('users.filterUser')}</SelectItem>
+            <SelectItem value="admin">{t('users.filterAdmin')}</SelectItem>
           </SelectContent>
         </Select>
         {errors.role && (
@@ -276,10 +273,10 @@ function UserForm({ user, onSuccess, onClose }) {
       {/* Submit Button */}
       <div className="flex justify-end gap-2 pt-4 border-t">
         <Button variant="outline" onClick={onClose} disabled={loading}>
-          Cancel
+          {t('users.cancel')}
         </Button>
         <Button onClick={handleSubmit(onSubmit)} disabled={loading}>
-          {loading ? 'Saving...' : user ? 'Update User' : 'Create User'}
+          {loading ? t('users.saving') : user ? t('users.update') : t('users.create')}
         </Button>
       </div>
     </div>
@@ -306,28 +303,26 @@ export default function Users() {
     mutationFn: (id) => userService.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries(['users']);
-      toast.success('User deleted successfully');
+      toast.success(t('users.userDeleted'));
       setDeleteDialogOpen(false);
       setUserToDelete(null);
       setIsDeleting(false);
     },
     onError: () => {
-      toast.error('Failed to delete user');
+      toast.error(t('users.failedDelete'));
       setIsDeleting(false);
     },
   });
 
   const users = data?.data?.data?.users || [];
-  console.log("Users Data ", users);
 
   const handleEdit = async (user) => {
     try {
-      // Fetch full user data
       const response = await userService.getById(user._id);
       setSelectedUser(response.data.data.user);
       setDialogOpen(true);
     } catch (error) {
-      toast.error('Failed to load user details');
+      toast.error(t('users.failedLoad'));
     }
   };
 
@@ -361,14 +356,14 @@ export default function Users() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">User Management</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{t('users.title')}</h1>
           <p className="text-muted-foreground mt-2">
-            Manage organization users and their access permissions
+            {t('users.subtitle')}
           </p>
         </div>
         <Button onClick={handleAddNew}>
           <Plus className="h-4 w-4 mr-2" />
-          Add User
+          {t('users.addUser')}
         </Button>
       </div>
 
@@ -377,7 +372,7 @@ export default function Users() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Users
+              {t('users.totalUsers')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -388,7 +383,7 @@ export default function Users() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Admins
+              {t('users.admins')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -401,7 +396,7 @@ export default function Users() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Active Users
+              {t('users.activeUsers')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -418,7 +413,7 @@ export default function Users() {
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search users..."
+              placeholder={t('users.search')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10"
@@ -430,9 +425,9 @@ export default function Users() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Roles</SelectItem>
-              <SelectItem value="admin">Admin</SelectItem>
-              <SelectItem value="user">User</SelectItem>
+              <SelectItem value="all">{t('users.filterByRole')}</SelectItem>
+              <SelectItem value="admin">{t('users.filterAdmin')}</SelectItem>
+              <SelectItem value="user">{t('users.filterUser')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -444,26 +439,26 @@ export default function Users() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Username</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t('users.username')}</TableHead>
+                <TableHead>{t('users.email')}</TableHead>
+                <TableHead>{t('users.phone')}</TableHead>
+                <TableHead>{t('users.role')}</TableHead>
+                <TableHead>{t('users.status')}</TableHead>
+                <TableHead>{t('users.created')}</TableHead>
+                <TableHead>{t('users.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-8">
-                    Loading...
+                    {t('users.loading')}
                   </TableCell>
                 </TableRow>
               ) : users.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-8">
-                    No users found
+                    {t('users.noUsers')}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -474,7 +469,7 @@ export default function Users() {
                     <TableCell>{user.phone || '-'}</TableCell>
                     <TableCell>
                       <Badge className={getRoleBadgeColor(user.role)}>
-                        {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                        {user.role === 'admin' ? t('users.filterAdmin') : t('users.filterUser')}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -482,12 +477,12 @@ export default function Users() {
                         {user.isInactive ? (
                           <>
                             <div className="h-2 w-2 rounded-full bg-gray-400"></div>
-                            <span className="text-xs text-gray-600">Inactive</span>
+                            <span className="text-xs text-gray-600">{t('users.inactive')}</span>
                           </>
                         ) : (
                           <>
                             <div className="h-2 w-2 rounded-full bg-green-500"></div>
-                            <span className="text-xs text-green-600">Active</span>
+                            <span className="text-xs text-green-600">{t('users.active')}</span>
                           </>
                         )}
                       </div>
@@ -501,7 +496,7 @@ export default function Users() {
                           variant="ghost"
                           size="icon"
                           onClick={() => handleEdit(user)}
-                          title="Edit user"
+                          title={t('users.editUser')}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
@@ -509,7 +504,7 @@ export default function Users() {
                           variant="ghost"
                           size="icon"
                           onClick={() => handleDeleteClick(user)}
-                          title="Delete user"
+                          title={t('users.deleteUser')}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -528,7 +523,7 @@ export default function Users() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>
-              {selectedUser ? 'Edit User' : 'Add New User'}
+              {selectedUser ? t('users.editUser') : t('users.addNewUser')}
             </DialogTitle>
           </DialogHeader>
           {dialogOpen && (
@@ -555,20 +550,20 @@ export default function Users() {
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
                 <AlertCircle className="h-6 w-6 text-red-600" />
               </div>
-              <AlertDialogTitle className="text-lg">Delete User</AlertDialogTitle>
+              <AlertDialogTitle className="text-lg">{t('users.deleteUser')}</AlertDialogTitle>
             </div>
             <AlertDialogDescription className="mt-4">
               <div className="space-y-4">
-                <p>Are you sure you want to delete this user? This action cannot be undone.</p>
+                <p>{t('users.deleteConfirmation')}</p>
                 {userToDelete && (
                   <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
                     <div className="space-y-2">
                       <div>
-                        <p className="text-xs text-muted-foreground">Username</p>
+                        <p className="text-xs text-muted-foreground">{t('users.username')}</p>
                         <p className="font-semibold">{userToDelete.username}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground">Email</p>
+                        <p className="text-xs text-muted-foreground">{t('users.email')}</p>
                         <p className="font-semibold">{userToDelete.email}</p>
                       </div>
                     </div>
@@ -578,13 +573,13 @@ export default function Users() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2">
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('users.cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmDelete}
               disabled={isDeleting}
               className="bg-red-600 hover:bg-red-700"
             >
-              {isDeleting ? 'Deleting...' : 'Delete'}
+              {isDeleting ? t('users.deleting') : t('users.delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

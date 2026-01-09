@@ -5,6 +5,7 @@
 import AdvancedBooking from '../models/AdvancedBooking.js';
 import Customer from '../models/Customer.js';
 import Item from '../models/Item.js';
+import logger from '../../utils/logger.js';
 
 export const createBooking = async (req, res) => {
   try {
@@ -37,7 +38,8 @@ export const createBooking = async (req, res) => {
       data: booking
     });
   } catch (error) {
-    console.error('Create booking error:', error);
+    // console.error('Create booking error:', error);
+    logger.error('Create booking error:', error);
     res.status(500).json({
       success: false,
       message: 'Error creating booking',
@@ -105,7 +107,8 @@ export const getBookings = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Get bookings error:', error);
+    // console.error('Get bookings error:', error);
+    logger.error('Get bookings error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching bookings'
@@ -131,7 +134,8 @@ export const getBookingById = async (req, res) => {
       data: booking
     });
   } catch (error) {
-    console.error('Get booking error:', error);
+    // console.error('Get booking error:', error);
+    logger.error('Get booking error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching booking'
@@ -174,7 +178,8 @@ export const updateBooking = async (req, res) => {
       data: booking
     });
   } catch (error) {
-    console.error('Update booking error:', error);
+    // console.error('Update booking error:', error);
+    logger.error('Update booking error:', error);
     res.status(500).json({
       success: false,
       message: 'Error updating booking'
@@ -200,7 +205,8 @@ export const deleteBooking = async (req, res) => {
       message: 'Booking deleted successfully'
     });
   } catch (error) {
-    console.error('Delete booking error:', error);
+    // console.error('Delete booking error:', error);
+    logger.error('Delete booking error:', error);
     res.status(500).json({
       success: false,
       message: 'Error deleting booking'
@@ -289,7 +295,8 @@ export const confirmBooking = async (req, res) => {
       data: booking
     });
   } catch (error) {
-    console.error('Confirm booking error:', error);
+    // console.error('Confirm booking error:', error);
+    logger.error('Confirm booking error:', error);
     res.status(500).json({
       success: false,
       message: error.message || 'Error confirming booking'
@@ -320,7 +327,8 @@ export const cancelBooking = async (req, res) => {
       data: booking
     });
   } catch (error) {
-    console.error('Cancel booking error:', error);
+    // console.error('Cancel booking error:', error);
+    logger.error('Cancel booking error:', error);
     res.status(500).json({
       success: false,
       message: 'Error cancelling booking'
@@ -349,7 +357,8 @@ export const getBookingStats = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Booking stats error:', error);
+    // console.error('Booking stats error:', error);
+    logger.error('Booking stats error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching booking statistics'

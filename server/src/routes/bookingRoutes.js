@@ -1,3 +1,40 @@
+// // File: routes/bookingRoutes.js
+// import express from 'express';
+// import { 
+//   createBooking, 
+//   getBookings, 
+//   getBookingById,
+//   updateBooking, 
+//   deleteBooking,
+//   confirmBooking,
+//   cancelBooking,
+//   getBookingStats
+// } from '../controllers/bookingController.js';
+// import { generateBookingBill } from '../controllers/billController.js';
+// import { authenticate } from '../middleware/auth.js';
+
+// const router = express.Router();
+
+// router.use(authenticate);
+
+// router.post('/', createBooking);
+// router.get('/', getBookings);
+// router.get('/stats', getBookingStats);
+// router.get('/:id', getBookingById);
+// router.put('/:id', updateBooking);
+// router.delete('/:id', deleteBooking);
+// router.post('/:id/confirm', confirmBooking);
+// router.post('/:id/cancel', cancelBooking);
+
+// // Bill generation routes
+// router.get('/:id/bill/generate', generateBookingBill);
+// router.get('/:id/bill/marathi', (req, res, next) => {
+//   req.query.language = 'mr';
+//   return generateBookingBill(req, res);
+// });
+
+// export default router;
+
 // File: routes/bookingRoutes.js
 import express from 'express';
 import { 
@@ -17,20 +54,35 @@ const router = express.Router();
 
 router.use(authenticate);
 
+// ========================================
+// POST ROUTES
+// ========================================
 router.post('/', createBooking);
-router.get('/', getBookings);
-router.get('/stats', getBookingStats);
-router.get('/:id', getBookingById);
-router.put('/:id', updateBooking);
-router.delete('/:id', deleteBooking);
 router.post('/:id/confirm', confirmBooking);
 router.post('/:id/cancel', cancelBooking);
 
-// Bill generation routes
+// ========================================
+// GET SPECIFIC ROUTES (before /:id)
+// ========================================
+// ✅ BILL GENERATION ROUTES
 router.get('/:id/bill/generate', generateBookingBill);
-router.get('/:id/bill/marathi', (req, res, next) => {
-  req.query.language = 'mr';
-  return generateBookingBill(req, res);
-});
+
+router.get('/stats', getBookingStats);
+
+// ========================================
+// GET BY ID (after specific routes)
+// ========================================
+router.get('/:id', getBookingById);
+
+// ========================================
+// GET GENERIC ROUTES (LAST!)
+// ========================================
+router.get('/', getBookings);
+
+// ========================================
+// PUT/DELETE ROUTES
+// ========================================
+router.put('/:id', updateBooking);
+router.delete('/:id', deleteBooking);
 
 export default router;

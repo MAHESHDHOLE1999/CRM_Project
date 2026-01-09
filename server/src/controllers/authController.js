@@ -1,13 +1,14 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import logger from '../../utils/logger.js';
 
 const cookieOptions = {
   httpOnly: true,
   secure: true,        // REQUIRED for ngrok (https)
   sameSite: 'none',    // REQUIRED for cross-origin
   // maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-  expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+  expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
 };
 
 
@@ -122,7 +123,8 @@ export const register = async (req, res) => {
       });
 
   } catch (error) {
-    console.error('Register error:', error);
+    // console.error('Register error:', error);
+    logger.error('Register error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error during registration'
@@ -245,7 +247,8 @@ export const login = async (req, res) => {
       });
 
   } catch (error) {
-    console.error('Login error:', error);
+    // console.error('Login error:', error);
+    logger.error('Login error:', error);
     res.status(500).json({
       success: false,
       message: 'Server error during login'
@@ -293,7 +296,8 @@ export const me = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Me error:', error);
+    // console.error('Me error:', error);
+    logger.error('Me error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching user'

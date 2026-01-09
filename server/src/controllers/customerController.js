@@ -1512,66 +1512,279 @@
 //   console.log(`✅ Items returned successfully (${reason})`);
 // }
 
+
+// //Version 2
 import Customer from '../models/Customer.js';
 import Item from '../models/Item.js';
+import logger from '../../utils/logger.js';
 
 // =====================================================
 // CREATE CUSTOMER - RENT ITEMS
 // =====================================================
+// export const createCustomer = async (req, res) => {
+//   try {
+//     const customerData = req.body;
+//     const items = customerData.items || [];
+
+//     console.log('🔵 CREATE CUSTOMER - Starting');
+//     console.log('📦 Items to rent:', items);
+
+//     // ✅ Check availability before creating customer
+//     const availabilityCheck = await checkItemsAvailability(items);
+//     if (!availabilityCheck.allAvailable) {
+//       console.error('❌ Items not available:', availabilityCheck.unavailable);
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Some items are not available in requested quantity',
+//         unavailableItems: availabilityCheck.unavailable
+//       });
+//     }
+
+//     const remainingAmount = 
+//       customerData.totalAmount - (customerData.givenAmount || 0);
+
+//     // ✅ Initialize rental history
+//     const initialHistory = {
+//       action: 'created',
+//       itemsUsed: items || [],
+//       totalQuantityUsed: (items || []).reduce((sum, item) => sum + item.quantity, 0),
+//       totalValueUsed: (items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+//       status: 'Active',
+//       notes: 'Customer created'
+//     };
+
+//     const customer = await Customer.create({
+//       ...customerData,
+//       userId: req.userId,
+//       remainingAmount,
+//       rentalHistory: [initialHistory]
+//     });
+
+//     console.log('✅ Customer created:', customer._id);
+
+//     // ✅ RENT the items - Deduct from available
+//     console.log('🔄 Renting items...');
+//     await rentItems(items);
+
+//     console.log('✅ Customer created and items rented successfully');
+
+//     res.status(201).json({
+//       success: true,
+//       message: 'Customer created successfully and items rented',
+//       data: customer
+//     });
+//   } catch (error) {
+//     console.error('❌ Create customer error:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error creating customer',
+//       error: error.message
+//     });
+//   }
+// };
+
+//Version 2
+// export const createCustomer = async (req, res) => {
+//   try {
+//     const customerData = req.body;
+//     const items = customerData.items || [];
+//     const itemsCheckoutData = customerData.itemsCheckoutData || {};
+
+//     console.log('🔵 CREATE CUSTOMER - Starting');
+//     console.log('📦 Items to rent:', items);
+//     console.log('⏰ Per-item checkout data:', itemsCheckoutData);
+
+//     if (!items || items.length === 0) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'At least one item is required'
+//       });
+//     }
+
+//     // ✅ Check availability
+//     const availabilityCheck = await checkItemsAvailability(items);
+//     if (!availabilityCheck.allAvailable) {
+//       return res.status(400).json({
+//         success: false,
+//         message: 'Some items are not available',
+//         unavailableItems: availabilityCheck.unavailable
+//       });
+//     }
+
+//     // ✅ Calculate totals
+//     const itemsCost = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+//     const transportCost = parseFloat(customerData.transportCost) || 0;
+//     const maintenanceCharges = parseFloat(customerData.maintenanceCharges) || 0;
+    
+//     // ✅ Calculate total extra charges from itemsCheckoutData
+//     let totalExtraCharges = 0;
+//     if (itemsCheckoutData && Object.keys(itemsCheckoutData).length > 0) {
+//       Object.values(itemsCheckoutData).forEach(item => {
+//         totalExtraCharges += parseFloat(item.extraCharges) || 0;
+//       });
+//     }
+
+//     const totalAmount = itemsCost + transportCost + maintenanceCharges + totalExtraCharges;
+//     const givenAmount = parseFloat(customerData.givenAmount) || 0;
+//     const remainingAmount = totalAmount - givenAmount;
+
+//     console.log('✅ Calculations:');
+//     console.log('   Items: ₹' + itemsCost);
+//     console.log('   Extra Charges: ₹' + totalExtraCharges);
+//     console.log('   Total: ₹' + totalAmount);
+
+//     const initialHistory = {
+//       action: 'created',
+//       itemsUsed: items,
+//       totalQuantityUsed: items.reduce((sum, item) => sum + item.quantity, 0),
+//       totalValueUsed: itemsCost,
+//       status: 'Active',
+//       itemsCheckoutData: itemsCheckoutData,
+//       totalExtraCharges: totalExtraCharges,
+//       notes: 'Customer created with per-item checkout'
+//     };
+
+//     const newCustomer = new Customer({
+//       userId: req.userId,
+//       name: customerData.name,
+//       phone: customerData.phone,
+//       address: customerData.address || '',
+//       checkInDate: new Date(customerData.checkInDate),
+//       checkInTime: customerData.checkInTime || '10:00',
+//       hourlyRate: parseFloat(customerData.hourlyRate) || 0,
+//       items: items,
+//       totalAmount: totalAmount,
+//       depositAmount: parseFloat(customerData.depositAmount) || 0,
+//       givenAmount: givenAmount,
+//       remainingAmount: remainingAmount,
+//       transportRequired: customerData.transportRequired || false,
+//       transportCost: transportCost,
+//       transportLocation: customerData.transportLocation || '',
+//       maintenanceCharges: maintenanceCharges,
+//       status: customerData.status || 'Active',
+//       fitterName: customerData.fitterName || '',
+//       notes: customerData.notes || '',
+//       itemsCheckoutData: itemsCheckoutData,
+//       rentalHistory: [initialHistory]
+//     });
+
+//     const customer = await newCustomer.save();
+
+//     console.log('✅ Customer created:', customer._id);
+//     console.log('🔄 Renting items...');
+//     await rentItems(items);
+
+//     res.status(201).json({
+//       success: true,
+//       message: 'Customer created successfully',
+//       data: customer
+//     });
+//   } catch (error) {
+//     console.error('❌ Create customer error:', error.message);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error creating customer',
+//       error: error.message
+//     });
+//   }
+// };
+
 export const createCustomer = async (req, res) => {
   try {
     const customerData = req.body;
     const items = customerData.items || [];
+    const itemsCheckoutData = customerData.itemsCheckoutData || {};
 
-    console.log('🔵 CREATE CUSTOMER - Starting');
-    console.log('📦 Items to rent:', items);
+    logger.info('🔵 CREATE CUSTOMER - Starting');
+    logger.info('📦 Items to rent:', items);
+    logger.info('⏰ Per-item checkout data:', itemsCheckoutData);
 
-    // ✅ Check availability before creating customer
-    const availabilityCheck = await checkItemsAvailability(items);
-    if (!availabilityCheck.allAvailable) {
-      console.error('❌ Items not available:', availabilityCheck.unavailable);
+    if (!items || items.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'Some items are not available in requested quantity',
+        message: 'At least one item is required'
+      });
+    }
+
+    // ✅ Check availability
+    const availabilityCheck = await checkItemsAvailability(items);
+    if (!availabilityCheck.allAvailable) {
+      return res.status(400).json({
+        success: false,
+        message: 'Some items are not available',
         unavailableItems: availabilityCheck.unavailable
       });
     }
 
-    const remainingAmount = 
-      customerData.totalAmount - (customerData.givenAmount || 0);
+    // ✅ Calculate totals
+    const itemsCost = items.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+    const transportCost = parseFloat(customerData.transportCost) || 0;
+    const maintenanceCharges = parseFloat(customerData.maintenanceCharges) || 0;
+    
+    // ✅ Calculate total extra charges from itemsCheckoutData
+    let totalExtraCharges = 0;
+    if (itemsCheckoutData && Object.keys(itemsCheckoutData).length > 0) {
+      Object.values(itemsCheckoutData).forEach(item => {
+        totalExtraCharges += parseFloat(item.extraCharges) || 0;
+      });
+    }
 
-    // ✅ Initialize rental history
+    const totalAmount = itemsCost + transportCost + maintenanceCharges + totalExtraCharges;
+    const givenAmount = parseFloat(customerData.givenAmount) || 0;
+    const remainingAmount = totalAmount - givenAmount;
+
+    logger.info('✅ Calculations:');
+    logger.info('   Items: ₹' + itemsCost);
+    logger.info('   Extra Charges: ₹' + totalExtraCharges);
+    logger.info('   Total: ₹' + totalAmount);
+
     const initialHistory = {
       action: 'created',
-      itemsUsed: items || [],
-      totalQuantityUsed: (items || []).reduce((sum, item) => sum + item.quantity, 0),
-      totalValueUsed: (items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+      itemsUsed: items,
+      totalQuantityUsed: items.reduce((sum, item) => sum + item.quantity, 0),
+      totalValueUsed: itemsCost,
       status: 'Active',
-      notes: 'Customer created'
+      itemsExtraCharges: itemsCheckoutData,
+      totalExtraCharges: totalExtraCharges,
+      notes: 'Customer created with per-item checkout'
     };
 
-    const customer = await Customer.create({
-      ...customerData,
+    const newCustomer = new Customer({
       userId: req.userId,
-      remainingAmount,
+      name: customerData.name,
+      phone: customerData.phone,
+      address: customerData.address || '',
+      checkInDate: new Date(customerData.checkInDate),
+      checkInTime: customerData.checkInTime || '10:00',
+      items: items,
+      totalAmount: totalAmount,
+      depositAmount: parseFloat(customerData.depositAmount) || 0,
+      givenAmount: givenAmount,
+      remainingAmount: remainingAmount,
+      transportRequired: customerData.transportRequired || false,
+      transportCost: transportCost,
+      transportLocation: customerData.transportLocation || '',
+      maintenanceCharges: maintenanceCharges,
+      status: customerData.status || 'Active',
+      fitterName: customerData.fitterName || '',
+      notes: customerData.notes || '',
+      itemsCheckoutData: itemsCheckoutData, // ✅ IMPORTANT: Store checkout data
       rentalHistory: [initialHistory]
     });
 
-    console.log('✅ Customer created:', customer._id);
+    const customer = await newCustomer.save();
 
-    // ✅ RENT the items - Deduct from available
-    console.log('🔄 Renting items...');
+    logger.info('✅ Customer created:', customer._id);
+    logger.info('🔄 Renting items...');
     await rentItems(items);
-
-    console.log('✅ Customer created and items rented successfully');
 
     res.status(201).json({
       success: true,
-      message: 'Customer created successfully and items rented',
+      message: 'Customer created successfully',
       data: customer
     });
   } catch (error) {
-    console.error('❌ Create customer error:', error);
+    logger.error('❌ Create customer error:', error.message);
     res.status(500).json({
       success: false,
       message: 'Error creating customer',
@@ -1583,6 +1796,80 @@ export const createCustomer = async (req, res) => {
 // =====================================================
 // GET ALL CUSTOMERS
 // =====================================================
+//Version 2
+// export const getCustomers = async (req, res) => {
+//   try {
+//     const { 
+//       status, 
+//       search, 
+//       startDate, 
+//       endDate,
+//       fitterName,
+//       page = 1,
+//       limit = 50
+//     } = req.query;
+    
+//     const query = { userId: req.userId };
+    
+//     if (status && status !== 'all') {
+//       query.status = status;
+//     }
+    
+//     if (search) {
+//       query.$or = [
+//         { name: { $regex: search, $options: 'i' } },
+//         { phone: { $regex: search, $options: 'i' } },
+//         { fitterName: { $regex: search, $options: 'i' } }
+//       ];
+//     }
+    
+//     if (startDate || endDate) {
+//       query.registrationDate = {};
+//       if (startDate) {
+//         query.registrationDate.$gte = new Date(startDate);
+//       }
+//       if (endDate) {
+//         query.registrationDate.$lte = new Date(endDate);
+//       }
+//     }
+    
+//     if (fitterName) {
+//       query.fitterName = fitterName;
+//     }
+
+//     const skip = (Number(page) - 1) * Number(limit);
+
+//     const [customers, total] = await Promise.all([
+//       Customer.find(query)
+//         .sort({ registrationDate: -1 })
+//         .skip(skip)
+//         .limit(Number(limit))
+//         .lean(),
+//       Customer.countDocuments(query)
+//     ]);
+
+//     res.json({
+//       success: true,
+//       data: {
+//         customers,
+//         pagination: {
+//           total,
+//           page: Number(page),
+//           limit: Number(limit),
+//           totalPages: Math.ceil(total / Number(limit))
+//         }
+//       }
+//     });
+//   } catch (error) {
+//     console.error('❌ Get customers error:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error fetching customers',
+//       error: error.message
+//     });
+//   }
+// };
+
 export const getCustomers = async (req, res) => {
   try {
     const { 
@@ -1647,7 +1934,7 @@ export const getCustomers = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('❌ Get customers error:', error);
+    logger.error('❌ Get customers error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching customers',
@@ -1659,11 +1946,54 @@ export const getCustomers = async (req, res) => {
 // =====================================================
 // GET CUSTOMER BY ID
 // =====================================================
+// export const getCustomerById = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+    
+//     console.log('🔵 GET CUSTOMER BY ID:', id);
+
+//     const customer = await Customer.findById(id).lean();
+
+//     if (!customer) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'Customer not found'
+//       });
+//     }
+
+//     // ✅ Format dates properly
+//     if (customer.checkInDate) {
+//       customer.checkInDate = new Date(customer.checkInDate)
+//         .toISOString()
+//         .split('T')[0];
+//     }
+//     if (customer.checkOutDate) {
+//       customer.checkOutDate = new Date(customer.checkOutDate)
+//         .toISOString()
+//         .split('T')[0];
+//     }
+
+//     console.log('✅ Customer found:', customer.name);
+
+//     res.json({
+//       success: true,
+//       data: customer
+//     });
+//   } catch (error) {
+//     console.error('❌ Get customer by ID error:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error fetching customer',
+//       error: error.message
+//     });
+//   }
+// };
+
 export const getCustomerById = async (req, res) => {
   try {
     const { id } = req.params;
     
-    console.log('🔵 GET CUSTOMER BY ID:', id);
+    logger.debug('🔵 GET CUSTOMER BY ID:', id);
 
     const customer = await Customer.findById(id).lean();
 
@@ -1680,20 +2010,25 @@ export const getCustomerById = async (req, res) => {
         .toISOString()
         .split('T')[0];
     }
-    if (customer.checkOutDate) {
-      customer.checkOutDate = new Date(customer.checkOutDate)
-        .toISOString()
-        .split('T')[0];
+
+    // ✅ Convert itemsExtraCharges Map to object if needed
+    if (customer.itemsExtraCharges && customer.itemsExtraCharges instanceof Map) {
+      const chargesObj = {};
+      for (const [key, value] of customer.itemsExtraCharges) {
+        chargesObj[key] = value;
+      }
+      customer.itemsExtraCharges = chargesObj;
     }
 
-    console.log('✅ Customer found:', customer.name);
+    logger.info('✅ Customer found:', customer.name);
+    logger.info('Items extra charges:', customer.itemsExtraCharges);
 
     res.json({
       success: true,
       data: customer
     });
   } catch (error) {
-    console.error('❌ Get customer by ID error:', error);
+    logger.error('❌ Get customer by ID error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching customer',
@@ -1702,17 +2037,249 @@ export const getCustomerById = async (req, res) => {
   }
 };
 
+
 // =====================================================
 // UPDATE CUSTOMER - HANDLE ITEM RETURN
 // =====================================================
+// export const updateCustomer = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const updateData = req.body;
+
+//     console.log('🔵 UPDATE CUSTOMER - Starting');
+//     console.log('Customer ID:', id);
+//     console.log('Update Data:', updateData);
+
+//     const customer = await Customer.findById(id);
+
+//     if (!customer) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'Customer not found'
+//       });
+//     }
+
+//     const oldStatus = customer.status;
+//     const newStatus = updateData.status;
+
+//     console.log(`📊 Status Change: ${oldStatus} → ${newStatus}`);
+
+//     // ✅ HANDLE STATUS CHANGES - Return items
+//     if (newStatus === 'Completed' && oldStatus !== 'Completed') {
+//       console.log('🏁 COMPLETING booking - Returning items to inventory');
+      
+//       if (customer.items && customer.items.length > 0) {
+//         await returnItemsWithHistory(customer.items, 'Completed');
+//       }
+
+//       // ✅ Add to rental history
+//       if (!updateData.rentalHistory) {
+//         updateData.rentalHistory = customer.rentalHistory || [];
+//       }
+//       updateData.rentalHistory.push({
+//         date: new Date(),
+//         action: 'completed',
+//         itemsUsed: customer.items || [],
+//         totalQuantityUsed: (customer.items || []).reduce((sum, item) => sum + item.quantity, 0),
+//         totalValueUsed: (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+//         status: 'Completed',
+//         rentalDays: updateData.rentalDays || customer.rentalDays || 0,
+//         extraHours: updateData.extraHours || customer.extraHours || 0,
+//         extraCharges: updateData.extraCharges || customer.extraCharges || 0,
+//         notes: 'Customer status changed to Completed'
+//       });
+//     } 
+//     else if (newStatus === 'Cancelled' && oldStatus !== 'Cancelled') {
+//       console.log('❌ CANCELLING booking - Returning items to inventory');
+      
+//       if (customer.items && customer.items.length > 0) {
+//         await returnItemsWithHistory(customer.items, 'Cancelled');
+//       }
+
+//       // ✅ Add to rental history
+//       if (!updateData.rentalHistory) {
+//         updateData.rentalHistory = customer.rentalHistory || [];
+//       }
+//       updateData.rentalHistory.push({
+//         date: new Date(),
+//         action: 'cancelled',
+//         itemsUsed: customer.items || [],
+//         totalQuantityUsed: (customer.items || []).reduce((sum, item) => sum + item.quantity, 0),
+//         totalValueUsed: (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+//         status: 'Cancelled',
+//         notes: 'Customer status changed to Cancelled'
+//       });
+//     }
+
+//     // ✅ Calculate remaining amount
+//     if (updateData.totalAmount !== undefined || updateData.givenAmount !== undefined) {
+//       updateData.remainingAmount = 
+//         (updateData.totalAmount ?? customer.totalAmount) - 
+//         (updateData.givenAmount ?? customer.givenAmount);
+//     }
+
+//     const updatedCustomer = await Customer.findByIdAndUpdate(
+//       id,
+//       updateData,
+//       { new: true, runValidators: true }
+//     );
+
+//     console.log('✅ Customer updated successfully');
+//     console.log('Updated Status:', updatedCustomer.status);
+
+//     res.json({
+//       success: true,
+//       message: 'Customer updated successfully',
+//       data: updatedCustomer
+//     });
+//   } catch (error) {
+//     console.error('❌ Update customer error:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error updating customer',
+//       error: error.message
+//     });
+//   }
+// };
+
+//Version 2
+// export const updateCustomer = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const updateData = req.body;
+
+//     console.log('🔵 UPDATE CUSTOMER - Starting');
+//     console.log('Customer ID:', id);
+//     console.log('Update Data fields:', Object.keys(updateData));
+
+//     const customer = await Customer.findById(id);
+
+//     if (!customer) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'Customer not found'
+//       });
+//     }
+
+//     const oldStatus = customer.status;
+//     const newStatus = updateData.status;
+
+//     console.log(`📊 Status Change: ${oldStatus} → ${newStatus}`);
+
+//     // ✅ Calculate total extra charges from itemsExtraCharges
+//     let totalExtraCharges = 0;
+//     if (updateData.itemsExtraCharges) {
+//       if (typeof updateData.itemsExtraCharges === 'object') {
+//         totalExtraCharges = Object.values(updateData.itemsExtraCharges)
+//           .reduce((sum, charge) => sum + (parseFloat(charge) || 0), 0);
+//       }
+      
+//       console.log('💰 Per-item extra charges:', updateData.itemsExtraCharges);
+//       console.log('💰 Total extra charges:', totalExtraCharges);
+
+//       // ✅ Update extraCharges field to match total
+//       updateData.extraCharges = totalExtraCharges;
+//     }
+
+//     // ✅ Recalculate total amount if itemsExtraCharges changed
+//     if (updateData.itemsExtraCharges) {
+//       const itemsCost = (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0);
+//       const transportCost = updateData.transportCost !== undefined ? parseFloat(updateData.transportCost) : (customer.transportCost || 0);
+//       const maintenanceCharges = updateData.maintenanceCharges !== undefined ? parseFloat(updateData.maintenanceCharges) : (customer.maintenanceCharges || 0);
+      
+//       updateData.totalAmount = itemsCost + transportCost + maintenanceCharges + totalExtraCharges;
+//       console.log('✅ Total amount recalculated:', updateData.totalAmount);
+//     }
+
+//     // ✅ Calculate remaining amount
+//     if (updateData.totalAmount !== undefined || updateData.givenAmount !== undefined) {
+//       const totalAmount = updateData.totalAmount !== undefined ? updateData.totalAmount : customer.totalAmount;
+//       const givenAmount = updateData.givenAmount !== undefined ? updateData.givenAmount : customer.givenAmount;
+//       updateData.remainingAmount = totalAmount - givenAmount;
+//       console.log('✅ Remaining amount calculated:', updateData.remainingAmount);
+//     }
+
+//     // ✅ HANDLE STATUS CHANGES - Return items
+//     if (newStatus === 'Completed' && oldStatus !== 'Completed') {
+//       console.log('🏁 COMPLETING booking - Returning items to inventory');
+      
+//       if (customer.items && customer.items.length > 0) {
+//         await returnItemsWithHistory(customer.items, 'Completed');
+//       }
+
+//       // ✅ Add to rental history
+//       if (!updateData.rentalHistory) {
+//         updateData.rentalHistory = customer.rentalHistory || [];
+//       }
+//       updateData.rentalHistory.push({
+//         date: new Date(),
+//         action: 'completed',
+//         itemsUsed: customer.items || [],
+//         totalQuantityUsed: (customer.items || []).reduce((sum, item) => sum + item.quantity, 0),
+//         totalValueUsed: (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+//         status: 'Completed',
+//         itemsExtraCharges: updateData.itemsExtraCharges || customer.itemsExtraCharges || {},
+//         totalExtraCharges: totalExtraCharges || customer.extraCharges || 0,
+//         notes: 'Customer status changed to Completed'
+//       });
+//     } 
+//     else if (newStatus === 'Cancelled' && oldStatus !== 'Cancelled') {
+//       console.log('❌ CANCELLING booking - Returning items to inventory');
+      
+//       if (customer.items && customer.items.length > 0) {
+//         await returnItemsWithHistory(customer.items, 'Cancelled');
+//       }
+
+//       // ✅ Add to rental history
+//       if (!updateData.rentalHistory) {
+//         updateData.rentalHistory = customer.rentalHistory || [];
+//       }
+//       updateData.rentalHistory.push({
+//         date: new Date(),
+//         action: 'cancelled',
+//         itemsUsed: customer.items || [],
+//         totalQuantityUsed: (customer.items || []).reduce((sum, item) => sum + item.quantity, 0),
+//         totalValueUsed: (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+//         status: 'Cancelled',
+//         itemsExtraCharges: updateData.itemsExtraCharges || customer.itemsExtraCharges || {},
+//         totalExtraCharges: totalExtraCharges || customer.extraCharges || 0,
+//         notes: 'Customer status changed to Cancelled'
+//       });
+//     }
+
+//     const updatedCustomer = await Customer.findByIdAndUpdate(
+//       id,
+//       updateData,
+//       { new: true, runValidators: true }
+//     );
+
+//     console.log('✅ Customer updated successfully');
+//     console.log('Updated Total Amount:', updatedCustomer.totalAmount);
+//     console.log('Updated Extra Charges:', updatedCustomer.extraCharges);
+
+//     res.json({
+//       success: true,
+//       message: 'Customer updated successfully',
+//       data: updatedCustomer
+//     });
+//   } catch (error) {
+//     console.error('❌ Update customer error:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error updating customer',
+//       error: error.message
+//     });
+//   }
+// };
+
 export const updateCustomer = async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
 
-    console.log('🔵 UPDATE CUSTOMER - Starting');
-    console.log('Customer ID:', id);
-    console.log('Update Data:', updateData);
+    logger.info('🔵 UPDATE CUSTOMER - Starting');
+    logger.info('Customer ID:', id);
+    logger.info('Items Checkout Data:', updateData.itemsCheckoutData);
 
     const customer = await Customer.findById(id);
 
@@ -1726,17 +2293,49 @@ export const updateCustomer = async (req, res) => {
     const oldStatus = customer.status;
     const newStatus = updateData.status;
 
-    console.log(`📊 Status Change: ${oldStatus} → ${newStatus}`);
+    logger.info(`📊 Status Change: ${oldStatus} → ${newStatus}`);
 
-    // ✅ HANDLE STATUS CHANGES - Return items
+    // ✅ Calculate total extra charges from itemsCheckoutData
+    let totalExtraCharges = 0;
+    if (updateData.itemsCheckoutData) {
+      if (typeof updateData.itemsCheckoutData === 'object') {
+        totalExtraCharges = Object.values(updateData.itemsCheckoutData)
+          .reduce((sum, charge) => sum + (parseFloat(charge?.extraCharges) || 0), 0);
+      }
+
+      logger.info('💰 Per-item extra charges:', updateData.itemsCheckoutData);
+      logger.info('💰 Total extra charges:', totalExtraCharges);
+
+      // ✅ Update extraCharges field
+      updateData.extraCharges = totalExtraCharges;
+    }
+
+    // ✅ Recalculate total amount if itemsCheckoutData changed
+    if (updateData.itemsCheckoutData) {
+      const itemsCost = (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0);
+      const transportCost = updateData.transportCost !== undefined ? parseFloat(updateData.transportCost) : (customer.transportCost || 0);
+      const maintenanceCharges = updateData.maintenanceCharges !== undefined ? parseFloat(updateData.maintenanceCharges) : (customer.maintenanceCharges || 0);
+      
+      updateData.totalAmount = itemsCost + transportCost + maintenanceCharges + totalExtraCharges;
+      logger.info('✅ Total amount recalculated:', updateData.totalAmount);
+    }
+
+    // ✅ Calculate remaining amount
+    if (updateData.totalAmount !== undefined || updateData.givenAmount !== undefined) {
+      const totalAmount = updateData.totalAmount !== undefined ? updateData.totalAmount : customer.totalAmount;
+      const givenAmount = updateData.givenAmount !== undefined ? updateData.givenAmount : customer.givenAmount;
+      updateData.remainingAmount = totalAmount - givenAmount;
+      logger.info('✅ Remaining amount calculated:', updateData.remainingAmount);
+    }
+
+    // ✅ HANDLE STATUS CHANGES
     if (newStatus === 'Completed' && oldStatus !== 'Completed') {
-      console.log('🏁 COMPLETING booking - Returning items to inventory');
+      logger.info('🏁 COMPLETING booking - Returning items to inventory');
       
       if (customer.items && customer.items.length > 0) {
         await returnItemsWithHistory(customer.items, 'Completed');
       }
 
-      // ✅ Add to rental history
       if (!updateData.rentalHistory) {
         updateData.rentalHistory = customer.rentalHistory || [];
       }
@@ -1747,20 +2346,18 @@ export const updateCustomer = async (req, res) => {
         totalQuantityUsed: (customer.items || []).reduce((sum, item) => sum + item.quantity, 0),
         totalValueUsed: (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
         status: 'Completed',
-        rentalDays: updateData.rentalDays || customer.rentalDays || 0,
-        extraHours: updateData.extraHours || customer.extraHours || 0,
-        extraCharges: updateData.extraCharges || customer.extraCharges || 0,
+        itemsExtraCharges: updateData.itemsCheckoutData || customer.itemsCheckoutData || {},
+        totalExtraCharges: totalExtraCharges || customer.extraCharges || 0,
         notes: 'Customer status changed to Completed'
       });
     } 
     else if (newStatus === 'Cancelled' && oldStatus !== 'Cancelled') {
-      console.log('❌ CANCELLING booking - Returning items to inventory');
+      logger.info('❌ CANCELLING booking - Returning items to inventory');
       
       if (customer.items && customer.items.length > 0) {
         await returnItemsWithHistory(customer.items, 'Cancelled');
       }
 
-      // ✅ Add to rental history
       if (!updateData.rentalHistory) {
         updateData.rentalHistory = customer.rentalHistory || [];
       }
@@ -1771,15 +2368,10 @@ export const updateCustomer = async (req, res) => {
         totalQuantityUsed: (customer.items || []).reduce((sum, item) => sum + item.quantity, 0),
         totalValueUsed: (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
         status: 'Cancelled',
+        itemsExtraCharges: updateData.itemsCheckoutData || customer.itemsCheckoutData || {},
+        totalExtraCharges: totalExtraCharges || customer.extraCharges || 0,
         notes: 'Customer status changed to Cancelled'
       });
-    }
-
-    // ✅ Calculate remaining amount
-    if (updateData.totalAmount !== undefined || updateData.givenAmount !== undefined) {
-      updateData.remainingAmount = 
-        (updateData.totalAmount ?? customer.totalAmount) - 
-        (updateData.givenAmount ?? customer.givenAmount);
     }
 
     const updatedCustomer = await Customer.findByIdAndUpdate(
@@ -1788,8 +2380,9 @@ export const updateCustomer = async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    console.log('✅ Customer updated successfully');
-    console.log('Updated Status:', updatedCustomer.status);
+    logger.info('✅ Customer updated successfully');
+    logger.info('Updated Total Amount:', updatedCustomer.totalAmount);
+    logger.info('Updated Extra Charges:', updatedCustomer.extraCharges);
 
     res.json({
       success: true,
@@ -1797,7 +2390,7 @@ export const updateCustomer = async (req, res) => {
       data: updatedCustomer
     });
   } catch (error) {
-    console.error('❌ Update customer error:', error);
+    logger.error('❌ Update customer error:', error);
     res.status(500).json({
       success: false,
       message: 'Error updating customer',
@@ -1806,6 +2399,7 @@ export const updateCustomer = async (req, res) => {
   }
 };
 
+
 // =====================================================
 // DELETE CUSTOMER - RETURN ITEMS
 // =====================================================
@@ -1813,8 +2407,8 @@ export const deleteCustomer = async (req, res) => {
   try {
     const { id } = req.params;
     
-    console.log('🗑️ DELETE CUSTOMER - Starting');
-    console.log('Customer ID:', id);
+    logger.info('🗑️ DELETE CUSTOMER - Starting');
+    logger.info('Customer ID:', id);
 
     const customer = await Customer.findById(id);
 
@@ -1825,25 +2419,25 @@ export const deleteCustomer = async (req, res) => {
       });
     }
 
-    console.log('Deleting customer:', customer.name);
-    console.log('Current Status:', customer.status);
+    logger.info('Deleting customer:', customer.name);
+    logger.info('Current Status:', customer.status);
 
     // ✅ Return items if customer hasn't completed
     if (customer.status !== 'Completed' && customer.items && customer.items.length > 0) {
-      console.log('🔄 Returning rented items to inventory');
+      logger.info('🔄 Returning rented items to inventory');
       await returnItemsWithHistory(customer.items, 'Deleted');
     }
 
     await Customer.findByIdAndDelete(id);
 
-    console.log('✅ Customer deleted successfully');
+    logger.info('✅ Customer deleted successfully');
 
     res.json({
       success: true,
       message: 'Customer deleted successfully'
     });
   } catch (error) {
-    console.error('❌ Delete customer error:', error);
+    logger.error('❌ Delete customer error:', error);
     res.status(500).json({
       success: false,
       message: 'Error deleting customer',
@@ -1860,8 +2454,8 @@ export const checkoutCustomer = async (req, res) => {
     const { id } = req.params;
     const { checkOutDate, checkOutTime, hourlyRate } = req.body;
 
-    console.log('🔵 CHECKOUT CUSTOMER - Starting');
-    console.log('Customer ID:', id);
+    logger.info('🔵 CHECKOUT CUSTOMER - Starting');
+    logger.info('Customer ID:', id);
 
     const customer = await Customer.findById(id);
 
@@ -1872,7 +2466,7 @@ export const checkoutCustomer = async (req, res) => {
       });
     }
 
-    console.log('Checking out customer:', customer.name);
+    logger.info('Checking out customer:', customer.name);
 
     // ✅ Parse check-in date-time
     const [inHours, inMinutes] = customer.checkInTime.split(':');
@@ -1884,8 +2478,8 @@ export const checkoutCustomer = async (req, res) => {
     const checkOutDateTime = new Date(checkOutDate);
     checkOutDateTime.setHours(parseInt(outHours), parseInt(outMinutes), 0, 0);
 
-    console.log('Check-in:', checkInDateTime.toISOString());
-    console.log('Check-out:', checkOutDateTime.toISOString());
+    logger.info('Check-in:', checkInDateTime.toISOString());
+    logger.info('Check-out:', checkOutDateTime.toISOString());
 
     // ✅ Calculate total hours
     const totalMilliseconds = checkOutDateTime - checkInDateTime;
@@ -1902,7 +2496,7 @@ export const checkoutCustomer = async (req, res) => {
     const rentalDays = Math.floor(totalHours / 24);
     const extraHours = totalHours % 24;
 
-    console.log(`Rental Duration: ${rentalDays} days, ${extraHours} hours`);
+    logger.info(`Rental Duration: ${rentalDays} days, ${extraHours} hours`);
 
     // ✅ Calculate extra charges based on hourly rate
     let extraCharges = 0;
@@ -1910,7 +2504,7 @@ export const checkoutCustomer = async (req, res) => {
       extraCharges = Math.round(extraHours * hourlyRate);
     }
 
-    console.log('Extra Charges:', extraCharges);
+    logger.info('Extra Charges:', extraCharges);
 
     // ✅ Update customer with rental info
     customer.checkOutDate = new Date(checkOutDate);
@@ -1947,12 +2541,12 @@ export const checkoutCustomer = async (req, res) => {
     await customer.save();
 
     // ✅ RETURN ITEMS to available
-    console.log('🔄 Returning items to inventory...');
+    logger.info('🔄 Returning items to inventory...');
     if (customer.items && customer.items.length > 0) {
       await returnItemsWithHistory(customer.items, 'Completed');
     }
 
-    console.log('✅ Customer checked out and items returned');
+    logger.info('✅ Customer checked out and items returned');
 
     res.json({
       success: true,
@@ -1975,7 +2569,7 @@ export const checkoutCustomer = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('❌ Checkout customer error:', error);
+    logger.error('❌ Checkout customer error:', error);
     res.status(500).json({
       success: false,
       message: 'Error checking out customer',
@@ -1991,7 +2585,7 @@ export const calculateRentalDuration = async (req, res) => {
   try {
     const { checkInDate, checkInTime, checkOutDate, checkOutTime, hourlyRate } = req.body;
 
-    console.log('🔵 CALCULATE RENTAL DURATION');
+    logger.info('🔵 CALCULATE RENTAL DURATION');
 
     if (!checkInDate || !checkInTime || !checkOutDate || !checkOutTime) {
       return res.status(400).json({
@@ -2010,8 +2604,8 @@ export const calculateRentalDuration = async (req, res) => {
     const checkOut = new Date(checkOutDate);
     checkOut.setHours(parseInt(outHours), parseInt(outMinutes), 0, 0);
 
-    console.log('Check-in:', checkIn.toISOString());
-    console.log('Check-out:', checkOut.toISOString());
+    logger.info('Check-in:', checkIn.toISOString());
+    logger.info('Check-out:', checkOut.toISOString());
 
     // Calculate total hours
     const totalHours = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60));
@@ -2027,7 +2621,7 @@ export const calculateRentalDuration = async (req, res) => {
     const fullDays = Math.floor(totalHours / 24);
     const extraHours = totalHours % 24;
 
-    console.log(`Duration: ${fullDays} days, ${extraHours} hours`);
+    logger.info(`Duration: ${fullDays} days, ${extraHours} hours`);
 
     // Calculate extra charges
     let extraCharges = 0;
@@ -2035,7 +2629,7 @@ export const calculateRentalDuration = async (req, res) => {
       extraCharges = extraHours * hourlyRate;
     }
 
-    console.log('Extra Charges:', extraCharges);
+    logger.info('Extra Charges:', extraCharges);
 
     res.json({
       success: true,
@@ -2049,7 +2643,7 @@ export const calculateRentalDuration = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('❌ Calculate rental duration error:', error);
+    logger.error('❌ Calculate rental duration error:', error);
     res.status(500).json({
       success: false,
       message: 'Error calculating rental duration',
@@ -2107,7 +2701,7 @@ export const getDashboardStats = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('❌ Dashboard stats error:', error);
+    logger.error('❌ Dashboard stats error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching dashboard statistics',
@@ -2172,7 +2766,7 @@ export const getEnhancedDashboardStats = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('❌ Enhanced stats error:', error);
+    logger.error('❌ Enhanced stats error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching dashboard statistics',
@@ -2261,7 +2855,7 @@ export const getAnalytics = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('❌ Analytics error:', error);
+    logger.error('❌ Analytics error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching analytics',
@@ -2376,7 +2970,7 @@ export const getFinancialStats = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('❌ Financial stats error:', error);
+    logger.error('❌ Financial stats error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching financial statistics',
@@ -2429,7 +3023,7 @@ export const getFitterReport = async (req, res) => {
       data: { fitterReport }
     });
   } catch (error) {
-    console.error('❌ Fitter report error:', error);
+    logger.error('❌ Fitter report error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching fitter report',
@@ -2443,6 +3037,26 @@ export const getFitterReport = async (req, res) => {
 // =====================================================
 
 // ✅ Check items availability
+// async function checkItemsAvailability(items) {
+//   const unavailable = [];
+//   let allAvailable = true;
+
+//   for (const item of items) {
+//     const itemDoc = await Item.findById(item.itemId);
+//     if (!itemDoc || itemDoc.availableQuantity < item.quantity) {
+//       allAvailable = false;
+//       unavailable.push({
+//         itemId: item.itemId,
+//         itemName: item.itemName,
+//         requestedQuantity: item.quantity,
+//         availableQuantity: itemDoc?.availableQuantity || 0
+//       });
+//     }
+//   }
+
+//   return { allAvailable, unavailable };
+// }
+
 async function checkItemsAvailability(items) {
   const unavailable = [];
   let allAvailable = true;
@@ -2463,9 +3077,57 @@ async function checkItemsAvailability(items) {
   return { allAvailable, unavailable };
 }
 
+
 // ✅ RENT ITEMS - Deduct from available
+// async function rentItems(items) {
+//   console.log('🔄 RENT ITEMS - Deducting from available');
+  
+//   for (const item of items) {
+//     try {
+//       const itemDoc = await Item.findById(item.itemId);
+//       if (itemDoc) {
+//         const oldAvailable = itemDoc.availableQuantity;
+//         const oldRented = itemDoc.rentedQuantity;
+
+//         itemDoc.availableQuantity -= item.quantity;
+//         itemDoc.rentedQuantity += item.quantity;
+        
+//         console.log(`  📦 ${itemDoc.name}:`);
+//         console.log(`     Available: ${oldAvailable} → ${itemDoc.availableQuantity}`);
+//         console.log(`     Rented: ${oldRented} → ${itemDoc.rentedQuantity}`);
+
+//         // Auto-sync status
+//         if (itemDoc.availableQuantity === 0) {
+//           itemDoc.status = 'NotAvailable';
+//         } else if (itemDoc.rentedQuantity > 0) {
+//           itemDoc.status = 'InUse';
+//         }
+        
+//         // Add to history
+//         if (!itemDoc.quantityHistory) {
+//           itemDoc.quantityHistory = [];
+//         }
+//         itemDoc.quantityHistory.push({
+//           date: new Date(),
+//           action: 'rented',
+//           quantityChanged: item.quantity,
+//           availableQuantity: itemDoc.availableQuantity,
+//           rentedQuantity: itemDoc.rentedQuantity,
+//           notes: `Rented ${item.quantity} unit(s)`
+//         });
+        
+//         await itemDoc.save();
+//       }
+//     } catch (error) {
+//       console.error(`❌ Error renting item ${item.itemId}:`, error);
+//     }
+//   }
+  
+//   console.log('✅ Items rented successfully');
+// }
+
 async function rentItems(items) {
-  console.log('🔄 RENT ITEMS - Deducting from available');
+  logger.info('🔄 RENT ITEMS - Deducting from available');
   
   for (const item of items) {
     try {
@@ -2476,19 +3138,17 @@ async function rentItems(items) {
 
         itemDoc.availableQuantity -= item.quantity;
         itemDoc.rentedQuantity += item.quantity;
-        
-        console.log(`  📦 ${itemDoc.name}:`);
-        console.log(`     Available: ${oldAvailable} → ${itemDoc.availableQuantity}`);
-        console.log(`     Rented: ${oldRented} → ${itemDoc.rentedQuantity}`);
 
-        // Auto-sync status
+        logger.info(`  📦 ${itemDoc.name}:`);
+        logger.info(`     Available: ${oldAvailable} → ${itemDoc.availableQuantity}`);
+        logger.info(`     Rented: ${oldRented} → ${itemDoc.rentedQuantity}`);
+
         if (itemDoc.availableQuantity === 0) {
           itemDoc.status = 'NotAvailable';
         } else if (itemDoc.rentedQuantity > 0) {
           itemDoc.status = 'InUse';
         }
         
-        // Add to history
         if (!itemDoc.quantityHistory) {
           itemDoc.quantityHistory = [];
         }
@@ -2504,16 +3164,65 @@ async function rentItems(items) {
         await itemDoc.save();
       }
     } catch (error) {
-      console.error(`❌ Error renting item ${item.itemId}:`, error);
+      logger.error(`❌ Error renting item ${item.itemId}:`, error);
     }
   }
-  
-  console.log('✅ Items rented successfully');
+
+  logger.info('✅ Items rented successfully');
 }
 
 // ✅ RETURN ITEMS - Add back to available with history
+// async function returnItemsWithHistory(items, reason = 'Completed') {
+//   console.log(`🔄 RETURN ITEMS (${reason}) - Adding back to available`);
+  
+//   for (const item of items) {
+//     try {
+//       const itemDoc = await Item.findById(item.itemId || item._id);
+//       if (itemDoc) {
+//         const oldAvailable = itemDoc.availableQuantity;
+//         const oldRented = itemDoc.rentedQuantity;
+
+//         itemDoc.availableQuantity += item.quantity;
+//         itemDoc.rentedQuantity -= item.quantity;
+        
+//         console.log(`  📦 ${itemDoc.name}:`);
+//         console.log(`     Available: ${oldAvailable} → ${itemDoc.availableQuantity}`);
+//         console.log(`     Rented: ${oldRented} → ${itemDoc.rentedQuantity}`);
+
+//         // Auto-sync status
+//         if (itemDoc.availableQuantity === 0) {
+//           itemDoc.status = 'NotAvailable';
+//         } else if (itemDoc.rentedQuantity === 0) {
+//           itemDoc.status = 'Available';
+//         } else {
+//           itemDoc.status = 'InUse';
+//         }
+
+//         // Add to history
+//         if (!itemDoc.quantityHistory) {
+//           itemDoc.quantityHistory = [];
+//         }
+//         itemDoc.quantityHistory.push({
+//           date: new Date(),
+//           action: 'returned',
+//           quantityChanged: item.quantity,
+//           availableQuantity: itemDoc.availableQuantity,
+//           rentedQuantity: itemDoc.rentedQuantity,
+//           notes: `Returned ${item.quantity} unit(s) (Customer: ${reason})`
+//         });
+        
+//         await itemDoc.save();
+//       }
+//     } catch (error) {
+//       console.error(`❌ Error returning item ${item.itemId || item._id}:`, error);
+//     }
+//   }
+  
+//   console.log(`✅ Items returned successfully (${reason})`);
+// }
+
 async function returnItemsWithHistory(items, reason = 'Completed') {
-  console.log(`🔄 RETURN ITEMS (${reason}) - Adding back to available`);
+  logger.info(`🔄 RETURN ITEMS (${reason}) - Adding back to available`);
   
   for (const item of items) {
     try {
@@ -2525,11 +3234,10 @@ async function returnItemsWithHistory(items, reason = 'Completed') {
         itemDoc.availableQuantity += item.quantity;
         itemDoc.rentedQuantity -= item.quantity;
         
-        console.log(`  📦 ${itemDoc.name}:`);
-        console.log(`     Available: ${oldAvailable} → ${itemDoc.availableQuantity}`);
-        console.log(`     Rented: ${oldRented} → ${itemDoc.rentedQuantity}`);
+        logger.info(`  📦 ${itemDoc.name}:`);
+        logger.info(`     Available: ${oldAvailable} → ${itemDoc.availableQuantity}`);
+        logger.info(`     Rented: ${oldRented} → ${itemDoc.rentedQuantity}`);
 
-        // Auto-sync status
         if (itemDoc.availableQuantity === 0) {
           itemDoc.status = 'NotAvailable';
         } else if (itemDoc.rentedQuantity === 0) {
@@ -2538,7 +3246,6 @@ async function returnItemsWithHistory(items, reason = 'Completed') {
           itemDoc.status = 'InUse';
         }
 
-        // Add to history
         if (!itemDoc.quantityHistory) {
           itemDoc.quantityHistory = [];
         }
@@ -2554,9 +3261,31 @@ async function returnItemsWithHistory(items, reason = 'Completed') {
         await itemDoc.save();
       }
     } catch (error) {
-      console.error(`❌ Error returning item ${item.itemId || item._id}:`, error);
+      logger.error(`❌ Error returning item ${item.itemId || item._id}:`, error);
     }
   }
-  
-  console.log(`✅ Items returned successfully (${reason})`);
+
+  logger.info(`✅ Items returned successfully (${reason})`);
 }
+
+// ====================================================
+// HELPER FUNCTION: Log per-item extra charges breakdown
+// =====================================================
+function logExtraChargesBreakdown(itemsCheckoutData, hourlyRate) {
+  logger.info('📊 EXTRA CHARGES BREAKDOWN:');
+  let totalExtra = 0;
+  
+  Object.entries(itemsCheckoutData).forEach(([itemId, data]) => {
+    logger.info(`  Item ${itemId}:`);
+    logger.info(`    - Rental Days: ${data.rentalDays}`);
+    logger.info(`    - Extra Hours: ${data.extraHours}`);
+    logger.info(`    - Extra Charges: ₹${data.extraCharges}`);
+    totalExtra += data.extraCharges;
+  });
+
+  logger.info(`  TOTAL EXTRA CHARGES: ₹${totalExtra}`);
+}
+
+// File: backend/controllers/customerBillController.js
+// UPDATED: Display per-item extra charges on rental invoice
+
