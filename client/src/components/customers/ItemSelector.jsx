@@ -1,5 +1,10 @@
+// File: components/customers/ItemSelector.jsx
+// UPDATED: All numeric inputs changed to text inputs
+// No scroll-based number changes allowed
+
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { Plus, Trash2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +20,28 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { itemService } from "@/services/itemService";
 
+// ✅ Helper function to format number input - only allows numeric characters
+const formatNumberInput = (value) => {
+  if (value === "" || value === null) return "";
+  // Remove all non-numeric characters
+  return value.toString().replace(/[^0-9]/g, "");
+};
+
+// ✅ Helper function to format decimal input - allows numbers and decimal point
+const formatDecimalInput = (value) => {
+  if (value === "" || value === null) return "";
+  // Remove non-numeric characters except decimal point
+  const cleaned = value.toString().replace(/[^0-9.]/g, "");
+  // Ensure only one decimal point
+  const parts = cleaned.split(".");
+  if (parts.length > 2) {
+    return parts[0] + "." + parts[1];
+  }
+  return cleaned;
+};
+
 export default function ItemSelector({ selectedItems = [], onItemsChange }) {
+  const { t } = useTranslation();
   const [items, setItems] = useState(selectedItems);
 
   const { data: availableItems, isLoading } = useQuery({
@@ -27,7 +53,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
 
   useEffect(() => {
     onItemsChange(items);
-  }, [items]);
+  }, [items, onItemsChange]);
 
   const addItem = () => {
     setItems([
@@ -62,17 +88,24 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
   };
 
   const calculateTotal = () => {
-    return items.reduce((sum, item) => sum + item.quantity * item.price, 0);
+    return items.reduce((sum, item) => sum + parseInt(item.quantity || 0) * parseFloat(item.price || 0), 0);
   };
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <Label className="text-lg font-semibold">Select Items</Label>
+        <Label className="text-lg font-semibold">{t("customer.selectItem") || "Select Items"}</Label>
         <Button type="button" onClick={addItem} size="sm">
           <Plus className="h-4 w-4 mr-2" />
-          Add Item
+          {t("common.addItem") || "Add Item"}
         </Button>
+      </div>
+
+      {/* Info Banner */}
+      <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+        <p className="text-sm text-amber-800">
+          ✅ <strong>Text Input Mode:</strong> Quantity and Price fields use text input only. No mouse wheel scrolling allowed.
+        </p>
       </div>
 
       {items.length === 0 ? (
@@ -80,8 +113,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
           <CardContent className="flex flex-col items-center justify-center py-8">
             <Package className="h-12 w-12 text-muted-foreground mb-4" />
             <p className="text-muted-foreground text-center">
-              No items selected. Click "Add Item" to select items for this
-              booking.
+              {t("customer.noItemsSelected") || "No items selected. Click 'Add Item' to select items for this booking."}
             </p>
           </CardContent>
         </Card>
@@ -91,8 +123,9 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
             <Card key={index}>
               <CardContent className="pt-4">
                 <div className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
+                  {/* Item Selection */}
                   <div className="md:col-span-2">
-                    <Label className="text-xs">Item *</Label>
+                    <Label className="text-xs font-semibold">{t("customer.item") || "Item"} *</Label>
                     <Select
                       value={item.itemId}
                       onValueChange={(value) =>
@@ -102,16 +135,16 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                       <SelectTrigger
                         style={{ outline: "none", boxShadow: "none" }}
                       >
-                        <SelectValue placeholder="Select item" />
+                        <SelectValue placeholder={t("customer.selectItem") || "Select item"} />
                       </SelectTrigger>
                       <SelectContent>
                         {isLoading ? (
                           <div className="p-2 text-sm text-muted-foreground">
-                            Loading...
+                            {t("common.loading") || "Loading"}...
                           </div>
                         ) : allItems.length === 0 ? (
                           <div className="p-2 text-sm text-muted-foreground">
-                            No items available
+                            {t("common.noData") || "No items available"}
                           </div>
                         ) : (
                           allItems.map((availableItem) => (
@@ -121,7 +154,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                             >
                               {availableItem.name}
                               <span className="text-xs text-muted-foreground ml-2">
-                                (Available: {availableItem.availableQuantity})
+                                ({t("items.availableQuantity") || "Available"}: {availableItem.availableQuantity})
                               </span>
                             </SelectItem>
                           ))
@@ -130,76 +163,83 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                     </Select>
                   </div>
 
+                  {/* Quantity - TEXT INPUT ONLY */}
                   <div>
-                    <Label className="text-xs">Quantity *</Label>
+                    <Label className="text-xs font-semibold">{t("customer.quantity") || "Qty"} *</Label>
                     <Input
                       type="text"
+                      inputMode="numeric"
                       value={item.quantity}
                       onChange={(e) => {
-                        const value = e.target.value;
-                        // Allow only numbers
-                        if (value === "" || /^\d+$/.test(value)) {
-                          updateItem(
-                            index,
-                            "quantity",
-                            value === "" ? "" : parseInt(value)
-                          );
-                        }
+                        const formatted = formatNumberInput(e.target.value);
+                        updateItem(
+                          index,
+                          "quantity",
+                          formatted === "" ? "" : parseInt(formatted)
+                        );
                       }}
-                      placeholder="Enter quantity"
+                      placeholder="1"
+                      className="border border-gray-300 bg-white font-semibold"
                       style={{ outline: "none", boxShadow: "none" }}
+                      onWheel={(e) => e.preventDefault()}
                     />
                     {item.availableQty > 0 && (
                       <p className="text-xs text-muted-foreground mt-1">
-                        Max: {item.availableQty}
+                        {t("common.max") || "Max"}: {item.availableQty}
                       </p>
                     )}
                   </div>
 
+                  {/* Price - TEXT INPUT ONLY */}
                   <div>
-                    <Label className="text-xs">Price per unit</Label>
+                    <Label className="text-xs font-semibold">{t("customer.pricePerUnit") || "Price"}</Label>
                     <Input
                       type="text"
+                      inputMode="decimal"
                       value={item.price}
                       onChange={(e) => {
-                        const value = e.target.value;
-                        // Allow numbers and decimal point
-                        if (value === "" || /^\d*\.?\d*$/.test(value)) {
-                          updateItem(
-                            index,
-                            "price",
-                            value === "" ? "" : parseFloat(value)
-                          );
-                        }
+                        const formatted = formatDecimalInput(e.target.value);
+                        updateItem(
+                          index,
+                          "price",
+                          formatted === "" ? "" : parseFloat(formatted)
+                        );
                       }}
-                      placeholder="Enter price"
+                      placeholder="0"
+                      className="border border-gray-300 bg-white font-semibold"
                       style={{ outline: "none", boxShadow: "none" }}
+                      onWheel={(e) => e.preventDefault()}
                     />
                   </div>
 
+                  {/* Subtotal - Display Only */}
                   <div>
-                    <Label className="text-xs">Subtotal</Label>
-                    <div className="h-10 flex items-center font-semibold">
-                      ₹{(item.quantity * item.price).toLocaleString("en-IN")}
+                    <Label className="text-xs font-semibold">{t("customer.subtotal") || "Subtotal"}</Label>
+                    <div className="h-10 flex items-center font-bold bg-gray-50 rounded border border-gray-200 px-3">
+                      ₹{(parseInt(item.quantity || 0) * parseFloat(item.price || 0)).toLocaleString("en-IN")}
                     </div>
                   </div>
 
+                  {/* Delete Button */}
                   <div>
                     <Button
                       type="button"
                       variant="destructive"
                       size="icon"
                       onClick={() => removeItem(index)}
+                      title={t("common.remove") || "Remove"}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
 
+                {/* Quantity Warning */}
                 {item.quantity > item.availableQty && item.availableQty > 0 && (
-                  <div className="mt-2 text-sm text-red-600">
-                    ⚠️ Warning: Requested quantity ({item.quantity}) exceeds
-                    available quantity ({item.availableQty})
+                  <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded">
+                    <p className="text-sm text-red-700">
+                      ⚠️ <strong>Warning:</strong> Requested quantity ({item.quantity}) exceeds available quantity ({item.availableQty})
+                    </p>
                   </div>
                 )}
               </CardContent>
@@ -209,11 +249,11 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
       )}
 
       {items.length > 0 && (
-        <Card className="bg-muted">
+        <Card className="bg-green-50 border border-green-200">
           <CardContent className="pt-4">
             <div className="flex justify-between items-center">
-              <span className="font-semibold">Items Total:</span>
-              <span className="text-2xl font-bold">
+              <span className="font-semibold text-lg">{t("customer.itemsTotal") || "Items Total"}:</span>
+              <span className="text-3xl font-bold text-green-600">
                 ₹{calculateTotal().toLocaleString("en-IN")}
               </span>
             </div>

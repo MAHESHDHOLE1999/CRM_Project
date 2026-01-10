@@ -2072,7 +2072,8 @@
 // }
 
 // File: components/customers/CustomerForm.jsx
-// COMPLETE: Per-item checkout with auto-calculated extra charges
+// UPDATED: ALL number inputs converted to text inputs
+// Admin must manually enter all amounts - no scroll wheel changes
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -2096,23 +2097,33 @@ import {
 import { Card } from "@/components/ui/card";
 import { customerService } from "@/services/customerService";
 import ItemSelector from "./ItemSelector";
-import { Calculator, AlertCircle } from "lucide-react";
+import { Calculator } from "lucide-react";
 
 const inputStyles = `
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type="number"] {
-    -moz-appearance: textfield;
-  }
   input:focus,
   textarea:focus {
     outline: none !important;
     box-shadow: none !important;
   }
 `;
+
+// ✅ Helper function to format decimal input
+const formatDecimalInput = (value) => {
+  if (value === "" || value === null) return "";
+  const cleaned = value.toString().replace(/[^0-9.]/g, "");
+  const parts = cleaned.split(".");
+  if (parts.length > 2) {
+    return parts[0] + "." + parts[1];
+  }
+  return cleaned;
+};
+
+// ✅ Helper function to parse number
+const parseNumberInput = (value) => {
+  if (value === "" || value === null) return 0;
+  const num = parseFloat(value);
+  return isNaN(num) ? 0 : num;
+};
 
 const optionalNumber = z.preprocess(
   (val) => (val === "" || val === null ? undefined : Number(val)),
@@ -2151,7 +2162,6 @@ export default function CustomerForm({ customer, onSuccess }) {
   const [debugErrors, setDebugErrors] = useState([]);
   const [isLoadingCustomer, setIsLoadingCustomer] = useState(!!customer?._id);
   
-  // ✅ Per-item checkout data with auto-calculated charges
   const [itemsCheckoutData, setItemsCheckoutData] = useState({});
   const [totalPerItemExtraCharges, setTotalPerItemExtraCharges] = useState(0);
   const [isCalculating, setIsCalculating] = useState(false);
@@ -2187,7 +2197,6 @@ export default function CustomerForm({ customer, onSuccess }) {
     },
   });
 
-  // ✅ Load customer data
   useEffect(() => {
     const fetchCustomerData = async () => {
       if (!customer?._id) {
@@ -2197,13 +2206,8 @@ export default function CustomerForm({ customer, onSuccess }) {
 
       try {
         setIsLoadingCustomer(true);
-        console.log("🔵 FETCHING CUSTOMER DATA FOR ID:", customer._id);
-
         const response = await customerService.getById(customer._id);
         const fetchedCustomer = response.data.data || response.data;
-
-        console.log("📥 ✅ CUSTOMER DATA LOADED SUCCESSFULLY");
-        console.log("Items Checkout Data:", fetchedCustomer.itemsCheckoutData);
 
         if (fetchedCustomer) {
           setValue("name", fetchedCustomer.name || "");
@@ -2228,15 +2232,12 @@ export default function CustomerForm({ customer, onSuccess }) {
           setValue("status", fetchedCustomer.status || "Active");
           setValue("notes", fetchedCustomer.notes || "");
 
-          // ✅ Load per-item checkout data
           if (fetchedCustomer.itemsCheckoutData) {
             setItemsCheckoutData(fetchedCustomer.itemsCheckoutData);
             
             const totalExtra = Object.values(fetchedCustomer.itemsCheckoutData)
               .reduce((sum, item) => sum + (parseFloat(item.extraCharges) || 0), 0);
             setTotalPerItemExtraCharges(totalExtra);
-            
-            console.log("✅ Per-item checkout data loaded:", fetchedCustomer.itemsCheckoutData);
           }
 
           if (fetchedCustomer.items && Array.isArray(fetchedCustomer.items)) {
@@ -2249,22 +2250,20 @@ export default function CustomerForm({ customer, onSuccess }) {
               price: item.price,
             }));
             setSelectedItems(formattedItems);
-            console.log("📦 ✅ ITEMS LOADED:", formattedItems);
           }
         }
 
         setIsLoadingCustomer(false);
       } catch (error) {
-        console.error("❌ Error fetching customer:", error);
-        toast.error("Failed to load customer data: " + error.message);
+        console.error("Error fetching customer:", error);
+        toast.error(t("common.failedLoad") || "Failed to load customer data");
         setIsLoadingCustomer(false);
       }
     };
 
     fetchCustomerData();
-  }, [customer?._id, setValue]);
+  }, [customer?._id, setValue, t]);
 
-  // ✅ Calculate items total
   useEffect(() => {
     const total = selectedItems.reduce(
       (sum, item) =>
@@ -2274,10 +2273,9 @@ export default function CustomerForm({ customer, onSuccess }) {
     setItemsTotal(total);
   }, [selectedItems]);
 
-  // ✅ Calculate total amount with all charges
   useEffect(() => {
-    const transportCost = parseFloat(watch("transportCost")) || 0;
-    const maintenanceCharges = parseFloat(watch("maintenanceCharges")) || 0;
+    const transportCost = parseNumberInput(watch("transportCost")) || 0;
+    const maintenanceCharges = parseNumberInput(watch("maintenanceCharges")) || 0;
     const newTotal =
       itemsTotal + transportCost + maintenanceCharges + totalPerItemExtraCharges;
 
@@ -2290,7 +2288,6 @@ export default function CustomerForm({ customer, onSuccess }) {
     setValue,
   ]);
 
-  // ✅ Update per-item checkout field
   const updateItemCheckout = (itemId, field, value) => {
     setItemsCheckoutData((prev) => ({
       ...prev,
@@ -2301,19 +2298,18 @@ export default function CustomerForm({ customer, onSuccess }) {
     }));
   };
 
-  // ✅ Calculate extra charges for specific item
   const calculateItemExtraCharges = async (itemId) => {
     const formData = getValues();
     const itemCheckout = itemsCheckoutData[itemId];
 
     if (!itemCheckout?.checkOutDate || !itemCheckout?.checkOutTime) {
-      toast.error("Please enter checkout date and time for this item");
+      toast.error(t("customer.checkOutDateTimeRequired") || "Please enter checkout date and time");
       return;
     }
 
-    const hourlyRate = parseFloat(itemCheckout.hourlyRate);
+    const hourlyRate = parseNumberInput(itemCheckout.hourlyRate);
     if (!hourlyRate || hourlyRate <= 0) {
-      toast.error("Please enter a valid hourly rate for this item");
+      toast.error(t("customer.validHourlyRateRequired") || "Please enter a valid hourly rate");
       return;
     }
 
@@ -2331,7 +2327,6 @@ export default function CustomerForm({ customer, onSuccess }) {
       if (response.data.success) {
         const { fullDays, extraHours, extraCharges } = response.data.data;
 
-        // ✅ Update this item's checkout data
         const updatedCheckoutData = {
           ...itemsCheckoutData,
           [itemId]: {
@@ -2347,7 +2342,6 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         setItemsCheckoutData(updatedCheckoutData);
 
-        // ✅ Recalculate total extra charges
         const totalExtra = Object.values(updatedCheckoutData).reduce(
           (sum, item) => sum + (parseFloat(item.extraCharges) || 0),
           0
@@ -2355,15 +2349,13 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         setTotalPerItemExtraCharges(totalExtra);
 
-        console.log("✅ Item checkout data updated:", updatedCheckoutData);
-
         toast.success(
-          `✅ ${fullDays} day(s), ${extraHours} hour(s) @ ₹${hourlyRate}/hr\nExtra Charge: ₹${extraCharges.toLocaleString("en-IN")}`
+          `✅ ${fullDays} ${t("customer.day") || "day"}(s), ${extraHours} ${t("customer.hour") || "hour"}(s) @ ₹${hourlyRate}/hr\n${t("customer.extraCharge") || "Extra Charge"}: ₹${extraCharges.toLocaleString("en-IN")}`
         );
       }
     } catch (error) {
       console.error("Calculate duration error:", error);
-      toast.error("Failed to calculate duration");
+      toast.error(t("customer.calculationFailed") || "Failed to calculate duration");
     } finally {
       setIsCalculating(false);
     }
@@ -2373,25 +2365,21 @@ export default function CustomerForm({ customer, onSuccess }) {
     mutationFn: async (formData) => {
       const errors = [];
 
-      console.log("🔵 FORM SUBMISSION STARTED");
-      console.log("Items Checkout Data:", itemsCheckoutData);
-
       if (selectedItems.length === 0) {
-        throw new Error("Please select at least one item");
+        throw new Error(t("customer.selectAtLeastOneItem") || "Please select at least one item");
       }
 
-      if (!formData.name?.trim()) errors.push("Customer name is empty");
-      if (!formData.phone?.trim()) errors.push("Phone number is empty");
-      if (!formData.checkInDate) errors.push("Check-in date is empty");
-      if (!formData.checkInTime) errors.push("Check-in time is empty");
-      if (!formData.status) errors.push("Status is empty");
+      if (!formData.name?.trim()) errors.push(t("customer.nameRequired") || "Customer name is required");
+      if (!formData.phone?.trim()) errors.push(t("customer.phoneRequired") || "Phone number is required");
+      if (!formData.checkInDate) errors.push(t("customer.checkInDateRequired") || "Check-in date is required");
+      if (!formData.checkInTime) errors.push(t("customer.checkInTimeRequired") || "Check-in time is required");
+      if (!formData.status) errors.push(t("customer.statusRequired") || "Status is required");
 
-      const totalAmount = parseFloat(formData.totalAmount) || 0;
-      const depositAmount = parseFloat(formData.depositAmount) || 0;
-      const givenAmount = parseFloat(formData.givenAmount) || 0;
+      const totalAmount = parseNumberInput(formData.totalAmount) || 0;
+      const givenAmount = parseNumberInput(formData.givenAmount) || 0;
 
       if (givenAmount > totalAmount) {
-        errors.push(`Given (${givenAmount}) exceeds Total (${totalAmount})`);
+        errors.push(t("customer.givenExceedsTotal") || "Given amount exceeds total");
       }
 
       if (errors.length > 0) {
@@ -2405,13 +2393,13 @@ export default function CustomerForm({ customer, onSuccess }) {
         address: formData.address?.trim() || "",
         checkInDate: formData.checkInDate || "",
         checkInTime: formData.checkInTime || "",
-        totalAmount: parseFloat(formData.totalAmount) || 0,
-        depositAmount: parseFloat(formData.depositAmount) || 0,
+        totalAmount: parseNumberInput(formData.totalAmount) || 0,
+        depositAmount: parseNumberInput(formData.depositAmount) || 0,
         givenAmount: givenAmount,
         transportRequired: formData.transportRequired || false,
-        transportCost: parseFloat(formData.transportCost) || 0,
+        transportCost: parseNumberInput(formData.transportCost) || 0,
         transportLocation: formData.transportLocation?.trim() || "",
-        maintenanceCharges: parseFloat(formData.maintenanceCharges) || 0,
+        maintenanceCharges: parseNumberInput(formData.maintenanceCharges) || 0,
         fitterName: formData.fitterName?.trim() || "",
         status: formData.status || "Active",
         notes: formData.notes?.trim() || "",
@@ -2421,18 +2409,14 @@ export default function CustomerForm({ customer, onSuccess }) {
           quantity: parseInt(item.quantity) || 1,
           price: parseFloat(item.price) || 0,
         })),
-        itemsCheckoutData: itemsCheckoutData, // ✅ IMPORTANT: Include checkout data
+        itemsCheckoutData: itemsCheckoutData,
       };
-
-      console.log("📦 Final Payload:", payload);
 
       try {
         let response;
         if (customer?._id) {
-          console.log("🔄 UPDATING customer:", customer._id);
           response = await customerService.update(customer._id, payload);
         } else {
-          console.log("🆕 CREATING new customer");
           response = await customerService.create(payload);
         }
         return response;
@@ -2446,15 +2430,15 @@ export default function CustomerForm({ customer, onSuccess }) {
       setDebugErrors([]);
       toast.success(
         customer
-          ? "✅ Customer updated successfully!"
-          : "✅ Customer created successfully!"
+          ? t("customer.updateSuccess") || "Customer updated successfully!"
+          : t("customer.createSuccess") || "Customer created successfully!"
       );
       queryClient.invalidateQueries({ queryKey: ["customers"] });
       onSuccess?.();
     },
     onError: (error) => {
       setIsSubmitting(false);
-      let errorMsg = error.message || "Failed to save customer";
+      let errorMsg = error.message || (t("common.savingError") || "Failed to save customer");
       if (error.response?.data?.message) {
         errorMsg = error.response.data.message;
       }
@@ -2474,7 +2458,7 @@ export default function CustomerForm({ customer, onSuccess }) {
     return (
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
         <p className="text-lg font-semibold text-blue-900">
-          ⏳ Loading customer data...
+          ⏳ {t("common.loading") || "Loading"}...
         </p>
       </div>
     );
@@ -2486,7 +2470,7 @@ export default function CustomerForm({ customer, onSuccess }) {
       <div className="space-y-6">
         {debugErrors.length > 0 && (
           <div className="bg-red-50 border border-red-300 rounded-lg p-4">
-            <h4 className="font-semibold text-red-800 mb-2">❌ Issues Found:</h4>
+            <h4 className="font-semibold text-red-800 mb-2">❌ {t("common.issuesFound") || "Issues Found"}:</h4>
             {debugErrors.map((error, idx) => (
               <p key={idx} className="text-sm text-red-700 mb-1">
                 • {error}
@@ -2496,27 +2480,27 @@ export default function CustomerForm({ customer, onSuccess }) {
         )}
 
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <Badge className="bg-blue-100">⏰ Per-Item Checkout with Auto-Calculation</Badge>
+          <Badge className="bg-blue-100">✅ TEXT INPUT MODE</Badge>
           <p className="text-sm text-muted-foreground mt-2">
-            Set checkout time and hourly rate for each item separately. Extra charges will be calculated automatically.
+            <strong>All numeric fields are text inputs.</strong> Admin must manually enter values. No scroll wheel changes allowed.
           </p>
         </div>
 
         {/* Customer Information */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Customer Information</h3>
+          <h3 className="text-lg font-semibold mb-4">{t("customer.customerInfo") || "Customer Information"}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Customer Name *</Label>
+              <Label>{t("customer.name")} *</Label>
               <Input
                 {...register("name")}
-                placeholder="John Doe"
+                placeholder={t("customer.name") || "Customer Name"}
                 className="border border-gray-300 bg-white"
               />
               {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>}
             </div>
             <div>
-              <Label>Phone Number *</Label>
+              <Label>{t("customer.phone")} *</Label>
               <Input
                 {...register("phone")}
                 placeholder="9876543210"
@@ -2525,10 +2509,10 @@ export default function CustomerForm({ customer, onSuccess }) {
               {errors.phone && <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p>}
             </div>
             <div className="md:col-span-2">
-              <Label>Address</Label>
+              <Label>{t("customer.address") || "Address"}</Label>
               <Input
                 {...register("address")}
-                placeholder="123 Main Street, City"
+                placeholder={t("customer.address") || "Address"}
                 className="border border-gray-300 bg-white"
               />
             </div>
@@ -2537,10 +2521,10 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         {/* Check-in Details */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Check-in Details</h3>
+          <h3 className="text-lg font-semibold mb-4">{t("customer.checkInDetails") || "Check-in Details"}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Check-in Date *</Label>
+              <Label>{t("customer.checkInDate")} *</Label>
               <Input
                 type="date"
                 {...register("checkInDate")}
@@ -2548,7 +2532,7 @@ export default function CustomerForm({ customer, onSuccess }) {
               />
             </div>
             <div>
-              <Label>Check-in Time *</Label>
+              <Label>{t("customer.checkInTime")} *</Label>
               <Input
                 type="time"
                 {...register("checkInTime")}
@@ -2556,18 +2540,15 @@ export default function CustomerForm({ customer, onSuccess }) {
               />
             </div>
           </div>
-          <p className="text-xs text-blue-600 mt-3">
-            💡 Tip: Each item can have its own hourly rate and checkout time. Set rate when calculating.
-          </p>
         </div>
 
         {/* Items with Per-Item Checkout */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Items - Checkout & Hourly Rates</h3>
+          <h3 className="text-lg font-semibold mb-4">{t("customer.itemsCheckout") || "Items - Checkout & Hourly Rates"}</h3>
           
           {selectedItems.length === 0 ? (
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center">
-              <p className="text-muted-foreground">No items selected. Add items below.</p>
+              <p className="text-muted-foreground">{t("customer.noItemsSelected") || "No items selected"}</p>
             </div>
           ) : (
             <div className="space-y-4 mb-6">
@@ -2578,14 +2559,13 @@ export default function CustomerForm({ customer, onSuccess }) {
                 return (
                   <Card key={idx} className="p-4 border-2 border-blue-100 bg-gradient-to-r from-blue-50 to-purple-50">
                     <div className="space-y-4">
-                      {/* Item Info */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label className="text-sm font-semibold">Item</Label>
+                          <Label className="text-sm font-semibold">{t("customer.item") || "Item"}</Label>
                           <p className="text-base font-medium">{item.itemName || item.name}</p>
                         </div>
                         <div>
-                          <Label className="text-sm font-semibold">Cost</Label>
+                          <Label className="text-sm font-semibold">{t("customer.cost") || "Cost"}</Label>
                           <p className="text-base">
                             {item.quantity} × ₹{item.price.toLocaleString("en-IN")} = ₹
                             {(item.quantity * item.price).toLocaleString("en-IN")}
@@ -2593,12 +2573,11 @@ export default function CustomerForm({ customer, onSuccess }) {
                         </div>
                       </div>
 
-                      {/* Checkout Fields */}
                       <div className="border-t pt-4">
-                        <Label className="text-sm font-semibold block mb-3">Item Checkout Details</Label>
+                        <Label className="text-sm font-semibold block mb-3">{t("customer.itemCheckoutDetails") || "Item Checkout Details"}</Label>
                         <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
                           <div>
-                            <Label className="text-xs">Checkout Date</Label>
+                            <Label className="text-xs">{t("customer.checkOutDate") || "Checkout Date"}</Label>
                             <Input
                               type="date"
                               value={itemCheckout.checkOutDate || ""}
@@ -2609,7 +2588,7 @@ export default function CustomerForm({ customer, onSuccess }) {
                             />
                           </div>
                           <div>
-                            <Label className="text-xs">Time</Label>
+                            <Label className="text-xs">{t("customer.time") || "Time"}</Label>
                             <Input
                               type="time"
                               value={itemCheckout.checkOutTime || ""}
@@ -2620,17 +2599,18 @@ export default function CustomerForm({ customer, onSuccess }) {
                             />
                           </div>
                           <div>
-                            <Label className="text-xs">Hourly Rate (₹)</Label>
+                            <Label className="text-xs">{t("customer.hourlyRate")} (₹) *</Label>
                             <Input
-                              type="number"
+                              type="text"
+                              inputMode="decimal"
                               value={itemCheckout.hourlyRate || ""}
-                              onChange={(e) =>
-                                updateItemCheckout(itemKey, "hourlyRate", parseFloat(e.target.value) || 0)
-                              }
+                              onChange={(e) => {
+                                const formatted = formatDecimalInput(e.target.value);
+                                updateItemCheckout(itemKey, "hourlyRate", formatted);
+                              }}
                               placeholder="100"
-                              min="0"
-                              step="1"
-                              className="border border-gray-300"
+                              className="border border-gray-300 bg-white font-semibold"
+                              onWheel={(e) => e.preventDefault()}
                             />
                           </div>
                           <div className="md:col-span-2 flex items-end">
@@ -2641,30 +2621,29 @@ export default function CustomerForm({ customer, onSuccess }) {
                               className="w-full flex items-center justify-center gap-2"
                             >
                               <Calculator className="h-4 w-4" />
-                              {isCalculating ? "Calculating..." : "Calculate"}
+                              {isCalculating ? t("common.calculating") || "Calculating..." : t("common.calculate") || "Calculate"}
                             </Button>
                           </div>
                         </div>
                       </div>
 
-                      {/* Charges Display */}
                       {itemCheckout.rentalDays !== undefined && (
                         <div className="bg-white border border-orange-200 rounded-lg p-3">
                           <div className="grid grid-cols-5 gap-2 text-center">
                             <div>
-                              <p className="text-xs text-muted-foreground">Days</p>
+                              <p className="text-xs text-muted-foreground">{t("customer.days") || "Days"}</p>
                               <p className="text-lg font-bold text-blue-600">{itemCheckout.rentalDays}</p>
                             </div>
                             <div>
-                              <p className="text-xs text-muted-foreground">Hours</p>
+                              <p className="text-xs text-muted-foreground">{t("customer.hours") || "Hours"}</p>
                               <p className="text-lg font-bold text-orange-600">{itemCheckout.extraHours}h</p>
                             </div>
                             <div>
-                              <p className="text-xs text-muted-foreground">Rate</p>
+                              <p className="text-xs text-muted-foreground">{t("customer.rate") || "Rate"}</p>
                               <p className="text-sm font-bold text-purple-600">₹{itemCheckout.hourlyRate}/hr</p>
                             </div>
                             <div className="md:col-span-2">
-                              <p className="text-xs text-muted-foreground">Extra Charge</p>
+                              <p className="text-xs text-muted-foreground">{t("customer.extraCharge") || "Extra Charge"}</p>
                               <p className="text-lg font-bold text-red-600">
                                 ₹{itemCheckout.extraCharges?.toLocaleString("en-IN") || 0}
                               </p>
@@ -2681,22 +2660,22 @@ export default function CustomerForm({ customer, onSuccess }) {
 
           <ItemSelector selectedItems={selectedItems} onItemsChange={setSelectedItems} />
           {selectedItems.length === 0 && (
-            <p className="text-sm text-red-600 font-medium mt-2">⚠️ Select at least one item</p>
+            <p className="text-sm text-red-600 font-medium mt-2">⚠️ {t("customer.selectAtLeastOneItem") || "Select at least one item"}</p>
           )}
         </div>
 
         {/* Payment Summary */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Payment Summary</h3>
+          <h3 className="text-lg font-semibold mb-4">{t("customer.paymentInfo") || "Payment Summary"}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <p className="text-xs text-muted-foreground">Items Cost</p>
+              <p className="text-xs text-muted-foreground">{t("customer.itemsTotal") || "Items Cost"}</p>
               <p className="text-2xl font-bold">₹{itemsTotal.toLocaleString("en-IN")}</p>
             </div>
 
             {totalPerItemExtraCharges > 0 && (
               <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
-                <p className="text-xs font-semibold text-orange-600">Extra Charges (from checkouts)</p>
+                <p className="text-xs font-semibold text-orange-600">{t("customer.extraCharges") || "Extra Charges"}</p>
                 <p className="text-2xl font-bold text-orange-600">
                   ₹{totalPerItemExtraCharges.toLocaleString("en-IN")}
                 </p>
@@ -2704,13 +2683,18 @@ export default function CustomerForm({ customer, onSuccess }) {
             )}
 
             <div>
-              <Label>Maintenance Charges</Label>
+              <Label>{t("customer.maintenanceCharges") || "Maintenance Charges"}</Label>
               <Input
-                type="number"
+                type="text"
+                inputMode="decimal"
                 {...register("maintenanceCharges")}
+                onChange={(e) => {
+                  const formatted = formatDecimalInput(e.target.value);
+                  setValue("maintenanceCharges", formatted);
+                }}
                 placeholder="0"
-                min="0"
-                className="border border-gray-300"
+                className="border border-gray-300 bg-white font-semibold"
+                onWheel={(e) => e.preventDefault()}
               />
             </div>
 
@@ -2720,23 +2704,28 @@ export default function CustomerForm({ customer, onSuccess }) {
                 checked={transportRequired}
                 onCheckedChange={(checked) => setValue("transportRequired", checked)}
               />
-              <Label htmlFor="transport">Transport Required</Label>
+              <Label htmlFor="transport">{t("customer.transport") || "Transport Required"}</Label>
             </div>
 
             {transportRequired && (
               <>
                 <div>
-                  <Label>Transport Cost</Label>
+                  <Label>{t("customer.transportCost") || "Transport Cost"}</Label>
                   <Input
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     {...register("transportCost")}
+                    onChange={(e) => {
+                      const formatted = formatDecimalInput(e.target.value);
+                      setValue("transportCost", formatted);
+                    }}
                     placeholder="0"
-                    min="0"
-                    className="border border-gray-300"
+                    className="border border-gray-300 bg-white font-semibold"
+                    onWheel={(e) => e.preventDefault()}
                   />
                 </div>
                 <div>
-                  <Label>Transport Location</Label>
+                  <Label>{t("customer.transportLocation") || "Transport Location"}</Label>
                   <Input
                     {...register("transportLocation")}
                     className="border border-gray-300"
@@ -2746,29 +2735,48 @@ export default function CustomerForm({ customer, onSuccess }) {
             )}
 
             <div className="md:col-span-2 bg-green-50 border border-green-200 rounded-lg p-4">
-              <Label className="text-base font-semibold">Total Bill Amount</Label>
+              <Label className="text-base font-semibold">{t("customer.totalAmount") || "Total Bill Amount"}</Label>
               <p className="text-3xl font-bold text-green-600">
-                ₹{parseFloat(watch("totalAmount") || 0).toLocaleString("en-IN")}
-              </p>
-              <p className="text-xs text-green-700 mt-2">
-                Items + Extra Charges + Transport + Maintenance
+                ₹{parseNumberInput(watch("totalAmount") || 0).toLocaleString("en-IN")}
               </p>
             </div>
 
             <div>
-              <Label>Deposit</Label>
-              <Input type="number" {...register("depositAmount")} placeholder="0" min="0" className="border border-gray-300" />
+              <Label>{t("customer.depositAmount") || "Deposit"}</Label>
+              <Input
+                type="text"
+                inputMode="decimal"
+                {...register("depositAmount")}
+                onChange={(e) => {
+                  const formatted = formatDecimalInput(e.target.value);
+                  setValue("depositAmount", formatted);
+                }}
+                placeholder="0"
+                className="border border-gray-300 bg-white font-semibold"
+                onWheel={(e) => e.preventDefault()}
+              />
             </div>
 
             <div>
-              <Label>Given Amount</Label>
-              <Input type="number" {...register("givenAmount")} placeholder="0" min="0" className="border border-gray-300" />
+              <Label>{t("customer.givenAmount") || "Given Amount"}</Label>
+              <Input
+                type="text"
+                inputMode="decimal"
+                {...register("givenAmount")}
+                onChange={(e) => {
+                  const formatted = formatDecimalInput(e.target.value);
+                  setValue("givenAmount", formatted);
+                }}
+                placeholder="0"
+                className="border border-gray-300 bg-white font-semibold"
+                onWheel={(e) => e.preventDefault()}
+              />
             </div>
 
             <div className="md:col-span-2 bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <Label className="text-base font-semibold">Remaining Amount</Label>
+              <Label className="text-base font-semibold">{t("customer.remainingAmount") || "Remaining Amount"}</Label>
               <p className="text-2xl font-bold text-blue-600">
-                ₹{(parseFloat(watch("totalAmount") || 0) - parseFloat(watch("givenAmount") || 0)).toLocaleString("en-IN")}
+                ₹{(parseNumberInput(watch("totalAmount") || 0) - parseNumberInput(watch("givenAmount") || 0)).toLocaleString("en-IN")}
               </p>
             </div>
           </div>
@@ -2776,28 +2784,32 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         {/* Additional Info */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Additional Information</h3>
+          <h3 className="text-lg font-semibold mb-4">{t("customer.additionalInfo") || "Additional Information"}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Fitter Name</Label>
+              <Label>{t("customer.fitterName") || "Fitter Name"}</Label>
               <Input {...register("fitterName")} className="border border-gray-300" />
             </div>
             <div>
-              <Label>Status *</Label>
+              <Label>{t("customer.status")} *</Label>
               <Select value={watch("status")} onValueChange={(value) => setValue("status", value)}>
-                <SelectTrigger className="border border-gray-300">
+                <SelectTrigger className="border border-gray-300 focus:ring-0 focus:outline-none focus:border-none">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Active">Active</SelectItem>
-                  <SelectItem value="Completed">Completed</SelectItem>
-                  <SelectItem value="Cancelled">Cancelled</SelectItem>
+                  <SelectItem value="Active">{t("customer.active") || "Active"}</SelectItem>
+                  <SelectItem value="Completed">{t("customer.completed") || "Completed"}</SelectItem>
+                  <SelectItem value="Cancelled">{t("customer.cancelled") || "Cancelled"}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div className="md:col-span-2">
-              <Label>Notes</Label>
-              <Input {...register("notes")} placeholder="Add notes..." className="border border-gray-300" />
+              <Label>{t("common.notes") || "Notes"}</Label>
+              <Input
+                {...register("notes")}
+                placeholder={t("common.notes") || "Add notes..."}
+                className="border border-gray-300"
+              />
             </div>
           </div>
         </div>
@@ -2811,7 +2823,7 @@ export default function CustomerForm({ customer, onSuccess }) {
             size="lg"
             className="min-w-[140px]"
           >
-            {isSubmitting || mutation.isPending ? "Saving..." : "Save Customer"}
+            {isSubmitting || mutation.isPending ? t("common.saving") || "Saving..." : t("common.save") || "Save"}
           </Button>
         </div>
       </div>

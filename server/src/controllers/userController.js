@@ -4,6 +4,7 @@ import User from '../models/User.js';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import logger from '../../utils/logger.js';
 
 dotenv.config();
 // ✅ Email configuration - Update with your SMTP details
@@ -73,7 +74,7 @@ export const getAllUsers = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Get users error:', error);
+    logger.error('Get users error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching users'
@@ -114,7 +115,7 @@ export const getUserById = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Get user error:', error);
+    logger.error('Get user error:', error);
     res.status(500).json({
       success: false,
       message: 'Error fetching user'
@@ -174,7 +175,7 @@ export const createUser = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Create user error:', error);
+    logger.error('Create user error:', error);
     res.status(500).json({
       success: false,
       message: 'Error creating user'
@@ -238,7 +239,7 @@ export const updateUser = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Update user error:', error);
+    logger.error('Update user error:', error);
     res.status(500).json({
       success: false,
       message: 'Error updating user'
@@ -265,7 +266,7 @@ export const deleteUser = async (req, res) => {
       message: 'User deleted successfully'
     });
   } catch (error) {
-    console.error('Delete user error:', error);
+    logger.error('Delete user error:', error);
     res.status(500).json({
       success: false,
       message: 'Error deleting user'
@@ -435,8 +436,8 @@ export const deleteUser = async (req, res) => {
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    console.log("=== FORGOT PASSWORD REQUEST ===");
-    console.log("Email received:", email);
+    logger.info("=== FORGOT PASSWORD REQUEST ===");
+    logger.info("Email received:", email);
 
     if (!email) {
       return res.status(400).json({
@@ -447,7 +448,7 @@ export const forgotPassword = async (req, res) => {
 
     // Check if user exists
     const user = await User.findOne({ email });
-    console.log("User found:", user ? user.email : 'NOT FOUND');
+    logger.warn("User found:", user ? user.email : 'NOT FOUND');
 
     if (!user) {
       return res.status(404).json({
@@ -460,9 +461,9 @@ export const forgotPassword = async (req, res) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
 
-    console.log('Generated OTP:', otp);
-    console.log('OTP Expiry:', otpExpiry);
-    console.log('Current Time:', new Date());
+    logger.info('Generated OTP:', otp);
+    logger.info('OTP Expiry:', otpExpiry);
+    logger.info('Current Time:', new Date());
 
     // Save OTP to user
     user.resetOTP = otp;
@@ -470,14 +471,14 @@ export const forgotPassword = async (req, res) => {
     
     // Save and check if successful
     const savedUser = await user.save();
-    console.log('User saved successfully');
-    console.log('Saved OTP in DB:', savedUser.resetOTP);
-    console.log('Saved OTP Expiry in DB:', savedUser.resetOTPExpiry);
+    logger.info('User saved successfully');
+    logger.info('Saved OTP in DB:', savedUser.resetOTP);
+    logger.info('Saved OTP Expiry in DB:', savedUser.resetOTPExpiry);
 
     // Verify OTP was actually saved
     const verifyUser = await User.findOne({ email });
-    console.log('Verified - OTP in DB:', verifyUser.resetOTP);
-    console.log('Verified - OTP Expiry in DB:', verifyUser.resetOTPExpiry);
+    logger.info('Verified - OTP in DB:', verifyUser.resetOTP);
+    logger.info('Verified - OTP Expiry in DB:', verifyUser.resetOTPExpiry);
 
     // Send OTP via email
     try {
@@ -492,22 +493,22 @@ export const forgotPassword = async (req, res) => {
           <p>If you didn't request this, please ignore this email.</p>
         `
       });
-      console.log('Email sent successfully');
+      logger.info('Email sent successfully');
     } catch (emailError) {
-      console.error('Email sending error:', emailError);
+      logger.error('Email sending error:', emailError);
       return res.status(500).json({
         success: false,
         message: 'Error sending OTP email'
       });
     }
 
-    console.log("=== FORGOT PASSWORD SUCCESS ===\n");
+    logger.info("=== FORGOT PASSWORD SUCCESS ===\n");
     res.json({
       success: true,
       message: 'OTP sent to your email'
     });
   } catch (error) {
-    console.error('Forgot password error:', error);
+    logger.error('Forgot password error:', error);
     res.status(500).json({
       success: false,
       message: 'Error processing forgot password request'
@@ -519,13 +520,13 @@ export const forgotPassword = async (req, res) => {
 export const verifyOTP = async (req, res) => {
   try {
     const { email, otp } = req.body;
-    console.log("\n=== VERIFY OTP REQUEST ===");
-    console.log("Received email:", email);
-    console.log("Received OTP:", otp);
+    logger.info("\n=== VERIFY OTP REQUEST ===");
+    logger.info("Received email:", email);
+    logger.info("Received OTP:", otp);
 
     // Validate input
     if (!email || !otp) {
-      console.log('Validation failed - missing email or otp');
+      logger.warn('Validation failed - missing email or otp');
       return res.status(400).json({
         success: false,
         message: 'Email and OTP are required'
@@ -533,7 +534,7 @@ export const verifyOTP = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-    console.log("User found:", user ? user.email : 'NOT FOUND');
+    logger.warn("User found:", user ? user.email : 'NOT FOUND');
 
     if (!user) {
       return res.status(404).json({
@@ -543,11 +544,11 @@ export const verifyOTP = async (req, res) => {
     }
 
     // Check if OTP exists in DB
-    console.log('OTP in DB:', user.resetOTP);
-    console.log('OTP Expiry in DB:', user.resetOTPExpiry);
+    logger.info('OTP in DB:', user.resetOTP);
+    logger.info('OTP Expiry in DB:', user.resetOTPExpiry);
 
     if (!user.resetOTP) {
-      console.log('ERROR: No OTP found in database');
+      logger.warn('ERROR: No OTP found in database');
       return res.status(400).json({
         success: false,
         message: 'OTP not found. Please request a new one.'
@@ -564,15 +565,15 @@ export const verifyOTP = async (req, res) => {
     
     const currentTime = Date.now();
 
-    console.log('=== TIME DEBUG ===');
-    console.log('OTP Expiry Timestamp:', otpExpiry);
-    console.log('Current Time Timestamp:', currentTime);
-    console.log('Time Remaining (seconds):', otpExpiry ? Math.round((otpExpiry - currentTime) / 1000) : 'N/A');
-    console.log('Is Expired?:', otpExpiry && otpExpiry < currentTime);
+    logger.info('=== TIME DEBUG ===');
+    logger.info('OTP Expiry Timestamp:', otpExpiry);
+    logger.info('Current Time Timestamp:', currentTime);
+    logger.info('Time Remaining (seconds):', otpExpiry ? Math.round((otpExpiry - currentTime) / 1000) : 'N/A');
+    logger.info('Is Expired?:', otpExpiry && otpExpiry < currentTime);
 
     // Check if OTP is expired
     if (!otpExpiry || otpExpiry < currentTime) {
-      console.log('ERROR: OTP has expired');
+      logger.warn('ERROR: OTP has expired');
       return res.status(400).json({
         success: false,
         message: 'OTP has expired. Please request a new one.'
@@ -583,20 +584,20 @@ export const verifyOTP = async (req, res) => {
     const storedOTP = String(user.resetOTP).trim();
     const providedOTP = String(otp).trim();
     
-    console.log('=== OTP COMPARISON ===');
-    console.log('Stored OTP:', `"${storedOTP}"`, `(length: ${storedOTP.length})`);
-    console.log('Provided OTP:', `"${providedOTP}"`, `(length: ${providedOTP.length})`);
-    console.log('Match?:', storedOTP === providedOTP);
+    logger.info('=== OTP COMPARISON ===');
+    logger.info('Stored OTP:', `"${storedOTP}"`, `(length: ${storedOTP.length})`);
+    logger.info('Provided OTP:', `"${providedOTP}"`, `(length: ${providedOTP.length})`);
+    logger.info('Match?:', storedOTP === providedOTP);
 
     if (storedOTP !== providedOTP) {
-      console.log('ERROR: OTP mismatch');
+      logger.warn('ERROR: OTP mismatch');
       return res.status(400).json({
         success: false,
         message: 'Invalid OTP'
       });
     }
 
-    console.log('OTP VERIFIED SUCCESSFULLY');
+    logger.info('OTP VERIFIED SUCCESSFULLY');
 
     // Generate reset token
     const resetToken = crypto.randomBytes(32).toString('hex');
@@ -608,9 +609,8 @@ export const verifyOTP = async (req, res) => {
     user.resetOTPExpiry = undefined;
     
     await user.save();
-    console.log('Reset token generated and saved');
-
-    console.log("=== VERIFY OTP SUCCESS ===\n");
+    logger.info('Reset token generated and saved');
+    logger.info("=== VERIFY OTP SUCCESS ===\n");
 
     res.json({
       success: true,
@@ -620,7 +620,7 @@ export const verifyOTP = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('OTP verification error:', error);
+    logger.error('OTP verification error:', error);
     res.status(500).json({
       success: false,
       message: 'Error verifying OTP'
@@ -632,8 +632,7 @@ export const verifyOTP = async (req, res) => {
 export const resetPassword = async (req, res) => {
   try {
     const { email, newPassword, resetToken } = req.body;
-    console.log("\n=== RESET PASSWORD REQUEST ===");
-
+    logger.info("\n=== RESET PASSWORD REQUEST ===");
     if (!email || !newPassword || !resetToken) {
       return res.status(400).json({
         success: false,
@@ -677,14 +676,14 @@ export const resetPassword = async (req, res) => {
 
     await user.save();
 
-    console.log("=== RESET PASSWORD SUCCESS ===\n");
+    logger.info("=== RESET PASSWORD SUCCESS ===\n");
 
     res.json({
       success: true,
       message: 'Password reset successfully'
     });
   } catch (error) {
-    console.error('Reset password error:', error);
+    logger.error('Reset password error:', error);
     res.status(500).json({
       success: false,
       message: 'Error resetting password'
@@ -734,7 +733,7 @@ export const changePassword = async (req, res) => {
       message: 'Password changed successfully'
     });
   } catch (error) {
-    console.error('Change password error:', error);
+    logger.error('Change password error:', error);
     res.status(500).json({
       success: false,
       message: 'Error changing password'

@@ -1,4 +1,5 @@
 import Item from "../models/Item.js";
+import logger from "../../utils/logger.js";
 
 // Helper function to determine correct status based on quantities
 const determineStatus = (totalQuantity, availableQuantity, rentedQuantity) => {
@@ -47,7 +48,7 @@ export const createItem = async (req, res) => {
       data: item,
     });
   } catch (error) {
-    console.error("Create item error:", error);
+    logger.error("Create item error:", error);
     res.status(500).json({
       success: false,
       message: "Error creating item",
@@ -127,7 +128,7 @@ export const getItems = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Get items error:", error);
+    logger.error("Get items error:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching items",
@@ -167,7 +168,7 @@ export const getItemById = async (req, res) => {
       data: item,
     });
   } catch (error) {
-    console.error("Get item error:", error);
+    logger.error("Get item error:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching item",
@@ -251,7 +252,7 @@ export const updateItem = async (req, res) => {
       data: updatedItem,
     });
   } catch (error) {
-    console.error("Update item error:", error);
+    logger.error("Update item error:", error);
     res.status(500).json({
       success: false,
       message: "Error updating item",
@@ -293,7 +294,7 @@ export const deleteItem = async (req, res) => {
       message: "Item deleted successfully",
     });
   } catch (error) {
-    console.error("Delete item error:", error);
+    logger.error("Delete item error:", error);
     res.status(500).json({
       success: false,
       message: "Error deleting item",
@@ -312,7 +313,7 @@ export const getCategories = async (req, res) => {
       data: categories.filter((cat) => cat),
     });
   } catch (error) {
-    console.error("Get categories error:", error);
+    logger.error("Get categories error:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching categories",
@@ -373,7 +374,7 @@ export const rentItem = async (req, res) => {
       data: item,
     });
   } catch (error) {
-    console.error("Rent item error:", error);
+    logger.error("Rent item error:", error);
     res.status(500).json({
       success: false,
       message: error.message || "Error renting item",
@@ -434,7 +435,7 @@ export const returnItem = async (req, res) => {
       data: item,
     });
   } catch (error) {
-    console.error("Return item error:", error);
+    logger.error("Return item error:", error);
     res.status(500).json({
       success: false,
       message: error.message || "Error returning item",
@@ -470,7 +471,7 @@ export const getInventoryStats = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Get inventory stats error:", error);
+    logger.error("Get inventory stats error:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching inventory statistics",
@@ -556,7 +557,7 @@ export const bulkRentItems = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Bulk rent items error:", error);
+    logger.error("Bulk rent items error:", error);
     res.status(500).json({
       success: false,
       message: "Error renting items",
@@ -638,7 +639,7 @@ export const bulkReturnItems = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Bulk return items error:", error);
+    logger.error("Bulk return items error:", error);
     res.status(500).json({
       success: false,
       message: "Error returning items",
@@ -707,7 +708,7 @@ export const checkAvailability = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Check availability error:", error);
+    logger.error("Check availability error:", error);
     res.status(500).json({
       success: false,
       message: "Error checking availability",

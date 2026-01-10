@@ -1,0 +1,1533 @@
+{"level":"info","message":"GET /api/auth/me 304 68.499 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:21.872Z"}
+{"level":"info","message":"GET /api/auth/me 304 9.282 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:21.899Z"}
+{"level":"info","message":"GET /api/users?search=&role=all 304 79.431 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:22.126Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 104.176 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:25.040Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 481.734 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:28.028Z"}
+{"level":"info","message":"POST /api/customers 201 151.692 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:59.763Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 60.405 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:59.842Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 14.820 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:59.868Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 52.918 ms - 127.0.0.1","timestamp":"2026-01-10T03:56:59.930Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 200 23.420 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:04.039Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 19.342 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:04.073Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 13.884 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:04.161Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888/bill?language=en 200 5677.199 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:15.100Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 67.706 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:25.807Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 18.065 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:27.954Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 22.462 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:27.993Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 16.653 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:28.112Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 4.598 ms - 127.0.0.1","timestamp":"2026-01-10T03:57:45.894Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 2.793 ms - 127.0.0.1","timestamp":"2026-01-10T03:58:12.377Z"}
+{"level":"info","message":"🔄 RETURN ITEMS (Completed) - Adding back to available","timestamp":"2026-01-10T03:58:37.170Z"}
+{"level":"info","message":"  📦 Chairs:","timestamp":"2026-01-10T03:58:37.180Z"}
+{"level":"info","message":"     Available: 70 → 80","timestamp":"2026-01-10T03:58:37.181Z"}
+{"level":"info","message":"     Rented: 30 → 20","timestamp":"2026-01-10T03:58:37.182Z"}
+{"level":"info","message":"✅ Items returned successfully (Completed)","timestamp":"2026-01-10T03:58:37.195Z"}
+{"level":"info","message":"PUT /api/customers/6961ce0bd1bc57518a284888 200 105.153 ms - 127.0.0.1","timestamp":"2026-01-10T03:58:37.263Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 47.982 ms - 127.0.0.1","timestamp":"2026-01-10T03:58:37.325Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 13.369 ms - 127.0.0.1","timestamp":"2026-01-10T03:58:37.348Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 40.867 ms - 127.0.0.1","timestamp":"2026-01-10T03:58:37.394Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888/bill?language=en 200 4954.012 ms - 127.0.0.1","timestamp":"2026-01-10T03:58:49.839Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 41.193 ms - 127.0.0.1","timestamp":"2026-01-10T03:59:43.611Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888/bill?language=mr 200 5081.460 ms - 127.0.0.1","timestamp":"2026-01-10T03:59:53.551Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 119.970 ms - 127.0.0.1","timestamp":"2026-01-10T04:00:18.678Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 13.770 ms - 127.0.0.1","timestamp":"2026-01-10T04:00:28.174Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 37.232 ms - 127.0.0.1","timestamp":"2026-01-10T04:09:22.377Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 28.924 ms - 127.0.0.1","timestamp":"2026-01-10T04:11:01.165Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.764 ms - 127.0.0.1","timestamp":"2026-01-10T04:11:04.921Z"}
+{"level":"info","message":"GET /api/auth/me 304 3.156 ms - 127.0.0.1","timestamp":"2026-01-10T04:11:04.927Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 23.521 ms - 127.0.0.1","timestamp":"2026-01-10T04:11:05.043Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 7.112 ms - 127.0.0.1","timestamp":"2026-01-10T04:11:11.313Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 7.605 ms - 127.0.0.1","timestamp":"2026-01-10T04:15:56.982Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 20.253 ms - 127.0.0.1","timestamp":"2026-01-10T04:16:38.342Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 5.010 ms - 127.0.0.1","timestamp":"2026-01-10T04:16:52.087Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 8.834 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:01.608Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 11.473 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:13.364Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 19.438 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:13.377Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 7.185 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:16.821Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 35.538 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:38.014Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 7.420 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:41.564Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 10.175 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:53.113Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 11.960 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:53.119Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 7.430 ms - 127.0.0.1","timestamp":"2026-01-10T04:17:54.735Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 12.265 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:15.281Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 12.670 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:15.285Z"}
+{"level":"info","message":"POST /api/auth/logout 200 2.731 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:23.545Z"}
+{"level":"info","message":"POST /api/auth/login 200 506.734 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:40.819Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 200 41.645 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:42.411Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 35.115 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:42.423Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 29.872 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:42.445Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 200 71.771 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:42.505Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 27.967 ms - 127.0.0.1","timestamp":"2026-01-10T04:28:59.169Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 8.763 ms - 127.0.0.1","timestamp":"2026-01-10T04:29:01.675Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 200 34.997 ms - 127.0.0.1","timestamp":"2026-01-10T04:29:29.350Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 14.375 ms - 127.0.0.1","timestamp":"2026-01-10T04:29:29.376Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 7.536 ms - 127.0.0.1","timestamp":"2026-01-10T04:29:29.462Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 25.383 ms - 127.0.0.1","timestamp":"2026-01-10T04:33:59.050Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 39.794 ms - 127.0.0.1","timestamp":"2026-01-10T04:34:09.610Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 21.843 ms - 127.0.0.1","timestamp":"2026-01-10T04:38:55.258Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 7.264 ms - 127.0.0.1","timestamp":"2026-01-10T04:38:57.487Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 27.406 ms - 127.0.0.1","timestamp":"2026-01-10T04:43:03.728Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 31.783 ms - 127.0.0.1","timestamp":"2026-01-10T04:43:03.736Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 304 8.886 ms - 127.0.0.1","timestamp":"2026-01-10T04:43:25.617Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 304 7.141 ms - 127.0.0.1","timestamp":"2026-01-10T04:46:22.982Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 6.674 ms - 127.0.0.1","timestamp":"2026-01-10T04:46:37.158Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 9.564 ms - 127.0.0.1","timestamp":"2026-01-10T04:46:37.172Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 24.218 ms - 127.0.0.1","timestamp":"2026-01-10T04:46:39.227Z"}
+{"level":"info","message":"GET /api/users?search=&role=all 200 10.188 ms - 127.0.0.1","timestamp":"2026-01-10T04:47:04.153Z"}
+{"level":"info","message":"DELETE /api/users/69578dbe2ae6faf159b593ea 200 12.582 ms - 127.0.0.1","timestamp":"2026-01-10T04:47:15.512Z"}
+{"level":"info","message":"GET /api/users?search=&role=all 200 6.494 ms - 127.0.0.1","timestamp":"2026-01-10T04:47:15.527Z"}
+{"level":"info","message":"GET /api/users?search=&role=all 304 5.603 ms - 127.0.0.1","timestamp":"2026-01-10T04:50:16.538Z"}
+{"level":"info","message":"GET /api/users?search=&role=all 304 72.035 ms - ::1","timestamp":"2026-01-10T05:45:09.209Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.871Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.872Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.873Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.874Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.875Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 85.985 ms - ::1","timestamp":"2026-01-10T05:45:12.947Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.960Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.960Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.962Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.963Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 130.680 ms - ::1","timestamp":"2026-01-10T05:45:12.971Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.976Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.976Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:45:12.979Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 108.783 ms - ::1","timestamp":"2026-01-10T05:45:12.980Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 126.871 ms - ::1","timestamp":"2026-01-10T05:45:12.992Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 22.984 ms - ::1","timestamp":"2026-01-10T05:45:43.005Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.640 ms - ::1","timestamp":"2026-01-10T05:46:13.037Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.591 ms - ::1","timestamp":"2026-01-10T05:46:43.069Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 10.319 ms - ::1","timestamp":"2026-01-10T05:47:13.103Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 11.610 ms - ::1","timestamp":"2026-01-10T05:47:43.132Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 11.636 ms - ::1","timestamp":"2026-01-10T05:48:13.169Z"}
+{"level":"info","message":"GET /api/auth/me 200 8.538 ms - ::1","timestamp":"2026-01-10T05:48:27.553Z"}
+{"level":"info","message":"GET /api/auth/me 304 6.262 ms - ::1","timestamp":"2026-01-10T05:48:27.564Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.690Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.692Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.693Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.697Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.701Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 101.334 ms - ::1","timestamp":"2026-01-10T05:48:27.768Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.800Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.801Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.801Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.802Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.814Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.814Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T05:48:27.818Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 128.953 ms - ::1","timestamp":"2026-01-10T05:48:27.819Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 160.693 ms - ::1","timestamp":"2026-01-10T05:48:27.841Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 162.923 ms - ::1","timestamp":"2026-01-10T05:48:27.848Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 14.462 ms - ::1","timestamp":"2026-01-10T05:48:57.798Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 14.496 ms - ::1","timestamp":"2026-01-10T05:49:27.840Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 12.273 ms - ::1","timestamp":"2026-01-10T05:49:57.872Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.598 ms - ::1","timestamp":"2026-01-10T05:50:27.893Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 12.404 ms - ::1","timestamp":"2026-01-10T05:50:57.926Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.399 ms - ::1","timestamp":"2026-01-10T05:51:27.961Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.188 ms - ::1","timestamp":"2026-01-10T05:51:57.985Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.752 ms - ::1","timestamp":"2026-01-10T05:52:28.011Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.807 ms - ::1","timestamp":"2026-01-10T05:52:58.041Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 7.620 ms - ::1","timestamp":"2026-01-10T05:53:28.059Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 10.803 ms - ::1","timestamp":"2026-01-10T05:53:58.093Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.789 ms - ::1","timestamp":"2026-01-10T05:54:28.123Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 12.293 ms - ::1","timestamp":"2026-01-10T05:54:58.157Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 14.507 ms - ::1","timestamp":"2026-01-10T05:55:28.211Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 10.077 ms - ::1","timestamp":"2026-01-10T05:55:58.237Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.043 ms - ::1","timestamp":"2026-01-10T05:56:28.261Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 14.019 ms - ::1","timestamp":"2026-01-10T05:56:58.290Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 10.442 ms - ::1","timestamp":"2026-01-10T05:57:28.325Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.989 ms - ::1","timestamp":"2026-01-10T05:57:58.352Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.400 ms - ::1","timestamp":"2026-01-10T05:58:28.385Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 12.161 ms - ::1","timestamp":"2026-01-10T05:58:58.419Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 7.772 ms - ::1","timestamp":"2026-01-10T05:59:28.446Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.571 ms - ::1","timestamp":"2026-01-10T05:59:58.480Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 6.989 ms - ::1","timestamp":"2026-01-10T06:00:28.497Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 12.227 ms - ::1","timestamp":"2026-01-10T06:00:58.520Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.503 ms - ::1","timestamp":"2026-01-10T06:01:28.553Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 12.578 ms - ::1","timestamp":"2026-01-10T06:01:58.589Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.914 ms - ::1","timestamp":"2026-01-10T06:02:28.612Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.386 ms - ::1","timestamp":"2026-01-10T06:02:58.638Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.672Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.712Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.713Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.714Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.715Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 364.055 ms - ::1","timestamp":"2026-01-10T09:03:55.790Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 158.030 ms - ::1","timestamp":"2026-01-10T09:03:55.810Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 226.782 ms - ::1","timestamp":"2026-01-10T09:03:55.833Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.926Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.942Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.947Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.950Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.978Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.979Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:55.989Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 326.952 ms - ::1","timestamp":"2026-01-10T09:03:56.007Z"}
+{"level":"info","message":"GET /api/auth/me 304 68.108 ms - ::1","timestamp":"2026-01-10T09:03:59.413Z"}
+{"level":"info","message":"GET /api/auth/me 304 36.016 ms - ::1","timestamp":"2026-01-10T09:03:59.462Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.692Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.694Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.697Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.699Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.705Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 146.569 ms - ::1","timestamp":"2026-01-10T09:03:59.786Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 170.721 ms - ::1","timestamp":"2026-01-10T09:03:59.848Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 188.259 ms - ::1","timestamp":"2026-01-10T09:03:59.872Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.888Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.921Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.933Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.949Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.964Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.967Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:03:59.972Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 283.284 ms - ::1","timestamp":"2026-01-10T09:03:59.977Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 15.968 ms - ::1","timestamp":"2026-01-10T09:04:29.820Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 37.331 ms - ::1","timestamp":"2026-01-10T09:04:46.910Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:46.943Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:46.965Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:46.970Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:46.981Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:46.986Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 140.315 ms - ::1","timestamp":"2026-01-10T09:04:47.079Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:47.129Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:47.135Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:47.147Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:47.157Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 326.028 ms - ::1","timestamp":"2026-01-10T09:04:47.262Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:47.337Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:47.348Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:04:47.408Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 461.697 ms - ::1","timestamp":"2026-01-10T09:04:47.445Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 71.923 ms - ::1","timestamp":"2026-01-10T09:05:17.053Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.064Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.065Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.068Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.069Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.070Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 63.187 ms - ::1","timestamp":"2026-01-10T09:05:35.089Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 89.173 ms - ::1","timestamp":"2026-01-10T09:05:35.138Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 98.240 ms - ::1","timestamp":"2026-01-10T09:05:35.154Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.221Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.235Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.244Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.257Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.291Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.298Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:35.304Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 242.802 ms - ::1","timestamp":"2026-01-10T09:05:35.309Z"}
+{"level":"info","message":"GET /api/auth/me 304 59.254 ms - ::1","timestamp":"2026-01-10T09:05:45.638Z"}
+{"level":"info","message":"GET /api/auth/me 304 20.452 ms - ::1","timestamp":"2026-01-10T09:05:45.678Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.081Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.082Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.084Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.084Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.087Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 229.201 ms - ::1","timestamp":"2026-01-10T09:05:46.121Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 215.280 ms - ::1","timestamp":"2026-01-10T09:05:46.244Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 219.320 ms - ::1","timestamp":"2026-01-10T09:05:46.275Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.338Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.382Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.427Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.513Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.608Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.627Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:05:46.777Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 697.107 ms - ::1","timestamp":"2026-01-10T09:05:46.783Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.764Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.765Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.768Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.770Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.771Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 61.895 ms - ::1","timestamp":"2026-01-10T09:06:10.786Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 69.708 ms - ::1","timestamp":"2026-01-10T09:06:10.823Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 73.954 ms - ::1","timestamp":"2026-01-10T09:06:10.835Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.843Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.855Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.865Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.908Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.945Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.959Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:06:10.969Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 205.126 ms - ::1","timestamp":"2026-01-10T09:06:10.977Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 10.580 ms - ::1","timestamp":"2026-01-10T09:06:40.823Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 11.808 ms - ::1","timestamp":"2026-01-10T09:07:10.851Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 65.573 ms - ::1","timestamp":"2026-01-10T09:07:29.928Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:29.952Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:29.954Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:29.956Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:29.962Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:29.969Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 132.132 ms - ::1","timestamp":"2026-01-10T09:07:30.013Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 146.094 ms - ::1","timestamp":"2026-01-10T09:07:30.045Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:30.049Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:30.056Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:30.060Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:30.061Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:30.069Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:30.070Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:30.076Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 123.587 ms - ::1","timestamp":"2026-01-10T09:07:30.079Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.134Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.138Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.141Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.146Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.153Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 82.115 ms - ::1","timestamp":"2026-01-10T09:07:58.182Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 185.191 ms - ::1","timestamp":"2026-01-10T09:07:58.297Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 234.389 ms - ::1","timestamp":"2026-01-10T09:07:58.357Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.383Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.402Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.411Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.442Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.476Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.489Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:07:58.528Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 394.769 ms - ::1","timestamp":"2026-01-10T09:07:58.541Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.427Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.428Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.429Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.429Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.430Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 43.536 ms - ::1","timestamp":"2026-01-10T09:08:01.443Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.489Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.496Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.497Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.498Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 87.964 ms - ::1","timestamp":"2026-01-10T09:08:01.506Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 94.259 ms - ::1","timestamp":"2026-01-10T09:08:01.516Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.521Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.528Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:01.535Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 107.955 ms - ::1","timestamp":"2026-01-10T09:08:01.540Z"}
+{"level":"info","message":"GET /api/auth/me 304 7.177 ms - ::1","timestamp":"2026-01-10T09:08:06.067Z"}
+{"level":"info","message":"GET /api/auth/me 304 17.880 ms - ::1","timestamp":"2026-01-10T09:08:06.093Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.282Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.284Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.285Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.286Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.287Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 67.164 ms - ::1","timestamp":"2026-01-10T09:08:06.312Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 84.151 ms - ::1","timestamp":"2026-01-10T09:08:06.349Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 87.465 ms - ::1","timestamp":"2026-01-10T09:08:06.363Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.396Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.398Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.401Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.402Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.418Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.419Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:06.425Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 143.500 ms - ::1","timestamp":"2026-01-10T09:08:06.434Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.343Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.344Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.345Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.346Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.347Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 65.877 ms - ::1","timestamp":"2026-01-10T09:08:24.370Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 120.689 ms - ::1","timestamp":"2026-01-10T09:08:24.447Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 119.948 ms - ::1","timestamp":"2026-01-10T09:08:24.454Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.462Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.464Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.465Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.468Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.481Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.483Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:24.491Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 149.040 ms - ::1","timestamp":"2026-01-10T09:08:24.493Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.005Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.007Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.010Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.024Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.031Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 116.458 ms - ::1","timestamp":"2026-01-10T09:08:49.077Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 194.639 ms - ::1","timestamp":"2026-01-10T09:08:49.177Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 209.941 ms - ::1","timestamp":"2026-01-10T09:08:49.205Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.263Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.265Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.278Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.279Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.297Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.297Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:49.309Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 305.066 ms - ::1","timestamp":"2026-01-10T09:08:49.328Z"}
+{"level":"info","message":"GET /api/auth/me 304 11.595 ms - ::1","timestamp":"2026-01-10T09:08:51.398Z"}
+{"level":"info","message":"GET /api/auth/me 304 8.735 ms - ::1","timestamp":"2026-01-10T09:08:51.416Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:51.707Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:51.726Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:51.731Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:51.735Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:51.742Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 206.547 ms - ::1","timestamp":"2026-01-10T09:08:51.830Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 320.677 ms - ::1","timestamp":"2026-01-10T09:08:51.983Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 325.504 ms - ::1","timestamp":"2026-01-10T09:08:52.028Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:52.073Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:52.079Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:52.080Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:52.086Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:52.120Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:52.125Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:08:52.131Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 433.036 ms - ::1","timestamp":"2026-01-10T09:08:52.170Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 218.860 ms - ::1","timestamp":"2026-01-10T09:08:59.487Z"}
+{"level":"info","message":"GET /api/auth/me 304 9.040 ms - ::1","timestamp":"2026-01-10T09:09:05.591Z"}
+{"level":"info","message":"GET /api/auth/me 304 6.724 ms - ::1","timestamp":"2026-01-10T09:09:05.607Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 98.783 ms - ::1","timestamp":"2026-01-10T09:09:06.077Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 304 33.953 ms - ::1","timestamp":"2026-01-10T09:09:10.076Z"}
+{"level":"info","message":"GET /api/auth/me 304 9.320 ms - ::1","timestamp":"2026-01-10T09:09:15.404Z"}
+{"level":"info","message":"GET /api/auth/me 304 43.123 ms - ::1","timestamp":"2026-01-10T09:09:15.457Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 304 16.003 ms - ::1","timestamp":"2026-01-10T09:09:15.839Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 104.508 ms - ::1","timestamp":"2026-01-10T09:09:26.478Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 65.979 ms - ::1","timestamp":"2026-01-10T09:09:26.503Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.264Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.267Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.269Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.270Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.271Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.298Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.304Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.319Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.322Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:09:49.326Z"}
+{"level":"info","message":"[2026-01-10T09:09:49.332Z] ITEM REPORT","timestamp":"2026-01-10T09:09:49.332Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:09:49.338Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:09:49.345Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:09:49.347Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:09:49.349Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.375Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.383Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.386Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.391Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.394Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.400Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:09:49.424Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:09:49.425Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:09:49.425Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.462Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.465Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.468Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.470Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:09:49.474Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 200 187.646 ms - ::1","timestamp":"2026-01-10T09:09:49.476Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.491Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.492Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.495Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.497Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.505Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.506Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.507Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.508Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:09:49.527Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:09:49.531Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:09:49.536Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 115.688 ms - ::1","timestamp":"2026-01-10T09:09:49.539Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.543Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.544Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:09:49.549Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 200 179.085 ms - ::1","timestamp":"2026-01-10T09:09:49.555Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.558Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.559Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:09:49.568Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 200 303.834 ms - ::1","timestamp":"2026-01-10T09:09:49.571Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.028Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.033Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.037Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.044Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.045Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.061Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.066Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.068Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.074Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:10:54.076Z"}
+{"level":"info","message":"[2026-01-10T09:10:54.077Z] ITEM REPORT","timestamp":"2026-01-10T09:10:54.078Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:10:54.082Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:10:54.085Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:10:54.086Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:10:54.088Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.099Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.100Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.101Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.102Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.103Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.104Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:10:54.117Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:10:54.118Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:10:54.120Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.136Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.139Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.141Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.143Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:10:54.148Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 89.832 ms - ::1","timestamp":"2026-01-10T09:10:54.150Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.169Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.170Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.172Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.174Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:10:54.181Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:10:54.194Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:10:54.199Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 84.057 ms - ::1","timestamp":"2026-01-10T09:10:54.204Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.215Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.216Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.218Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.218Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.230Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.231Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:10:54.235Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 137.853 ms - ::1","timestamp":"2026-01-10T09:10:54.237Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.294Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.295Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:10:54.301Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 275.761 ms - ::1","timestamp":"2026-01-10T09:10:54.303Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:15.606Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:15.609Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:15.613Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:15.614Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:15.619Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.637Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.639Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.641Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.644Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:11:15.645Z"}
+{"level":"info","message":"[2026-01-10T09:11:15.651Z] ITEM REPORT","timestamp":"2026-01-10T09:11:15.651Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:11:15.654Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:11:15.655Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:11:15.657Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:11:15.658Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.671Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.674Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.676Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.678Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.681Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.682Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:15.705Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:15.708Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:15.709Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.740Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.742Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.743Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.748Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:15.753Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 117.122 ms - ::1","timestamp":"2026-01-10T09:11:15.755Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.781Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.783Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.794Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.801Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.824Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.834Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:15.844Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 174.785 ms - ::1","timestamp":"2026-01-10T09:11:15.866Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:15.882Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:15.894Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:15.897Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 197.253 ms - ::1","timestamp":"2026-01-10T09:11:15.976Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:16.010Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:16.012Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:16.013Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:16.015Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:16.031Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:16.035Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:16.047Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 443.847 ms - ::1","timestamp":"2026-01-10T09:11:16.057Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.486Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.490Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.493Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.495Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.498Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.513Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.516Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.528Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.536Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:11:30.538Z"}
+{"level":"info","message":"[2026-01-10T09:11:30.539Z] ITEM REPORT","timestamp":"2026-01-10T09:11:30.540Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:11:30.543Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:11:30.546Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:11:30.559Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:11:30.568Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.587Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.593Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.607Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.610Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.614Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.618Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:30.632Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:30.633Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:30.637Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.680Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.683Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.687Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.692Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:30.695Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 183.103 ms - ::1","timestamp":"2026-01-10T09:11:30.699Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.732Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.740Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.742Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.745Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:30.754Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:30.756Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:30.761Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 130.114 ms - ::1","timestamp":"2026-01-10T09:11:30.763Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.809Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.815Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.828Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.831Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.848Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.857Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:30.861Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 275.357 ms - ::1","timestamp":"2026-01-10T09:11:30.869Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.894Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.909Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:30.925Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 439.375 ms - ::1","timestamp":"2026-01-10T09:11:30.936Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.109Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.116Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.121Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.127Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.130Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.141Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.143Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.144Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.145Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:11:46.147Z"}
+{"level":"info","message":"[2026-01-10T09:11:46.148Z] ITEM REPORT","timestamp":"2026-01-10T09:11:46.148Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:11:46.152Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:11:46.156Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:11:46.163Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:11:46.177Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.204Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.208Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.210Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.211Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.212Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.213Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:46.229Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:46.230Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:46.231Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.256Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.261Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.262Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.264Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:11:46.269Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 129.444 ms - ::1","timestamp":"2026-01-10T09:11:46.275Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.282Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.288Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.289Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.290Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.310Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.315Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.332Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.356Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:46.364Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:46.373Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:11:46.376Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 148.425 ms - ::1","timestamp":"2026-01-10T09:11:46.393Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.406Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.408Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:11:46.411Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 214.094 ms - ::1","timestamp":"2026-01-10T09:11:46.413Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.424Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.426Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:11:46.440Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 325.452 ms - ::1","timestamp":"2026-01-10T09:11:46.446Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:38.984Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.023Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.037Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.044Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.049Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.076Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.087Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.100Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.104Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:12:39.105Z"}
+{"level":"info","message":"[2026-01-10T09:12:39.119Z] ITEM REPORT","timestamp":"2026-01-10T09:12:39.119Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:12:39.155Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:12:39.171Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:12:39.200Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:12:39.218Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.248Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.256Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.258Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.268Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.271Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.272Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:12:39.290Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:12:39.292Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:12:39.299Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.323Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.325Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.336Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.338Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:12:39.350Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 267.736 ms - ::1","timestamp":"2026-01-10T09:12:39.373Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.394Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.407Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.408Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.421Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:12:39.440Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:12:39.452Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:12:39.455Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 165.880 ms - ::1","timestamp":"2026-01-10T09:12:39.505Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.570Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.596Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.608Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.626Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.653Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.658Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:12:39.662Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 416.877 ms - ::1","timestamp":"2026-01-10T09:12:39.669Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.679Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.683Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:12:39.692Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 709.273 ms - ::1","timestamp":"2026-01-10T09:12:39.695Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:32:46.845Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:32:46.914Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:32:46.915Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:46.965Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:46.967Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:46.969Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:46.971Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:46.972Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:46.991Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:46.992Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:46.994Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:46.996Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:32:46.997Z"}
+{"level":"info","message":"[2026-01-10T09:32:47.000Z] ITEM REPORT","timestamp":"2026-01-10T09:32:47.001Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:32:47.002Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:32:47.005Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:32:47.006Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:32:47.007Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.025Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.027Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.028Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.029Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.031Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.032Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:47.054Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:47.058Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:47.064Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:47.067Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:32:47.083Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 91.375 ms - ::1","timestamp":"2026-01-10T09:32:47.087Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:32:47.136Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:32:47.150Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:32:47.167Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 1185.550 ms - ::1","timestamp":"2026-01-10T09:32:47.169Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.186Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.191Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.193Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.201Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:47.232Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:47.247Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:47.254Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:47.259Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:47.365Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:47.367Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:32:47.378Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 414.507 ms - ::1","timestamp":"2026-01-10T09:32:47.391Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.425Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.439Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:32:47.449Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 424.183 ms - ::1","timestamp":"2026-01-10T09:32:47.452Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.708Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.714Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.714Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.715Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.717Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.739Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.741Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.742Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.743Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:43:18.745Z"}
+{"level":"info","message":"[2026-01-10T09:43:18.747Z] ITEM REPORT","timestamp":"2026-01-10T09:43:18.747Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:43:18.749Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:43:18.752Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:43:18.753Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:43:18.754Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.762Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.763Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.764Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.765Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.765Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.767Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:18.782Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:18.782Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:18.785Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.816Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.819Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.819Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.820Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:18.825Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 85.972 ms - ::1","timestamp":"2026-01-10T09:43:18.828Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.833Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.833Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.834Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.837Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:18.846Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:18.847Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:18.848Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 67.166 ms - ::1","timestamp":"2026-01-10T09:43:18.852Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.856Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.858Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.859Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.860Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.890Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.891Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:18.895Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 218.771 ms - ::1","timestamp":"2026-01-10T09:43:18.896Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.900Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.900Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:18.903Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 142.374 ms - ::1","timestamp":"2026-01-10T09:43:18.904Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.771Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.782Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.785Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.786Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.787Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.797Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.798Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.800Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.800Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:43:30.801Z"}
+{"level":"info","message":"[2026-01-10T09:43:30.802Z] ITEM REPORT","timestamp":"2026-01-10T09:43:30.802Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:43:30.803Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:43:30.804Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:43:30.805Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:43:30.807Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:30.820Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:30.831Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:30.834Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.840Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.842Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.844Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.844Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.845Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.846Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.863Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.863Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.864Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.865Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:30.867Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 70.755 ms - ::1","timestamp":"2026-01-10T09:43:30.869Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:30.874Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:30.880Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:30.881Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 62.514 ms - ::1","timestamp":"2026-01-10T09:43:30.883Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.887Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.888Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.888Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.889Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.895Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.896Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.897Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.897Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.912Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.913Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:30.915Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 75.380 ms - ::1","timestamp":"2026-01-10T09:43:30.919Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.920Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.921Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:30.924Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 154.314 ms - ::1","timestamp":"2026-01-10T09:43:30.928Z"}
+{"level":"info","message":"GET /api/auth/me 304 59.387 ms - ::1","timestamp":"2026-01-10T09:43:32.900Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.485 ms - ::1","timestamp":"2026-01-10T09:43:32.909Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.462Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.466Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.467Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.468Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.473Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.492Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.494Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.495Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.496Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:43:33.497Z"}
+{"level":"info","message":"[2026-01-10T09:43:33.498Z] ITEM REPORT","timestamp":"2026-01-10T09:43:33.498Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:43:33.504Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:43:33.505Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:43:33.505Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:43:33.506Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.520Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.520Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.521Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.522Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.523Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.523Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:33.530Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:33.532Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:33.536Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.547Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.548Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.548Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.549Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:43:33.551Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 60.167 ms - ::1","timestamp":"2026-01-10T09:43:33.553Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.560Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.561Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.562Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.564Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:33.567Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:33.568Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:43:33.569Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 40.056 ms - ::1","timestamp":"2026-01-10T09:43:33.574Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.582Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.582Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.583Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.583Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.587Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.588Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:43:33.589Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 69.952 ms - ::1","timestamp":"2026-01-10T09:43:33.590Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.599Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.599Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:43:33.606Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 144.351 ms - ::1","timestamp":"2026-01-10T09:43:33.613Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.561Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.563Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.564Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.564Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.566Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.574Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.576Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.577Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.579Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:44:36.586Z"}
+{"level":"info","message":"[2026-01-10T09:44:36.590Z] ITEM REPORT","timestamp":"2026-01-10T09:44:36.590Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:44:36.591Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:44:36.594Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:44:36.595Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:44:36.596Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:44:36.603Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:44:36.604Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:44:36.605Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.610Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.611Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.613Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.614Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.615Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.615Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.632Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.635Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.638Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.639Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:44:36.642Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 69.231 ms - ::1","timestamp":"2026-01-10T09:44:36.643Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:44:36.646Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:44:36.648Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:44:36.649Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 46.828 ms - ::1","timestamp":"2026-01-10T09:44:36.651Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.657Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.659Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.660Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.661Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.665Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.667Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.671Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.672Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.683Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.685Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:44:36.690Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 80.691 ms - ::1","timestamp":"2026-01-10T09:44:36.695Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.698Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.703Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:44:36.713Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 152.973 ms - ::1","timestamp":"2026-01-10T09:44:36.717Z"}
+{"level":"info","message":"GET /api/auth/me 304 5.908 ms - ::1","timestamp":"2026-01-10T09:46:49.818Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.286 ms - ::1","timestamp":"2026-01-10T09:46:49.827Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.308Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.309Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.310Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.311Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.311Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.318Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.319Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.320Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.323Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:46:50.325Z"}
+{"level":"info","message":"[2026-01-10T09:46:50.326Z] ITEM REPORT","timestamp":"2026-01-10T09:46:50.326Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:46:50.329Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:46:50.329Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:46:50.330Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:46:50.330Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.337Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.343Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.344Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.345Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.346Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.346Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:46:50.358Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:46:50.359Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:46:50.360Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.370Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.376Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.376Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.377Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:46:50.378Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 61.587 ms - ::1","timestamp":"2026-01-10T09:46:50.379Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.383Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.384Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.384Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.385Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:46:50.391Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:46:50.392Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:46:50.395Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 40.325 ms - ::1","timestamp":"2026-01-10T09:46:50.399Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.403Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.404Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.411Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.412Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.415Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.416Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:46:50.420Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 83.591 ms - ::1","timestamp":"2026-01-10T09:46:50.428Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.430Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.430Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:46:50.433Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 125.784 ms - ::1","timestamp":"2026-01-10T09:46:50.441Z"}
+{"level":"info","message":"GET /api/auth/me 304 6.178 ms - ::1","timestamp":"2026-01-10T09:47:08.201Z"}
+{"level":"info","message":"GET /api/auth/me 304 3.942 ms - ::1","timestamp":"2026-01-10T09:47:08.210Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.742Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.742Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.743Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.744Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.744Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.751Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.752Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.753Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.755Z"}
+{"level":"info","message":"\n============================================================","timestamp":"2026-01-10T09:47:08.756Z"}
+{"level":"info","message":"[2026-01-10T09:47:08.757Z] ITEM REPORT","timestamp":"2026-01-10T09:47:08.757Z"}
+{"level":"info","message":"Message: MongoDB Query","timestamp":"2026-01-10T09:47:08.759Z"}
+{"level":"info","message":"Data:","timestamp":"2026-01-10T09:47:08.760Z"}
+{"level":"info","message":"============================================================","timestamp":"2026-01-10T09:47:08.760Z"}
+{"level":"info","message":"🔍 Querying Item model with:","timestamp":"2026-01-10T09:47:08.762Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.768Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.769Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.771Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.773Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.775Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.777Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:47:08.787Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:47:08.787Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:47:08.788Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.795Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.796Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.796Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.797Z"}
+{"level":"info","message":"ITEM REPORT","timestamp":"2026-01-10T09:47:08.798Z"}
+{"level":"info","message":"GET /api/reports/items?startDate=2025-12-31&endDate=2026-01-10 304 47.915 ms - ::1","timestamp":"2026-01-10T09:47:08.800Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.802Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.806Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.807Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.808Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:47:08.816Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:47:08.816Z"}
+{"level":"info","message":"FITTERS LIST","timestamp":"2026-01-10T09:47:08.818Z"}
+{"level":"info","message":"GET /api/reports/fitters 304 31.827 ms - ::1","timestamp":"2026-01-10T09:47:08.819Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.822Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.823Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.824Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.825Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.828Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.828Z"}
+{"level":"info","message":"FINANCIAL REPORT","timestamp":"2026-01-10T09:47:08.830Z"}
+{"level":"info","message":"GET /api/reports/financial?startDate=2025-12-31&endDate=2026-01-10 304 62.408 ms - ::1","timestamp":"2026-01-10T09:47:08.831Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.834Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.835Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:47:08.838Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-10&status=all&fitterName=all&reportType=fitter-wise 304 96.950 ms - ::1","timestamp":"2026-01-10T09:47:08.840Z"}
+{"level":"info","message":"GET /api/users?search=&role=all 304 39.693 ms - ::1","timestamp":"2026-01-10T09:47:14.593Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.431 ms - ::1","timestamp":"2026-01-10T09:47:29.329Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.699 ms - ::1","timestamp":"2026-01-10T09:47:29.339Z"}
+{"level":"info","message":"GET /api/users?search=&role=all 304 9.131 ms - ::1","timestamp":"2026-01-10T09:47:29.588Z"}
+{"level":"info","message":"POST /api/auth/logout 200 11.753 ms - ::1","timestamp":"2026-01-10T09:47:53.379Z"}
+{"level":"info","message":"POST /api/auth/login 200 530.906 ms - ::1","timestamp":"2026-01-10T09:48:22.023Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.646Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.648Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.648Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.649Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.649Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 45.103 ms - ::1","timestamp":"2026-01-10T09:48:23.656Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 38.433 ms - ::1","timestamp":"2026-01-10T09:48:23.677Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 38.722 ms - ::1","timestamp":"2026-01-10T09:48:23.682Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.687Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.688Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.688Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.689Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.694Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.695Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T09:48:23.698Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 52.687 ms - ::1","timestamp":"2026-01-10T09:48:23.700Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 8.804 ms - ::1","timestamp":"2026-01-10T09:48:53.678Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 39.273 ms - ::1","timestamp":"2026-01-10T09:48:59.032Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 99.333 ms - ::1","timestamp":"2026-01-10T09:49:01.407Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-10T09:49:54.731Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-10T09:49:54.739Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-10T09:49:54.740Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 15.551 ms - ::1","timestamp":"2026-01-10T09:49:54.744Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-10T09:49:54.750Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-10T09:49:54.761Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-10T09:49:54.762Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 17.637 ms - ::1","timestamp":"2026-01-10T09:49:54.767Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 7.840 ms - ::1","timestamp":"2026-01-10T09:49:54.850Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 50.650 ms - ::1","timestamp":"2026-01-10T09:54:03.593Z"}
+{"level":"info","message":"GET /api/auth/me 200 28.378 ms - ::1","timestamp":"2026-01-10T10:13:34.875Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.470 ms - ::1","timestamp":"2026-01-10T10:13:34.884Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 68.298 ms - ::1","timestamp":"2026-01-10T10:13:35.170Z"}
+{"level":"info","message":"GET /api/auth/me 304 6.019 ms - ::1","timestamp":"2026-01-10T10:14:36.151Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.200 ms - ::1","timestamp":"2026-01-10T10:14:36.160Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 44.372 ms - ::1","timestamp":"2026-01-10T10:14:36.314Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 38.481 ms - ::1","timestamp":"2026-01-10T10:14:38.931Z"}
+{"level":"info","message":"GET /api/auth/me 304 8.277 ms - ::1","timestamp":"2026-01-10T10:14:41.065Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.761 ms - ::1","timestamp":"2026-01-10T10:14:41.078Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 43.544 ms - ::1","timestamp":"2026-01-10T10:14:41.235Z"}
+{"level":"info","message":"GET /api/auth/me 304 6.489 ms - ::1","timestamp":"2026-01-10T10:14:43.071Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.508 ms - ::1","timestamp":"2026-01-10T10:14:43.080Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 30.907 ms - ::1","timestamp":"2026-01-10T10:14:43.199Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 62.201 ms - ::1","timestamp":"2026-01-10T10:15:22.762Z"}
+{"level":"info","message":"GET /api/auth/me 304 6.450 ms - ::1","timestamp":"2026-01-10T10:15:25.267Z"}
+{"level":"info","message":"GET /api/auth/me 304 3.796 ms - ::1","timestamp":"2026-01-10T10:15:25.280Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 29.930 ms - ::1","timestamp":"2026-01-10T10:15:25.391Z"}
+{"level":"info","message":"GET /api/auth/me 304 5.618 ms - ::1","timestamp":"2026-01-10T10:15:42.116Z"}
+{"level":"info","message":"GET /api/auth/me 304 5.795 ms - ::1","timestamp":"2026-01-10T10:15:42.128Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 30.887 ms - ::1","timestamp":"2026-01-10T10:15:42.273Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 41.945 ms - ::1","timestamp":"2026-01-10T10:15:45.779Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.706 ms - ::1","timestamp":"2026-01-10T10:15:50.441Z"}
+{"level":"info","message":"GET /api/auth/me 304 21.598 ms - ::1","timestamp":"2026-01-10T10:15:50.478Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 49.151 ms - ::1","timestamp":"2026-01-10T10:15:50.610Z"}
+{"level":"info","message":"GET /api/auth/me 304 7.477 ms - ::1","timestamp":"2026-01-10T10:15:52.182Z"}
+{"level":"info","message":"GET /api/auth/me 304 6.966 ms - ::1","timestamp":"2026-01-10T10:15:52.202Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 24.545 ms - ::1","timestamp":"2026-01-10T10:15:52.307Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 65.511 ms - ::1","timestamp":"2026-01-10T10:16:14.639Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 76.081 ms - ::1","timestamp":"2026-01-10T10:16:43.595Z"}
+{"level":"info","message":"GET /api/auth/me 304 5.492 ms - ::1","timestamp":"2026-01-10T10:17:41.064Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.589 ms - ::1","timestamp":"2026-01-10T10:17:41.077Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.181Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.183Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.184Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.187Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.187Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 57.539 ms - ::1","timestamp":"2026-01-10T10:17:41.210Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 43.830 ms - ::1","timestamp":"2026-01-10T10:17:41.221Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 53.582 ms - ::1","timestamp":"2026-01-10T10:17:41.227Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.231Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.232Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.232Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.233Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.246Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.251Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:17:41.262Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 81.591 ms - ::1","timestamp":"2026-01-10T10:17:41.264Z"}
+{"level":"info","message":"GET /api/auth/me 304 7.343 ms - ::1","timestamp":"2026-01-10T10:18:21.328Z"}
+{"level":"info","message":"GET /api/auth/me 304 7.286 ms - ::1","timestamp":"2026-01-10T10:18:21.353Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 21.433 ms - ::1","timestamp":"2026-01-10T10:18:21.699Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 20.589 ms - ::1","timestamp":"2026-01-10T10:18:21.749Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 34.425 ms - ::1","timestamp":"2026-01-10T10:18:21.794Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.808Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.815Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.831Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.833Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.843Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.865Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.869Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.877Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.882Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.899Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.909Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:21.916Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 107.435 ms - ::1","timestamp":"2026-01-10T10:18:21.926Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.061Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.062Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.063Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.063Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.064Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 61.117 ms - ::1","timestamp":"2026-01-10T10:18:25.102Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 83.948 ms - ::1","timestamp":"2026-01-10T10:18:25.133Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 81.175 ms - ::1","timestamp":"2026-01-10T10:18:25.139Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.142Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.143Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.143Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.144Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.148Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.149Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:25.155Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 94.054 ms - ::1","timestamp":"2026-01-10T10:18:25.158Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.462Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.463Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.464Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.465Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.466Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 44.580 ms - ::1","timestamp":"2026-01-10T10:18:32.486Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 52.554 ms - ::1","timestamp":"2026-01-10T10:18:32.507Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 55.078 ms - ::1","timestamp":"2026-01-10T10:18:32.513Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.516Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.518Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.518Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.519Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.523Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.523Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:18:32.527Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 65.084 ms - ::1","timestamp":"2026-01-10T10:18:32.527Z"}
+{"level":"info","message":"POST /api/auth/logout 200 1.854 ms - ::1","timestamp":"2026-01-10T10:18:56.774Z"}
+{"level":"info","message":"POST /api/auth/login 200 442.502 ms - ::1","timestamp":"2026-01-10T10:19:09.813Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.462Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.463Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.463Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.463Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.464Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 42.648 ms - ::1","timestamp":"2026-01-10T10:19:11.469Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 39.140 ms - ::1","timestamp":"2026-01-10T10:19:11.482Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 30.263 ms - ::1","timestamp":"2026-01-10T10:19:11.487Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.489Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.490Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.490Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.491Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.496Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.496Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:19:11.499Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 37.132 ms - ::1","timestamp":"2026-01-10T10:19:11.500Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.230 ms - ::1","timestamp":"2026-01-10T10:19:41.769Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 11.694 ms - ::1","timestamp":"2026-01-10T10:20:11.802Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 7.404 ms - ::1","timestamp":"2026-01-10T10:20:41.834Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.299Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.300Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.301Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.302Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.303Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 59.335 ms - ::1","timestamp":"2026-01-10T10:26:31.330Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 63.883 ms - ::1","timestamp":"2026-01-10T10:26:31.356Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 63.697 ms - ::1","timestamp":"2026-01-10T10:26:31.360Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.363Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.364Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.365Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.366Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.372Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.373Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:31.386Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 87.163 ms - ::1","timestamp":"2026-01-10T10:26:31.392Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.525Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.526Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.526Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.527Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.527Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 49.898 ms - ::1","timestamp":"2026-01-10T10:26:49.537Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 54.029 ms - ::1","timestamp":"2026-01-10T10:26:49.567Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 50.637 ms - ::1","timestamp":"2026-01-10T10:26:49.572Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.574Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.574Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.574Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.575Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.582Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.582Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:49.585Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 61.955 ms - ::1","timestamp":"2026-01-10T10:26:49.586Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.057Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.066Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.069Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.074Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.078Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 73.968 ms - ::1","timestamp":"2026-01-10T10:26:59.092Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 66.638 ms - ::1","timestamp":"2026-01-10T10:26:59.107Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 58.234 ms - ::1","timestamp":"2026-01-10T10:26:59.110Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.112Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.113Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.113Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.113Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.118Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.119Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:26:59.121Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 66.756 ms - ::1","timestamp":"2026-01-10T10:26:59.122Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.750Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.757Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.757Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.759Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.761Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 94.751 ms - ::1","timestamp":"2026-01-10T10:29:11.775Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 64.969 ms - ::1","timestamp":"2026-01-10T10:29:11.799Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 77.010 ms - ::1","timestamp":"2026-01-10T10:29:11.819Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.825Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.825Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.826Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.827Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.834Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.835Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:29:11.838Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 88.128 ms - ::1","timestamp":"2026-01-10T10:29:11.839Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.726Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.769Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.774Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.779Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.783Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 157.168 ms - ::1","timestamp":"2026-01-10T10:42:07.813Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 123.067 ms - ::1","timestamp":"2026-01-10T10:42:07.836Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 130.071 ms - ::1","timestamp":"2026-01-10T10:42:07.849Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.853Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.854Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.855Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.860Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.869Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.922Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:42:07.932Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 207.000 ms - ::1","timestamp":"2026-01-10T10:42:07.933Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 15.404 ms - ::1","timestamp":"2026-01-10T10:42:37.860Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 63.634 ms - ::1","timestamp":"2026-01-10T10:43:25.871Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.875Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.876Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.878Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.879Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.880Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 41.134 ms - ::1","timestamp":"2026-01-10T10:43:25.894Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 40.995 ms - ::1","timestamp":"2026-01-10T10:43:25.899Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.902Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.903Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.904Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.904Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.909Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.910Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:43:25.912Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 37.703 ms - ::1","timestamp":"2026-01-10T10:43:25.913Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 304 15.541 ms - ::1","timestamp":"2026-01-10T10:43:29.086Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 37.574 ms - ::1","timestamp":"2026-01-10T10:43:31.872Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-10T10:43:35.178Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-10T10:43:35.186Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-10T10:43:35.186Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 12.199 ms - ::1","timestamp":"2026-01-10T10:43:35.190Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-10T10:43:35.199Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-10T10:43:35.215Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-10T10:43:35.216Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 30.831 ms - ::1","timestamp":"2026-01-10T10:43:35.230Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 10.412 ms - ::1","timestamp":"2026-01-10T10:43:35.377Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-10T10:44:12.163Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-10T10:44:12.173Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-10T10:44:12.174Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 19.414 ms - ::1","timestamp":"2026-01-10T10:44:12.182Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-10T10:44:12.189Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-10T10:44:12.203Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-10T10:44:12.205Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 21.493 ms - ::1","timestamp":"2026-01-10T10:44:12.215Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 8.137 ms - ::1","timestamp":"2026-01-10T10:44:12.340Z"}
+{"level":"info","message":"POST /api/auth/logout 200 5.831 ms - ::1","timestamp":"2026-01-10T10:44:31.787Z"}
+{"level":"info","message":"POST /api/auth/login 200 975.792 ms - ::1","timestamp":"2026-01-10T10:44:35.199Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.483Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.483Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.484Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.485Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.485Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 116.050 ms - ::1","timestamp":"2026-01-10T10:44:37.492Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 70.957 ms - ::1","timestamp":"2026-01-10T10:44:37.542Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 73.084 ms - ::1","timestamp":"2026-01-10T10:44:37.550Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.559Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.560Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.561Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.561Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.566Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.567Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:37.578Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 90.318 ms - ::1","timestamp":"2026-01-10T10:44:37.581Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.374Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.388Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.389Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.390Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.406Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 75.573 ms - ::1","timestamp":"2026-01-10T10:44:42.438Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=quarter 304 91.246 ms - ::1","timestamp":"2026-01-10T10:44:42.462Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.497Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.497Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.500Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.502Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.539Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.540Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:42.561Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 187.391 ms - ::1","timestamp":"2026-01-10T10:44:42.564Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.198Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.200Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.201Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.202Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.202Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2026-01-02&endDate=2026-01-09 200 56.534 ms - ::1","timestamp":"2026-01-10T10:44:45.246Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.250Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.251Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.251Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.252Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=week 304 51.873 ms - ::1","timestamp":"2026-01-10T10:44:45.263Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.266Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.267Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:45.273Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2026-01-02&endDate=2026-01-09 200 76.525 ms - ::1","timestamp":"2026-01-10T10:44:45.299Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.439Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.441Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.442Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.443Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.444Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.463Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.465Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.465Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.467Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2026-01-09&endDate=2026-01-09 200 45.477 ms - ::1","timestamp":"2026-01-10T10:44:46.472Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=today 304 43.141 ms - ::1","timestamp":"2026-01-10T10:44:46.495Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.498Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.499Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:46.506Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2026-01-09&endDate=2026-01-09 200 66.537 ms - ::1","timestamp":"2026-01-10T10:44:46.513Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.264Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.267Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.267Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.268Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.269Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2026-01-02&endDate=2026-01-09 304 50.770 ms - ::1","timestamp":"2026-01-10T10:44:48.287Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=week 304 60.687 ms - ::1","timestamp":"2026-01-10T10:44:48.303Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.308Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.313Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.314Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.316Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.322Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.336Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:48.346Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2026-01-02&endDate=2026-01-09 304 88.278 ms - ::1","timestamp":"2026-01-10T10:44:48.353Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.599Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.600Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.601Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.602Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.602Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 40.024 ms - ::1","timestamp":"2026-01-10T10:44:49.627Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 47.085 ms - ::1","timestamp":"2026-01-10T10:44:49.640Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.647Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.651Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.652Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.653Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.660Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.665Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T10:44:49.669Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 70.224 ms - ::1","timestamp":"2026-01-10T10:44:49.670Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 9.673 ms - ::1","timestamp":"2026-01-10T10:45:08.528Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 10.576 ms - ::1","timestamp":"2026-01-10T10:45:38.560Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 7.887 ms - ::1","timestamp":"2026-01-10T10:46:08.577Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.085Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.088Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.089Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.090Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.091Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 215.071 ms - ::1","timestamp":"2026-01-10T11:58:48.285Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.305Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.311Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.316Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.321Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.354Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.358Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:48.368Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 281.780 ms - ::1","timestamp":"2026-01-10T11:58:48.370Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 341.645 ms - ::1","timestamp":"2026-01-10T11:58:48.381Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 328.824 ms - ::1","timestamp":"2026-01-10T11:58:48.408Z"}
+{"level":"info","message":"GET /api/auth/me 200 15.107 ms - ::1","timestamp":"2026-01-10T11:58:49.948Z"}
+{"level":"info","message":"GET /api/auth/me 304 5.711 ms - ::1","timestamp":"2026-01-10T11:58:49.962Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.141Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.144Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.145Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.146Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.147Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 77.749 ms - ::1","timestamp":"2026-01-10T11:58:50.205Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 79.228 ms - ::1","timestamp":"2026-01-10T11:58:50.213Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.222Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.225Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.227Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.233Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.249Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.250Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T11:58:50.258Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 114.507 ms - ::1","timestamp":"2026-01-10T11:58:50.266Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 183.578 ms - ::1","timestamp":"2026-01-10T11:58:50.280Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.859Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.862Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.863Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.864Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.865Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 198.488 ms - ::1","timestamp":"2026-01-10T12:02:05.907Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.964Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.965Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.966Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:05.967Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:06.000Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:06.014Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:06.032Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 175.346 ms - ::1","timestamp":"2026-01-10T12:02:06.043Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 241.834 ms - ::1","timestamp":"2026-01-10T12:02:06.079Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 245.825 ms - ::1","timestamp":"2026-01-10T12:02:06.093Z"}
+{"level":"info","message":"POST /api/auth/logout 200 4.659 ms - ::1","timestamp":"2026-01-10T12:02:17.475Z"}
+{"level":"info","message":"POST /api/auth/login 200 766.620 ms - ::1","timestamp":"2026-01-10T12:02:29.733Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 47.598 ms - ::1","timestamp":"2026-01-10T12:02:31.472Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.526Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.527Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.528Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.530Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.531Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 60.956 ms - ::1","timestamp":"2026-01-10T12:02:31.559Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 50.449 ms - ::1","timestamp":"2026-01-10T12:02:31.570Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.577Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.582Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.586Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.588Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.600Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.601Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:02:31.609Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 83.507 ms - ::1","timestamp":"2026-01-10T12:02:31.611Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.203Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.218Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.221Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.223Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.228Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 275.093 ms - ::1","timestamp":"2026-01-10T12:17:23.421Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 247.204 ms - ::1","timestamp":"2026-01-10T12:17:23.432Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 438.452 ms - ::1","timestamp":"2026-01-10T12:17:23.445Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.474Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.483Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.485Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.487Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.517Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.518Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:23.524Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 327.608 ms - ::1","timestamp":"2026-01-10T12:17:23.533Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.481Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.483Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.484Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.485Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.487Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 130.826 ms - ::1","timestamp":"2026-01-10T12:17:30.571Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 128.685 ms - ::1","timestamp":"2026-01-10T12:17:30.582Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.594Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.596Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.597Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.602Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.649Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.652Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:30.657Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 178.375 ms - ::1","timestamp":"2026-01-10T12:17:30.667Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 288.392 ms - ::1","timestamp":"2026-01-10T12:17:30.679Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 95.334 ms - ::1","timestamp":"2026-01-10T12:17:38.532Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.594Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.599Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.601Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.652Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.655Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 159.244 ms - ::1","timestamp":"2026-01-10T12:17:38.715Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 179.600 ms - ::1","timestamp":"2026-01-10T12:17:38.765Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.819Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.835Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.868Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.881Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.898Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.902Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:38.911Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 319.523 ms - ::1","timestamp":"2026-01-10T12:17:38.927Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.832Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.835Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.836Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.837Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.838Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 127.897 ms - ::1","timestamp":"2026-01-10T12:17:58.858Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-09 304 113.609 ms - ::1","timestamp":"2026-01-10T12:17:58.902Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 109.339 ms - ::1","timestamp":"2026-01-10T12:17:58.915Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.950Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.952Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.953Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.954Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:58.995Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:59.012Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-10T12:17:59.048Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-09 304 218.167 ms - ::1","timestamp":"2026-01-10T12:17:59.053Z"}

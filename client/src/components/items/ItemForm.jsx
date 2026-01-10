@@ -178,11 +178,21 @@ export default function ItemForm({ item, onSuccess }) {
         <div>
           <Label>{t('items.price')} (per item) *</Label>
           <Input
-            type="number"
-            {...register('price', { valueAsNumber: true })}
+            type="text"
+            inputMode="decimal"
+            {...register('price', { 
+              valueAsNumber: true,
+              onBlur: (e) => {
+                const value = parseFloat(e.target.value);
+                if (!isNaN(value)) {
+                  setValue('price', value);
+                }
+              }
+            })}
             placeholder="0"
             className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0"
             style={{ outline: 'none', boxShadow: 'none' }}
+            onWheel={(e) => e.target.blur()}
           />
           {errors.price && (
             <p className="text-sm text-red-500 mt-1">{errors.price.message}</p>
@@ -194,12 +204,21 @@ export default function ItemForm({ item, onSuccess }) {
             {item ? 'Quantity to Add *' : `${t('items.totalQuantity')} *`}
           </Label>
           <Input
-            type="number"
-            {...register('quantityToAdd', { valueAsNumber: true })}
+            type="text"
+            inputMode="numeric"
+            {...register('quantityToAdd', { 
+              valueAsNumber: true,
+              onBlur: (e) => {
+                const value = parseInt(e.target.value, 10);
+                if (!isNaN(value)) {
+                  setValue('quantityToAdd', value);
+                }
+              }
+            })}
             placeholder="0"
-            min="0"
             className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0"
             style={{ outline: 'none', boxShadow: 'none' }}
+            onWheel={(e) => e.target.blur()}
           />
           {errors.quantityToAdd && (
             <p className="text-sm text-red-500 mt-1">
@@ -292,7 +311,7 @@ export default function ItemForm({ item, onSuccess }) {
             <div>
               <Label>Available Quantity</Label>
               <Input
-                type="number"
+                type="text"
                 value={item.availableQuantity || 0}
                 disabled
                 className="bg-muted text-gray-700 font-semibold"
@@ -301,7 +320,7 @@ export default function ItemForm({ item, onSuccess }) {
             <div>
               <Label>Rented Quantity</Label>
               <Input
-                type="number"
+                type="text"
                 value={item.rentedQuantity || 0}
                 disabled
                 className="bg-muted text-gray-700 font-semibold"

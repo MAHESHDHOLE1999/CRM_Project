@@ -69,7 +69,7 @@ export default function BookingForm({ booking, onSuccess }) {
     );
     setItemsTotal(total);
     setValue('totalAmount', total);
-  }, [selectedItems]);
+  }, [selectedItems, setValue]);
 
   const mutation = useMutation({
     mutationFn: (data) => {
@@ -83,17 +83,21 @@ export default function BookingForm({ booking, onSuccess }) {
         : bookingService.create(payload);
     },
     onSuccess: () => {
-      toast.success(booking ? 'Booking updated!' : 'Booking created!');
+      toast.success(
+        booking 
+          ? t('booking.bookingUpdated') || 'Booking updated!'
+          : t('booking.bookingCreated') || 'Booking created!'
+      );
       onSuccess();
     },
     onError: () => {
-      toast.error('Failed to save booking');
+      toast.error(t('booking.failedSaveBooking') || 'Failed to save booking');
     }
   });
 
   const onSubmit = (data) => {
     if (selectedItems.length === 0) {
-      toast.error('Please select at least one item');
+      toast.error(t('customer.selectAtLeastOneItem') || 'Please select at least one item');
       return;
     }
     mutation.mutate(data);
@@ -107,27 +111,43 @@ export default function BookingForm({ booking, onSuccess }) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Customer Information */}
       <div>
-        <h3 className="text-lg font-semibold mb-3">Customer Information</h3>
+        <h3 className="text-lg font-semibold mb-3">{t('customer.customerInfo') || 'Customer Information'}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label>Customer Name *</Label>
-            <Input {...register('customerName')} placeholder="John Doe" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
+            <Label>{t('booking.customerName') || 'Customer Name'} *</Label>
+            <Input 
+              {...register('customerName')} 
+              placeholder={t('booking.customerName') || 'John Doe'}
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              style={{outline: 'none', boxShadow: 'none'}} 
+            />
             {errors.customerName && (
               <p className="text-sm text-red-500 mt-1">{errors.customerName.message}</p>
             )}
           </div>
 
           <div>
-            <Label>Phone Number *</Label>
-            <Input {...register('phone')} placeholder="9876543210" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
+            <Label>{t('booking.phone') || 'Phone Number'} *</Label>
+            <Input 
+              {...register('phone')} 
+              placeholder="9876543210" 
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              style={{outline: 'none', boxShadow: 'none'}} 
+            />
             {errors.phone && (
               <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>
             )}
           </div>
 
           <div className="md:col-span-2">
-            <Label>Email (Optional)</Label>
-            <Input {...register('email')} type="email" placeholder="customer@example.com" className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}/>
+            <Label>{t('booking.email') || 'Email (Optional)'}</Label>
+            <Input 
+              {...register('email')} 
+              type="email" 
+              placeholder="customer@example.com" 
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              style={{outline: 'none', boxShadow: 'none'}}
+            />
             {errors.email && (
               <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
             )}
@@ -145,11 +165,16 @@ export default function BookingForm({ booking, onSuccess }) {
 
       {/* Booking Details */}
       <div>
-        <h3 className="text-lg font-semibold mb-3">Booking Details</h3>
+        <h3 className="text-lg font-semibold mb-3">{t('booking.bookingDetails') || 'Booking Details'}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label>Booking Date *</Label>
-            <Input type="date" {...register('bookingDate')} className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}/>
+            <Label>{t('booking.date') || 'Booking Date'} *</Label>
+            <Input 
+              type="date" 
+              {...register('bookingDate')} 
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              style={{outline: 'none', boxShadow: 'none'}}
+            />
             {errors.bookingDate && (
               <p className="text-sm text-red-500 mt-1">{errors.bookingDate.message}</p>
             )}
@@ -157,12 +182,28 @@ export default function BookingForm({ booking, onSuccess }) {
 
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <Label>Start Time *</Label>
-              <Input type="time" {...register('startTime')} className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
+              <Label>{t('booking.startTime') || 'Start Time'} *</Label>
+              <Input 
+                type="time" 
+                {...register('startTime')} 
+                className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+                style={{outline: 'none', boxShadow: 'none'}} 
+              />
+              {errors.startTime && (
+                <p className="text-sm text-red-500 mt-1">{errors.startTime.message}</p>
+              )}
             </div>
             <div>
-              <Label>End Time *</Label>
-              <Input type="time" {...register('endTime')} className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
+              <Label>{t('booking.endTime') || 'End Time'} *</Label>
+              <Input 
+                type="time" 
+                {...register('endTime')} 
+                className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+                style={{outline: 'none', boxShadow: 'none'}} 
+              />
+              {errors.endTime && (
+                <p className="text-sm text-red-500 mt-1">{errors.endTime.message}</p>
+              )}
             </div>
           </div>
         </div>
@@ -170,10 +211,10 @@ export default function BookingForm({ booking, onSuccess }) {
 
       {/* Payment Information */}
       <div>
-        <h3 className="text-lg font-semibold mb-3">Payment Information</h3>
+        <h3 className="text-lg font-semibold mb-3">{t('customer.paymentInfo') || 'Payment Information'}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label>Total Amount (Auto-calculated) *</Label>
+            <Label>{t('customer.totalAmount') || 'Total Amount'} ({t('common.autoCalculated') || 'Auto-calculated'}) *</Label>
             <Input
               type="number"
               {...register('totalAmount', { valueAsNumber: true })}
@@ -183,27 +224,29 @@ export default function BookingForm({ booking, onSuccess }) {
           </div>
 
           <div>
-            <Label>Deposit Amount</Label>
+            <Label>{t('customer.depositAmount') || 'Deposit Amount'}</Label>
             <Input
               type="text"
               {...register('depositAmount', { valueAsNumber: true })}
               placeholder="0"
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
 
           <div>
-            <Label>Amount Given</Label>
+            <Label>{t('booking.amountGiven') || 'Amount Given'}</Label>
             <Input
               type="text"
               {...register('givenAmount', { valueAsNumber: true })}
               placeholder="0"
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
 
           <div>
-            <Label>Remaining Amount</Label>
+            <Label>{t('customer.remainingAmount') || 'Remaining Amount'}</Label>
             <Input
               type="number"
               value={remainingAmount}
@@ -213,7 +256,7 @@ export default function BookingForm({ booking, onSuccess }) {
           </div>
 
           <div>
-            <Label>Status</Label>
+            <Label>{t('customer.status') || 'Status'}</Label>
             <Select
               value={watch('status')}
               onValueChange={(value) => setValue('status', value)}
@@ -222,23 +265,35 @@ export default function BookingForm({ booking, onSuccess }) {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Pending">Pending</SelectItem>
-                <SelectItem value="Confirmed">Confirmed</SelectItem>
-                <SelectItem value="Cancelled">Cancelled</SelectItem>
+                <SelectItem value="Pending">{t('booking.pending') || 'Pending'}</SelectItem>
+                <SelectItem value="Confirmed">{t('booking.confirmed') || 'Confirmed'}</SelectItem>
+                <SelectItem value="Cancelled">{t('booking.cancelled') || 'Cancelled'}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="md:col-span-2">
-            <Label>Notes</Label>
-            <Input {...register('notes')} placeholder="Additional notes or requirements..." className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}} />
+            <Label>{t('common.notes') || 'Notes'}</Label>
+            <Input 
+              {...register('notes')} 
+              placeholder={t('booking.additionalNotesPlaceholder') || 'Additional notes or requirements...'} 
+              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              style={{outline: 'none', boxShadow: 'none'}} 
+            />
           </div>
         </div>
       </div>
 
       <div className="flex justify-end gap-2 pt-4 border-t">
         <Button type="submit" disabled={mutation.isPending} size="lg">
-          {mutation.isPending ? 'Saving...' : t('common.save')}
+          {mutation.isPending ? (
+            <>
+              <span className="animate-spin mr-2">⏳</span>
+              {t('common.saving') || 'Saving...'}
+            </>
+          ) : (
+            t('common.save') || 'Save'
+          )}
         </Button>
       </div>
     </form>

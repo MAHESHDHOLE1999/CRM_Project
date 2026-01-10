@@ -1,10 +1,10 @@
-// File: src/pages/ForgotPassword.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 import { Mail, ArrowRight, CheckCircle, Lock, Eye, EyeOff } from 'lucide-react';
 import api from '@/services/api';
 
@@ -25,8 +25,9 @@ const OtpVerificationSchema = z.object({
 });
 
 export default function ForgotPassword() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const [step, setStep] = useState('email'); // email -> otp -> password
+  const [step, setStep] = useState('email');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -45,17 +46,15 @@ export default function ForgotPassword() {
     resolver: zodResolver(resetPasswordSchema)
   });
 
-  // Handle email submission
   const onEmailSubmit = async (data) => {
     try {
       setLoading(true);
       await api.post('/users/forgot-password', { email: data.email });
       setEmail(data.email);
       setStep('otp');
-      setCountdown(300); // 5 minutes
-      toast.success('OTP sent to your email');
+      setCountdown(300);
+      toast.success(t('auth.otpSent') || 'OTP sent to your email');
       
-      // Countdown timer
       const timer = setInterval(() => {
         setCountdown((prev) => {
           if (prev <= 1) {
@@ -66,13 +65,12 @@ export default function ForgotPassword() {
         });
       }, 1000);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to send OTP');
+      toast.error(error.response?.data?.message || t('auth.failedSendOtp') || 'Failed to send OTP');
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle OTP verification
   const onOtpSubmit = async (data) => {
     try {
       setLoading(true);
@@ -80,19 +78,17 @@ export default function ForgotPassword() {
         email,
         otp: data.otp
       });
-      console.log(response);
       
       sessionStorage.setItem('resetToken', response.data.data.resetToken);
       setStep('password');
-      toast.success('OTP verified successfully');
+      toast.success(t('auth.otpVerified') || 'OTP verified successfully');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Invalid OTP');
+      toast.error(error.response?.data?.message || t('auth.invalidOtp') || 'Invalid OTP');
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle password reset
   const onPasswordSubmit = async (data) => {
     try {
       setLoading(true);
@@ -105,10 +101,10 @@ export default function ForgotPassword() {
       });
       
       sessionStorage.removeItem('resetToken');
-      toast.success('Password reset successfully');
+      toast.success(t('auth.passwordResetSuccess') || 'Password reset successfully');
       navigate('/login');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to reset password');
+      toast.error(error.response?.data?.message || t('auth.failedResetPassword') || 'Failed to reset password');
     } finally {
       setLoading(false);
     }
@@ -125,7 +121,7 @@ export default function ForgotPassword() {
       setLoading(true);
       await api.post('/users/forgot-password', { email });
       setCountdown(300);
-      toast.success('OTP resent to your email');
+      toast.success(t('auth.otpResent') || 'OTP resent to your email');
       
       const timer = setInterval(() => {
         setCountdown((prev) => {
@@ -137,7 +133,7 @@ export default function ForgotPassword() {
         });
       }, 1000);
     } catch (error) {
-      toast.error('Failed to resend OTP');
+      toast.error(t('auth.failedResendOtp') || 'Failed to resend OTP');
     } finally {
       setLoading(false);
     }
@@ -159,8 +155,12 @@ export default function ForgotPassword() {
           <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg mb-5">
             <Lock className="w-7 h-7 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Reset Password</h1>
-          <p className="text-slate-600 dark:text-slate-400">Recover your account access</p>
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+            {t('auth.resetPassword') || 'Reset Password'}
+          </h1>
+          <p className="text-slate-600 dark:text-slate-400">
+            {t('auth.recoverAccountAccess') || 'Recover your account access'}
+          </p>
         </div>
 
         {/* Main Card */}
@@ -172,7 +172,7 @@ export default function ForgotPassword() {
               <div className="space-y-6 animate-slide-in">
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                    Email Address
+                    {t('auth.email') || 'Email Address'}
                   </label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
@@ -191,7 +191,7 @@ export default function ForgotPassword() {
                 </div>
 
                 <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Enter your registered email address and we'll send you an OTP to reset your password.
+                  {t('auth.enterEmailForOtp') || 'Enter your registered email address and we\'ll send you an OTP to reset your password.'}
                 </p>
 
                 <button
@@ -202,11 +202,11 @@ export default function ForgotPassword() {
                   {loading ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Sending OTP...</span>
+                      <span>{t('auth.sendingOtp') || 'Sending OTP...'}</span>
                     </>
                   ) : (
                     <>
-                      <span>Send OTP</span>
+                      <span>{t('auth.sendOtp') || 'Send OTP'}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -214,12 +214,12 @@ export default function ForgotPassword() {
 
                 <div className="text-center">
                   <p className="text-slate-600 dark:text-slate-400 text-sm">
-                    Remember your password?{' '}
+                    {t('auth.rememberPassword') || 'Remember your password?'}{' '}
                     <button
                       onClick={() => navigate('/login')}
                       className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition"
                     >
-                      Sign in
+                      {t('auth.signIn') || 'Sign in'}
                     </button>
                   </p>
                 </div>
@@ -231,10 +231,10 @@ export default function ForgotPassword() {
               <div className="space-y-6 animate-slide-in">
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                    Enter OTP
+                    {t('auth.enterOtp') || 'Enter OTP'}
                   </label>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mb-3">
-                    We've sent a 6-digit OTP to {email}
+                    {t('auth.otpSentTo') || `We've sent a 6-digit OTP to`} {email}
                   </p>
                   <input
                     type="text"
@@ -252,7 +252,7 @@ export default function ForgotPassword() {
                 </div>
 
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-600 dark:text-slate-400">OTP expires in:</span>
+                  <span className="text-slate-600 dark:text-slate-400">{t('auth.otpExpiresIn') || 'OTP expires in'}:</span>
                   <span className={`font-semibold ${countdown < 60 ? 'text-red-600' : 'text-blue-600'}`}>
                     {formatCountdown(countdown)}
                   </span>
@@ -263,7 +263,7 @@ export default function ForgotPassword() {
                     onClick={handleResendOtp}
                     className="w-full text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold text-sm transition"
                   >
-                    Didn't receive OTP? Resend
+                    {t('auth.didntReceiveOtp') || "Didn't receive OTP? Resend"}
                   </button>
                 )}
 
@@ -275,11 +275,11 @@ export default function ForgotPassword() {
                   {loading ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Verifying...</span>
+                      <span>{t('auth.verifying') || 'Verifying...'}</span>
                     </>
                   ) : (
                     <>
-                      <span>Verify OTP</span>
+                      <span>{t('auth.verifyOtp') || 'Verify OTP'}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -289,7 +289,7 @@ export default function ForgotPassword() {
                   onClick={() => setStep('email')}
                   className="w-full text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-semibold py-2.5 rounded-lg transition"
                 >
-                  Back to Email
+                  {t('common.back') || 'Back to Email'}
                 </button>
               </div>
             )}
@@ -300,20 +300,20 @@ export default function ForgotPassword() {
                 <div className="flex items-center gap-3 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                   <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
                   <span className="text-sm font-semibold text-green-800 dark:text-green-300">
-                    Email verified successfully
+                    {t('auth.emailVerified') || 'Email verified successfully'}
                   </span>
                 </div>
 
                 {/* New Password */}
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                    New Password
+                    {t('auth.newPassword') || 'New Password'}
                   </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
                     <input
                       type={showPassword ? 'text' : 'password'}
-                      placeholder="Create a strong password"
+                      placeholder={t('auth.createStrongPassword') || 'Create a strong password'}
                       {...resetForm.register('password')}
                       className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-10 py-2.5 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-0 focus:ring-blue-500 focus:border-transparent dark:focus:ring-blue-400 transition-all"
                     />
@@ -335,13 +335,13 @@ export default function ForgotPassword() {
                 {/* Confirm Password */}
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                    Confirm Password
+                    {t('auth.confirmPassword') || 'Confirm Password'}
                   </label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-3 w-5 h-5 text-slate-400" />
                     <input
                       type={showConfirmPassword ? 'text' : 'password'}
-                      placeholder="Re-enter password"
+                      placeholder={t('auth.reEnterPassword') || 'Re-enter password'}
                       {...resetForm.register('confirmPassword')}
                       className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-10 py-2.5 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-0 focus:ring-blue-500 focus:border-transparent dark:focus:ring-blue-400 transition-all"
                     />
@@ -362,11 +362,13 @@ export default function ForgotPassword() {
 
                 {/* Password Requirements */}
                 <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg space-y-2">
-                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">Password Requirements:</p>
+                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                    {t('auth.passwordRequirements') || 'Password Requirements'}:
+                  </p>
                   <ul className="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-                    <li>✓ At least 6 characters long</li>
-                    <li>✓ Mix of uppercase and lowercase letters</li>
-                    <li>✓ Include at least one number</li>
+                    <li>✓ {t('auth.passwordMinLength') || 'At least 6 characters long'}</li>
+                    <li>✓ {t('auth.passwordMixed') || 'Mix of uppercase and lowercase letters'}</li>
+                    <li>✓ {t('auth.passwordNumber') || 'Include at least one number'}</li>
                   </ul>
                 </div>
 
@@ -378,11 +380,11 @@ export default function ForgotPassword() {
                   {loading ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Resetting Password...</span>
+                      <span>{t('auth.resettingPassword') || 'Resetting Password...'}</span>
                     </>
                   ) : (
                     <>
-                      <span>Reset Password</span>
+                      <span>{t('auth.resetPassword') || 'Reset Password'}</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -392,7 +394,7 @@ export default function ForgotPassword() {
                   onClick={() => navigate('/login')}
                   className="w-full text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-semibold py-2.5 rounded-lg transition"
                 >
-                  Back to Login
+                  {t('auth.backToLogin') || 'Back to Login'}
                 </button>
               </div>
             )}
@@ -401,7 +403,7 @@ export default function ForgotPassword() {
 
         {/* Footer */}
         <p className="text-center text-slate-600 dark:text-slate-500 text-xs mt-8">
-          © 2024 Ajay Gadhi Bandar CRM. All rights reserved.
+          {t('auth.copyright') || '© 2024 Ajay Gadhi Bandar CRM. All rights reserved.'}
         </p>
       </div>
     </div>

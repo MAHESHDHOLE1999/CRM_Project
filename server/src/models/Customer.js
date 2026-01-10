@@ -626,7 +626,7 @@
 // export default mongoose.model('Customer', customerSchema);
 
 // File: backend/models/Customer.js
-// COMPLETE: Customer model with per-item checkout data
+// COMPLETE & FINAL: Customer model with bill data storage
 
 import mongoose from 'mongoose';
 
@@ -648,6 +648,44 @@ const itemUsageSchema = new mongoose.Schema({
   price: {
     type: Number,
     default: 0
+  }
+}, { _id: false });
+
+// ✅ BILL DATA SCHEMA - Stores complete bill information
+const billItemSchema = new mongoose.Schema({
+  index: Number,
+  itemId: String,
+  itemName: String,
+  quantity: Number,
+  price: Number,
+  amount: Number,
+  checkOutDate: String,
+  checkOutTime: String,
+  rentalDays: Number,
+  extraHours: Number,
+  hourlyRate: Number,
+  extraCharges: Number
+}, { _id: false });
+
+const billSummarySchema = new mongoose.Schema({
+  itemsTotal: Number,
+  totalExtraCharges: Number,
+  depositAmount: Number,
+  maintenanceCharges: Number,
+  transportCost: Number,
+  totalAmount: Number,
+  givenAmount: Number,
+  remainingAmount: Number
+}, { _id: false });
+
+const billDataSchema = new mongoose.Schema({
+  billNo: String,
+  billDate: Date,
+  itemsWithCharges: [billItemSchema],
+  summary: billSummarySchema,
+  generatedAt: {
+    type: Date,
+    default: Date.now
   }
 }, { _id: false });
 
@@ -737,8 +775,7 @@ const customerSchema = new mongoose.Schema(
       default: 0
     },
     
-    // ✅ Per-item extra charges (Map: itemId -> chargeAmount)
-    // Admin manually enters charges for each item or auto-calculated from hourly rate
+    // ✅ Per-item checkout data (Map: itemId -> checkout details)
     itemsCheckoutData: {
       type: Map,
       of: new mongoose.Schema({
@@ -778,6 +815,9 @@ const customerSchema = new mongoose.Schema(
     fitterName: String,
     notes: String,
     
+    // ✅ BILL DATA - Stores complete bill for PDF generation
+    billData: billDataSchema,
+    
     // ✅ RENTAL HISTORY - Track all status changes
     rentalHistory: [rentalHistorySchema],
     
@@ -791,18 +831,18 @@ const customerSchema = new mongoose.Schema(
   }
 );
 
-// ✅ INDEX for faster queries
+// ✅ INDEXES for faster queries
 customerSchema.index({ userId: 1, status: 1 });
 customerSchema.index({ userId: 1, registrationDate: -1 });
 customerSchema.index({ phone: 1 });
 customerSchema.index({ fitterName: 1 });
 
-// ✅ VIRTUAL for total items used
+// ✅ VIRTUAL: total items used
 customerSchema.virtual('totalItemsUsed').get(function() {
   return (this.items || []).reduce((sum, item) => sum + item.quantity, 0);
 });
 
-// ✅ VIRTUAL for rental status display
+// ✅ VIRTUAL: rental status display
 customerSchema.virtual('rentalStatus').get(function() {
   const statuses = {
     'Active': '🟢 Active (In Progress)',
@@ -812,7 +852,7 @@ customerSchema.virtual('rentalStatus').get(function() {
   return statuses[this.status] || this.status;
 });
 
-// ✅ VIRTUAL for total per-item extra charges
+// ✅ VIRTUAL: total per-item extra charges
 customerSchema.virtual('totalPerItemExtraCharges').get(function() {
   if (!this.itemsCheckoutData || this.itemsCheckoutData.size === 0) {
     return 0;
@@ -825,7 +865,7 @@ customerSchema.virtual('totalPerItemExtraCharges').get(function() {
   return total;
 });
 
-// ✅ VIRTUAL for breakdown summary
+// ✅ VIRTUAL: charges breakdown
 customerSchema.virtual('chargesBreakdown').get(function() {
   const itemsCost = (this.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0);
   const perItemExtraCharges = this.totalPerItemExtraCharges || 0;
@@ -841,7 +881,90 @@ customerSchema.virtual('chargesBreakdown').get(function() {
   };
 });
 
-// ✅ METHOD to add rental history entry
+// ✅ METHOD: Generate and store bill data
+customerSchema.methods.generateBillData = function() {
+  try {
+    const items = this.items || [];
+    const itemsCheckoutData = this.itemsCheckoutData || {};
+
+    console.log('📄 Generating bill data...');
+
+    // Convert Map to object
+    let checkoutDataObj = {};
+    if (itemsCheckoutData instanceof Map) {
+      for (const [key, value] of itemsCheckoutData) {
+        checkoutDataObj[key] = value;
+      }
+    } else {
+      checkoutDataObj = itemsCheckoutData;
+    }
+
+    // Build items with charges
+    const itemsWithCharges = items.map((item, idx) => {
+      const itemId = (item.itemId || item._id || '').toString();
+      const checkoutData = checkoutDataObj[itemId] || {};
+
+      return {
+        index: idx + 1,
+        itemId: itemId,
+        itemName: item.itemName || item.name || 'N/A',
+        quantity: item.quantity || 0,
+        price: item.price || 0,
+        amount: (item.quantity || 0) * (item.price || 0),
+        checkOutDate: checkoutData.checkOutDate || '',
+        checkOutTime: checkoutData.checkOutTime || '',
+        rentalDays: checkoutData.rentalDays || 0,
+        extraHours: checkoutData.extraHours || 0,
+        hourlyRate: checkoutData.hourlyRate || 0,
+        extraCharges: checkoutData.extraCharges || 0
+      };
+    });
+
+    // Calculate totals
+    const itemsTotal = items.reduce((sum, item) => 
+      sum + ((item.quantity || 0) * (item.price || 0)), 0
+    );
+
+    const totalExtraCharges = itemsWithCharges.reduce((sum, item) =>
+      sum + (item.extraCharges || 0), 0
+    );
+
+    // Store bill data
+    this.billData = {
+      billNo: this._id.toString().slice(-6),
+      billDate: new Date(),
+      itemsWithCharges: itemsWithCharges,
+      summary: {
+        itemsTotal: itemsTotal,
+        totalExtraCharges: totalExtraCharges,
+        depositAmount: this.depositAmount || 0,
+        maintenanceCharges: this.maintenanceCharges || 0,
+        transportCost: this.transportCost || 0,
+        totalAmount: this.totalAmount || itemsTotal,
+        givenAmount: this.givenAmount || 0,
+        remainingAmount: this.remainingAmount || 0
+      },
+      generatedAt: new Date()
+    };
+
+    console.log('✅ Bill data generated successfully');
+    return this.billData;
+  } catch (error) {
+    console.error('❌ Error generating bill data:', error.message);
+    throw error;
+  }
+};
+
+// ✅ METHOD: Get bill data (generate if missing)
+customerSchema.methods.getBillData = function() {
+  if (!this.billData || !this.billData.itemsWithCharges || this.billData.itemsWithCharges.length === 0) {
+    console.warn('⚠️ Bill data missing, regenerating...');
+    return this.generateBillData();
+  }
+  return this.billData;
+};
+
+// ✅ METHOD: Add rental history entry
 customerSchema.methods.addRentalHistory = function(historyEntry) {
   try {
     if (!this.rentalHistory) {
@@ -876,7 +999,7 @@ customerSchema.methods.addRentalHistory = function(historyEntry) {
   }
 };
 
-// ✅ METHOD to get rental summary
+// ✅ METHOD: Get rental summary
 customerSchema.methods.getRentalSummary = function() {
   const itemsExtraChargesObj = {};
   if (this.itemsCheckoutData && this.itemsCheckoutData.size > 0) {
@@ -906,7 +1029,7 @@ customerSchema.methods.getRentalSummary = function() {
   };
 };
 
-// ✅ METHOD to get items with their individual extra charges
+// ✅ METHOD: Get items with their individual charges
 customerSchema.methods.getItemsWithExtraCharges = function() {
   if (!this.items || this.items.length === 0) {
     return [];
@@ -923,7 +1046,7 @@ customerSchema.methods.getItemsWithExtraCharges = function() {
       unitPrice: item.price,
       itemCost: item.quantity * item.price,
       
-      // ✅ Per-item checkout details
+      // Per-item checkout details
       checkOutDate: checkoutData.checkOutDate || '',
       checkOutTime: checkoutData.checkOutTime || '',
       rentalDays: checkoutData.rentalDays || 0,
@@ -931,13 +1054,13 @@ customerSchema.methods.getItemsWithExtraCharges = function() {
       hourlyRate: checkoutData.hourlyRate || 0,
       extraCharge: parseFloat(checkoutData.extraCharges) || 0,
       
-      // ✅ Total with extra charge
+      // Total with extra charge
       totalWithExtra: (item.quantity * item.price) + (parseFloat(checkoutData.extraCharges) || 0)
     };
   });
 };
 
-// ✅ METHOD to calculate complete charges breakdown
+// ✅ METHOD: Calculate complete charges breakdown
 customerSchema.methods.calculateChargesBreakdown = function() {
   const itemsCost = (this.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0);
   const perItemExtraCharges = this.totalPerItemExtraCharges || 0;
@@ -959,7 +1082,7 @@ customerSchema.methods.calculateChargesBreakdown = function() {
   };
 };
 
-// ✅ METHOD to format dates
+// ✅ METHOD: Format dates
 customerSchema.methods.formatDates = function() {
   if (this.checkInDate) {
     this.checkInDate = new Date(this.checkInDate).toISOString().split('T')[0];
@@ -971,14 +1094,14 @@ customerSchema.methods.formatDates = function() {
   return this;
 };
 
-// ✅ POST-FIND MIDDLEWARE: Convert Map to object if needed
+// ✅ POST-FIND MIDDLEWARE: Convert Map to object for API response
 customerSchema.post(['find', 'findOne', 'findOneAndUpdate'], function(docs) {
   if (!docs) return;
 
   const processDoc = (doc) => {
     if (!doc) return;
 
-    // Convert itemsCheckoutData Map to object for API response
+    // Convert itemsCheckoutData Map to object
     if (doc.itemsCheckoutData) {
       if (doc.itemsCheckoutData instanceof Map) {
         const obj = {};
@@ -1012,7 +1135,7 @@ customerSchema.post(['find', 'findOne', 'findOneAndUpdate'], function(docs) {
   }
 });
 
-// ✅ Ensure virtuals are included in JSON
+// ✅ Ensure virtuals are included in JSON/Object
 customerSchema.set('toJSON', { virtuals: true });
 customerSchema.set('toObject', { virtuals: true });
 

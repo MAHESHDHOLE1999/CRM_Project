@@ -103,9 +103,9 @@ export default function Reports() {
     // enabled: !!dates.startDate || !!dates.endDate || dateRange !== "custom",
     enabled: dateRange !== "custome" ? true : Boolean(startDate && endDate),
     onSuccess: (data) => {
-    console.log("✅ Customer Report API Response:", data);
-    console.log("✅ Raw customers data:", data?.data?.customers);
-    console.log("✅ Data structure:", Object.keys(data || {}));
+    // console.log("✅ Customer Report API Response:", data);
+    // console.log("✅ Raw customers data:", data?.data?.customers);
+    // console.log("✅ Data structure:", Object.keys(data || {}));
   },
   onError: (error) => {
     console.error("❌ Customer Report API Error:", error);
@@ -117,12 +117,12 @@ export default function Reports() {
     queryFn: () => reportService.getItemReport(dates),
     enabled: dateRange !== "custome" ? true : Boolean(startDate && endDate),
     onSuccess: (data) => {
-    console.log("✅ Items Report API Response:", data);
-    console.log("✅ Raw Items data:", data?.data?.customers);
-    console.log("✅ Data structure:", Object.keys(data || {}));
+    // console.log("✅ Items Report API Response:", data);
+    // console.log("✅ Raw Items data:", data?.data?.customers);
+    // console.log("✅ Data structure:", Object.keys(data || {}));
   },
   onError: (error) => {
-    console.error("❌ Items Report API Error:", error);
+    // console.error("❌ Items Report API Error:", error);
   }
   });
 
@@ -131,12 +131,12 @@ export default function Reports() {
     queryFn: () => reportService.getFinancialReport(dates),
     enabled: dateRange !== "custome" ? true : Boolean(startDate && endDate),
     onSuccess: (data) => {
-    console.log("✅ financial Report API Response:", data);
-    console.log("✅ Raw financial data:", data?.data?.customers);
-    console.log("✅ Data structure:", Object.keys(data || {}));
+    // console.log("✅ financial Report API Response:", data);
+    // console.log("✅ Raw financial data:", data?.data?.customers);
+    // console.log("✅ Data structure:", Object.keys(data || {}));
   },
   onError: (error) => {
-    console.error("❌ Customer Report API Error:", error);
+    // console.error("❌ Customer Report API Error:", error);
   }
   });
 
@@ -144,12 +144,12 @@ export default function Reports() {
     queryKey: ["fitters-list"],
     queryFn: () => reportService.getAllFitters(),
     onSuccess: (data) => {
-    console.log("✅ fittersData Report API Response:", data);
-    console.log("✅ Raw fittersData data:", data?.data?.customers);
-    console.log("✅ Data structure:", Object.keys(data || {}));
+    // console.log("✅ fittersData Report API Response:", data);
+    // console.log("✅ Raw fittersData data:", data?.data?.customers);
+    // console.log("✅ Data structure:", Object.keys(data || {}));
   },
   onError: (error) => {
-    console.error("❌ Customer Report API Error:", error);
+    // console.error("❌ Customer Report API Error:", error);
   }
   });
 
@@ -164,17 +164,17 @@ export default function Reports() {
   // const fitters = fittersData?.data?.data || [];
   const fitters = Array.isArray(fittersData?.data?.data)? fittersData.data.data  : [];
   
-  useEffect(() => {
-  console.log("Customer Report:", customerReport);
-  console.log("Item Report:", itemReport);
-  console.log("Financial Report:", financialReport);
-  console.log("Fitters:", fitters);
-}, [customerReport, itemReport, financialReport, fitters]);
+//   useEffect(() => {
+//   console.log("Customer Report:", customerReport);
+//   console.log("Item Report:", itemReport);
+//   console.log("Financial Report:", financialReport);
+//   console.log("Fitters:", fitters);
+// }, [customerReport, itemReport, financialReport, fitters]);
 
 
   const downloadCustomerPDF = () => {
     const doc = new jsPDF("p", "mm", "a4");
-    console.log("autoTable exists?", typeof doc.autoTable);
+    // console.log("autoTable exists?", typeof doc.autoTable);
 
     doc.addFileToVFS("Roboto-Regular.ttf",robotoBase64);
     doc.addFont("Roboto-Regular.ttf", "Roboto", "normal");
