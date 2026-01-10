@@ -74,6 +74,9 @@ app.use('/api/reports', reportRoutes);
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', message: 'Server Started Successfully.' });
+});
 
 // Error handling
 app.use((err, req, res, next) => {
