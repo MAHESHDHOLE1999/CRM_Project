@@ -23,11 +23,8 @@ connectDB();
 // Security Middleware
 app.use(helmet());
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  'http://localhost:5173',
-  'https://unmenially-dextrorotatory-micah.ngrok-free.dev'
-];
+const allowedOrigins = [process.env.FRONTEND_URL,"https://ajaygadibhandar.cloud",
+  "http://localhost:5173"];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -40,8 +37,11 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 // app.use(cors({
 //   origin: [process.env.FRONTEND_URL,'http://localhost:5173','https://unmenially-dextrorotatory-micah.ngrok-free.dev'],
 //   credentials: true

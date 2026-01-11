@@ -4,7 +4,7 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
-      app: { title: "Ajay Gadhi Bandar CRM" },
+      app: { title: "Ajay Gadi Bhandar CRM" },
       auth: {
         login: "Login",
         register: "Register",
