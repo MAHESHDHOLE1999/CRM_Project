@@ -267,9 +267,6 @@
 // File: components/customers/ItemSelector.jsx
 // UPDATED: Dark Mode Support + Text Input Mode
 
-// File: components/customers/ItemSelector.jsx
-// UPDATED: Dark Mode Support + Text Input Mode
-
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
@@ -287,28 +284,6 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { itemService } from "@/services/itemService";
-
-const inputStyles = `
-  input, textarea, select {
-    color: #000000 !important;
-  }
-  
-  input::placeholder {
-    color: #999999 !important;
-  }
-  
-  @media (prefers-color-scheme: dark) {
-    input, textarea, select {
-      color: #ffffff !important;
-      background-color: #1f2937 !important;
-      border-color: #4b5563 !important;
-    }
-    
-    input::placeholder {
-      color: #9ca3af !important;
-    }
-  }
-`;
 
 const formatNumberInput = (value) => {
   if (value === "" || value === null) return "";
@@ -378,9 +353,8 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
 
   return (
     <div className="space-y-4">
-      <style>{inputStyles}</style>
       <div className="flex items-center justify-between">
-        <Label className="text-lg font-semibold text-gray-900 dark:text-white">
+        <Label className="text-lg font-semibold text-gray-900 dark:text-gray-100">
           {t("customer.selectItem") || "Select Items"}
         </Label>
         <Button type="button" onClick={addItem} size="sm">
@@ -390,14 +364,14 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
       </div>
 
       {/* Info Banner */}
-      <div className="bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
+      <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
         <p className="text-sm text-amber-800 dark:text-amber-200">
           ✅ <strong>Text Input Mode:</strong> Quantity and Price fields use text input only. No mouse wheel scrolling allowed.
         </p>
       </div>
 
       {items.length === 0 ? (
-        <Card className="border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+        <Card className="border-dashed border-gray-300 dark:border-gray-700">
           <CardContent className="flex flex-col items-center justify-center py-8">
             <Package className="h-12 w-12 text-gray-400 dark:text-gray-600 mb-4" />
             <p className="text-gray-600 dark:text-gray-400 text-center">
@@ -413,14 +387,14 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                 <div className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
                   {/* Item Selection */}
                   <div className="md:col-span-2">
-                    <Label className="text-xs font-semibold text-gray-800 dark:text-gray-200">
+                    <Label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                       {t("customer.item") || "Item"} *
                     </Label>
                     <Select
                       value={item.itemId}
                       onValueChange={(value) => updateItem(index, "itemId", value)}
                     >
-                      <SelectTrigger className="mt-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white">
+                      <SelectTrigger className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
                         <SelectValue placeholder={t("customer.selectItem") || "Select item"} />
                       </SelectTrigger>
                       <SelectContent className="bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600">
@@ -436,7 +410,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                           allItems.map((availableItem) => (
                             <SelectItem key={availableItem._id} value={availableItem._id}>
                               <span className="text-gray-900 dark:text-gray-100">{availableItem.name}</span>
-                              <span className="text-xs text-gray-500 ml-2">
+                              <span className="text-xs text-gray-500 dark:text-gray-500 ml-2">
                                 (Available: {availableItem.availableQuantity})
                               </span>
                             </SelectItem>
@@ -448,7 +422,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
 
                   {/* Quantity - TEXT INPUT ONLY */}
                   <div>
-                    <Label className="text-xs font-semibold text-gray-800 dark:text-gray-200">
+                    <Label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                       {t("customer.quantity") || "Qty"} *
                     </Label>
                     <Input
@@ -460,7 +434,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                         updateItem(index, "quantity", formatted === "" ? "" : parseInt(formatted));
                       }}
                       placeholder="1"
-                      className="mt-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white font-semibold placeholder-gray-600 dark:placeholder-gray-400"
+                      className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-semibold placeholder-gray-500 dark:placeholder-gray-400"
                       onWheel={(e) => e.preventDefault()}
                     />
                     {item.availableQty > 0 && (
@@ -472,7 +446,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
 
                   {/* Price - TEXT INPUT ONLY */}
                   <div>
-                    <Label className="text-xs font-semibold text-gray-800 dark:text-gray-200">
+                    <Label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                       {t("customer.pricePerUnit") || "Price"}
                     </Label>
                     <Input
@@ -484,17 +458,17 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
                         updateItem(index, "price", formatted === "" ? "" : parseFloat(formatted));
                       }}
                       placeholder="0"
-                      className="mt-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white font-semibold placeholder-gray-600 dark:placeholder-gray-400"
+                      className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-semibold placeholder-gray-500 dark:placeholder-gray-400"
                       onWheel={(e) => e.preventDefault()}
                     />
                   </div>
 
                   {/* Subtotal - Display Only */}
                   <div>
-                    <Label className="text-xs font-semibold text-gray-800 dark:text-gray-200">
+                    <Label className="text-xs font-semibold text-gray-700 dark:text-gray-300">
                       {t("customer.subtotal") || "Subtotal"}
                     </Label>
-                    <div className="mt-1 h-10 flex items-center font-bold bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded border border-gray-200 dark:border-gray-700 px-3">
+                    <div className="h-10 flex items-center font-bold bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded border border-gray-200 dark:border-gray-700 px-3">
                       ₹{(parseInt(item.quantity || 0) * parseFloat(item.price || 0)).toLocaleString("en-IN")}
                     </div>
                   </div>
@@ -515,7 +489,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
 
                 {/* Quantity Warning */}
                 {item.quantity > item.availableQty && item.availableQty > 0 && (
-                  <div className="mt-3 p-2 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded">
+                  <div className="mt-3 p-2 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded">
                     <p className="text-sm text-red-700 dark:text-red-300">
                       ⚠️ <strong>Warning:</strong> Requested quantity ({item.quantity}) exceeds available quantity ({item.availableQty})
                     </p>
@@ -528,7 +502,7 @@ export default function ItemSelector({ selectedItems = [], onItemsChange }) {
       )}
 
       {items.length > 0 && (
-        <Card className="bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-800">
+        <Card className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800">
           <CardContent className="pt-4">
             <div className="flex justify-between items-center">
               <span className="font-semibold text-lg text-green-900 dark:text-green-100">

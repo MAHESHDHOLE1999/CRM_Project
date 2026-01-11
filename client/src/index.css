@@ -56,6 +56,224 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* INPUT FIELDS - LIGHT MODE */
+  input,
+  textarea,
+  select {
+    @apply bg-white text-gray-900 placeholder-gray-500 border-gray-300;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-gray-500;
+  }
+
+  /* INPUT FIELDS - DARK MODE */
+  .dark input,
+  .dark textarea,
+  .dark select {
+    @apply bg-gray-800 text-white placeholder-gray-400 border-gray-600;
+  }
+
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    @apply text-gray-400;
+  }
+
+  /* DATE & TIME INPUTS */
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="week"] {
+    @apply bg-white text-gray-900 border-gray-300;
+  }
+
+  .dark input[type="date"],
+  .dark input[type="time"],
+  .dark input[type="datetime-local"],
+  .dark input[type="month"],
+  .dark input[type="week"] {
+    @apply bg-gray-800 text-white border-gray-600;
+  }
+
+  /* NUMBER INPUTS */
+  input[type="number"] {
+    @apply bg-white text-gray-900 border-gray-300;
+  }
+
+  .dark input[type="number"] {
+    @apply bg-gray-800 text-white border-gray-600;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  /* TEXT INPUTS */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="url"] {
+    @apply bg-white text-gray-900 border-gray-300;
+  }
+
+  .dark input[type="text"],
+  .dark input[type="email"],
+  .dark input[type="password"],
+  .dark input[type="search"],
+  .dark input[type="tel"],
+  .dark input[type="url"] {
+    @apply bg-gray-800 text-white border-gray-600;
+  }
+
+  /* SELECT DROPDOWNS */
+  select {
+    @apply appearance-none bg-white text-gray-900 border-gray-300 pr-10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+  }
+
+  .dark select {
+    @apply bg-gray-800 text-white border-gray-600;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%9CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  }
+
+  /* FOCUS STATES */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply outline-none ring-2 ring-primary ring-offset-2 border-primary;
+  }
+
+  .dark input:focus,
+  .dark textarea:focus,
+  .dark select:focus {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-0 border-blue-500;
+  }
+
+  /* DISABLED STATES */
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    @apply bg-gray-100 text-gray-500 border-gray-300 cursor-not-allowed opacity-60;
+  }
+
+  .dark input:disabled,
+  .dark textarea:disabled,
+  .dark select:disabled {
+    @apply bg-gray-700 text-gray-500 border-gray-600 cursor-not-allowed opacity-60;
+  }
+
+  /* LABELS */
+  label {
+    @apply text-gray-800 font-medium;
+  }
+
+  .dark label {
+    @apply text-gray-200 font-medium;
+  }
+
+  /* READONLY FIELDS */
+  input:read-only,
+  textarea:read-only {
+    @apply bg-gray-50 text-gray-700 border-gray-300;
+  }
+
+  .dark input:read-only,
+  .dark textarea:read-only {
+    @apply bg-gray-700 text-gray-300 border-gray-600;
+  }
+
+  /* CHECKBOXES & RADIOS */
+  input[type="checkbox"],
+  input[type="radio"] {
+    @apply accent-primary;
+  }
+
+  .dark input[type="checkbox"],
+  .dark input[type="radio"] {
+    @apply accent-blue-500;
+  }
+
+  /* ✅ FIX: LIGHT BACKGROUND CARDS IN DARK MODE */
+  /* This is the KEY fix for your problem */
+  .dark .bg-blue-50 {
+    @apply bg-gray-800;
+  }
+
+  .dark .bg-green-50 {
+    @apply bg-gray-800;
+  }
+
+  .dark .bg-orange-50 {
+    @apply bg-gray-800;
+  }
+
+  .dark .bg-red-50 {
+    @apply bg-red-950/40;
+  }
+
+  .dark .bg-gray-50 {
+    @apply bg-gray-800;
+  }
+
+  .dark .bg-amber-50 {
+    @apply bg-amber-950/40;
+  }
+
+  /* Update text colors in dark mode cards */
+  .dark .text-blue-900 {
+    @apply text-blue-100;
+  }
+
+  .dark .text-green-900 {
+    @apply text-green-100;
+  }
+
+  .dark .text-orange-600 {
+    @apply text-orange-400;
+  }
+
+  .dark .text-red-700 {
+    @apply text-red-300;
+  }
+
+  .dark .text-amber-800 {
+    @apply text-amber-200;
+  }
+
+  /* Update border colors in dark mode */
+  .dark .border-blue-200 {
+    @apply border-blue-800;
+  }
+
+  .dark .border-green-200 {
+    @apply border-green-800;
+  }
+
+  .dark .border-orange-200 {
+    @apply border-orange-800;
+  }
+
+  .dark .border-red-300 {
+    @apply border-red-800;
+  }
+
+  .dark .border-amber-200 {
+    @apply border-amber-800;
+  }
 }
 
 /* Ensure proper layering */
