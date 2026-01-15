@@ -7,8 +7,10 @@ const cookieOptions = {
   httpOnly: true,
   secure: true,        // REQUIRED for ngrok (https)
   sameSite: 'none',    // REQUIRED for cross-origin
+  // domain: '.ajaygadibhandar.cloud',
+  // path: '/',
   // maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-  expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
+  expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
 };
 
 export const register = async (req, res) => {
@@ -44,7 +46,7 @@ export const register = async (req, res) => {
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: '1d' }
+      { expiresIn: '7d' }
     );
 
     res
@@ -75,7 +77,9 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    // const { email, password } = req.body;
+    const email = req.body.email?.trim().toLowerCase();
+    const password = req.body.password?.trim();
 
     if (!email || !password) {
       return res.status(400).json({
@@ -89,7 +93,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'Invalid credentials'
+        message: 'User not found'
       });
     }
 
@@ -98,7 +102,7 @@ export const login = async (req, res) => {
     if (!isValidPassword) {
       return res.status(401).json({
         success: false,
-        message: 'Invalid credentials'
+        message: 'Incorrect password'
       });
     }
 
@@ -143,7 +147,9 @@ export const logout = (req, res) => {
     .clearCookie('token', {
       httpOnly: true,
       secure: true,
-      sameSite: 'none'
+      sameSite: 'none',
+      //domain: '.ajaygadibhandar.cloud',
+      //path: '/',
     })
     .json({
       success: true,
