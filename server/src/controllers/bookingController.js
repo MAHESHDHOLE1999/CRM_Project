@@ -12,9 +12,15 @@ export const createBooking = async (req, res) => {
     const bookingData = req.body;
     const items = JSON.parse(bookingData.items || '[]');
 
+    logger.info('🔵 CREATE BOOKING - Starting');
+    logger.info('Customer:', bookingData.customerName);
+    logger.info('Registration Date:', bookingData.registrationDate);
+    logger.info('Booking Date:', bookingData.bookingDate);
+
     // ✅ Check availability before creating booking
     const availabilityCheck = await checkItemsAvailability(items);
     if (!availabilityCheck.allAvailable) {
+      logger.warn('❌ Items not available:', availabilityCheck.unavailable);
       return res.status(400).json({
         success: false,
         message: 'Some items are not available in requested quantity',
@@ -26,11 +32,16 @@ export const createBooking = async (req, res) => {
     const remainingAmount = 
       bookingData.totalAmount - (bookingData.givenAmount || 0);
 
+    // Create booking
     const booking = await AdvancedBooking.create({
       ...bookingData,
       userId: req.userId,
+      registrationDate: new Date(bookingData.registrationDate),
+      bookingDate: new Date(bookingData.bookingDate),
       remainingAmount
     });
+
+    logger.info('✅ Booking created:', booking._id);
 
     res.status(201).json({
       success: true,
@@ -94,6 +105,8 @@ export const getBookings = async (req, res) => {
       AdvancedBooking.countDocuments(query)
     ]);
 
+    logger.info(`✅ Fetched ${bookings.length} bookings`);
+
     res.json({
       success: true,
       data: {
@@ -119,6 +132,7 @@ export const getBookings = async (req, res) => {
 export const getBookingById = async (req, res) => {
   try {
     const { id } = req.params;
+    logger.info('🔵 GET BOOKING:', id);
     
     const booking = await AdvancedBooking.findById(id);
 
@@ -129,9 +143,20 @@ export const getBookingById = async (req, res) => {
       });
     }
 
+    // ✅ Format dates for response
+    const response = booking.toObject();
+    if (response.registrationDate) {
+      response.registrationDate = response.registrationDate.toISOString().split('T')[0];
+    }
+    if (response.bookingDate) {
+      response.bookingDate = response.bookingDate.toISOString().split('T')[0];
+    }
+
+    logger.info('✅ Booking found:', booking.customerName);
+
     res.json({
       success: true,
-      data: booking
+      data: response
     });
   } catch (error) {
     // console.error('Get booking error:', error);
@@ -147,6 +172,16 @@ export const updateBooking = async (req, res) => {
   try {
     const { id } = req.params;
     const updateData = req.body;
+
+    logger.info('🔵 UPDATE BOOKING:', id);
+
+    // ✅ Convert dates if present
+    if (updateData.registrationDate) {
+      updateData.registrationDate = new Date(updateData.registrationDate);
+    }
+    if (updateData.bookingDate) {
+      updateData.bookingDate = new Date(updateData.bookingDate);
+    }
 
     if (updateData.totalAmount !== undefined || 
         updateData.givenAmount !== undefined) {
@@ -171,6 +206,8 @@ export const updateBooking = async (req, res) => {
         message: 'Booking not found'
       });
     }
+    
+    logger.info('✅ Booking updated:', booking._id);
 
     res.json({
       success: true,
@@ -233,6 +270,8 @@ export const confirmBooking = async (req, res) => {
     booking.status = 'Confirmed';
     await booking.save();
 
+    logger.info('✅ Booking status updated to Confirmed');
+
     // If convertToCustomer is true, create a customer record
     if (convertToCustomer) {
       const items = JSON.parse(booking.items || '[]');
@@ -240,6 +279,7 @@ export const confirmBooking = async (req, res) => {
       // ✅ Check availability before renting
       const availabilityCheck = await checkItemsAvailability(items);
       if (!availabilityCheck.allAvailable) {
+        logger.warn('❌ Items not available for conversion:', availabilityCheck.unavailable);
         return res.status(400).json({
           success: false,
           message: 'Some items are no longer available',
@@ -255,8 +295,8 @@ export const confirmBooking = async (req, res) => {
         name: booking.customerName,
         phone: booking.phone,
         address: '',
-        registrationDate: new Date(),
-        checkInDate: booking.bookingDate,
+        registrationDate: new Date(booking.registrationDate),
+        checkInDate: new Date(booking.bookingDate),
         checkInTime: booking.startTime,
         checkOutDate: null,
         checkOutTime: null,
@@ -267,7 +307,7 @@ export const confirmBooking = async (req, res) => {
         transportRequired: false,
         transportCost: 0,
         maintenanceCharges: 0,
-        hourlyRate: 0,
+        // hourlyRate: 0,
         status: 'Active',
         notes: `Converted from Advanced Booking (ID: ${booking._id}). Original booking date: ${booking.bookingDate}. ${booking.notes || ''}`,
         items: items.map(item => ({
@@ -278,6 +318,8 @@ export const confirmBooking = async (req, res) => {
         })),
         userId: booking.userId
       });
+
+      logger.info('✅ Customer created from booking:', customer._id);
 
       return res.json({
         success: true,

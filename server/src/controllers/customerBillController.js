@@ -1,5 +1,5 @@
 // File: backend/controllers/customerBillController.js
-// COMPLETE & PRODUCTION READY - Bill generation from stored data
+// COMPLETE & UPDATED - With Receiver Name Field
 
 import puppeteer from 'puppeteer';
 import Customer from '../models/Customer.js';
@@ -19,6 +19,8 @@ const translations = {
     date: 'Registration Date',
     dueDate: 'Check-in Date',
     billTo: 'Customer Details',
+    customerName: 'Customer Name',
+    receiverName: 'Receiver Name',
     phone: 'Phone',
     address: 'Address',
     itemDescription: 'Item Description',
@@ -70,6 +72,8 @@ const translations = {
     date: 'नोंदणी तारीख',
     dueDate: 'चेक-इन तारीख',
     billTo: 'ग्राहक तपशील',
+    customerName: 'ग्राहक नाव',
+    receiverName: 'प्राप्तकर्ता नाव',
     phone: 'फोन',
     address: 'पता',
     itemDescription: 'वस्तूचे वर्णन',
@@ -418,9 +422,11 @@ export const generateCustomerBill = async (req, res) => {
         <div class="info-row"><strong>${t.dueDate}:</strong> ${checkInDateStr}</div>
       </div>
       
+      <!-- ✅ CHANGED: Updated bill-to section with Receiver Name -->
       <div class="bill-to">
         <div class="section-title">${t.billTo}</div>
-        <div class="info-row"><strong>${customer.name || 'N/A'}</strong></div>
+        <div class="info-row"><strong>${t.customerName}:</strong> ${customer.name || 'N/A'}</div>
+        ${customer.receiverName ? `<div class="info-row"><strong>${t.receiverName}:</strong> ${customer.receiverName}</div>` : ''}
         <div class="info-row"><strong>${t.phone}:</strong> ${customer.phone || 'N/A'}</div>
         <div class="info-row"><strong>${t.address}:</strong> ${customer.address || 'N/A'}</div>
       </div>

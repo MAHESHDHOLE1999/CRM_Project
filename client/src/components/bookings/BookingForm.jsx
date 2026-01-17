@@ -18,11 +18,23 @@ import {
 import { bookingService } from '@/services/bookingService';
 import ItemSelector from '../customers/ItemSelector';
 
+// ✅ Helper functions for date/time
+const getTodayDate = () => new Date().toISOString().split("T")[0];
+
+const getCurrentTime = () => {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+};
+
 const bookingSchema = z.object({
   customerName: z.string().min(1, 'Customer name is required'),
   phone: z.string().min(10, 'Valid phone number required'),
   email: z.string().email('Valid email required').optional().or(z.literal('')),
-  bookingDate: z.string().min(1, 'Booking date required'),
+  registrationDate: z.string().min(1, 'Registration date is required'), // ✅ NEW
+  registrationTime: z.string().min(1, 'Registration time is required'), // ✅ NEW
+  bookingDate: z.string().min(1, 'Booking date is required'),
   startTime: z.string().min(1, 'Start time required'),
   endTime: z.string().min(1, 'End time required'),
   totalAmount: z.number().min(0),
@@ -51,7 +63,9 @@ export default function BookingForm({ booking, onSuccess }) {
       customerName: '',
       phone: '',
       email: '',
-      bookingDate: new Date().toISOString().split('T')[0],
+      registrationDate: getTodayDate(), // ✅ Current date when form loads
+      registrationTime: getCurrentTime(), // ✅ Current time when form loads
+      bookingDate: getTodayDate(), // ✅ Can be changed to future date
       startTime: '10:00',
       endTime: '18:00',
       totalAmount: '',
@@ -118,7 +132,7 @@ export default function BookingForm({ booking, onSuccess }) {
             <Input 
               {...register('customerName')} 
               placeholder={t('booking.customerName') || 'John Doe'}
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              className="border border-gray-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-0" 
               style={{outline: 'none', boxShadow: 'none'}} 
             />
             {errors.customerName && (
@@ -131,7 +145,7 @@ export default function BookingForm({ booking, onSuccess }) {
             <Input 
               {...register('phone')} 
               placeholder="9876543210" 
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              className="border border-gray-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-0" 
               style={{outline: 'none', boxShadow: 'none'}} 
             />
             {errors.phone && (
@@ -145,7 +159,7 @@ export default function BookingForm({ booking, onSuccess }) {
               {...register('email')} 
               type="email" 
               placeholder="customer@example.com" 
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              className="border border-gray-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-0" 
               style={{outline: 'none', boxShadow: 'none'}}
             />
             {errors.email && (
@@ -163,17 +177,59 @@ export default function BookingForm({ booking, onSuccess }) {
         />
       </div>
 
-      {/* Booking Details */}
+      {/* ✅ REGISTRATION DATE & TIME - When booking was registered */}
       <div>
-        <h3 className="text-lg font-semibold mb-3">{t('booking.bookingDetails') || 'Booking Details'}</h3>
+        <h3 className="text-lg font-semibold mb-3">
+          📝 {t('booking.registrationDetails') || 'Registration Details'} (When booking was registered)
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label>{t('booking.date') || 'Booking Date'} *</Label>
-            <Input 
-              type="date" 
-              {...register('bookingDate')} 
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
-              style={{outline: 'none', boxShadow: 'none'}}
+          <div className="flex flex-col">
+            <Label className="text-sm font-semibold mb-1">
+              {t('booking.registrationDate') || 'Registration Date'} *
+            </Label>
+            <input
+              type="date"
+              {...register('registrationDate')}
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+              required
+            />
+            {errors.registrationDate && (
+              <p className="text-sm text-red-500 mt-1">{errors.registrationDate.message}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col">
+            <Label className="text-sm font-semibold mb-1">
+              {t('booking.registrationTime') || 'Registration Time'} *
+            </Label>
+            <input
+              type="time"
+              {...register('registrationTime')}
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+              required
+            />
+            {errors.registrationTime && (
+              <p className="text-sm text-red-500 mt-1">{errors.registrationTime.message}</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ✅ BOOKING DATE & TIME - When customer wants the items */}
+      <div>
+        <h3 className="text-lg font-semibold mb-3">
+          📅 {t('booking.bookingDetails') || 'Booking Details'} (When customer needs items)
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col">
+            <Label className="text-sm font-semibold mb-1">
+              {t('booking.date') || 'Booking Date'} *
+            </Label>
+            <input
+              type="date"
+              {...register('bookingDate')}
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+              required
             />
             {errors.bookingDate && (
               <p className="text-sm text-red-500 mt-1">{errors.bookingDate.message}</p>
@@ -181,25 +237,29 @@ export default function BookingForm({ booking, onSuccess }) {
           </div>
 
           <div className="grid grid-cols-2 gap-2">
-            <div>
-              <Label>{t('booking.startTime') || 'Start Time'} *</Label>
-              <Input 
-                type="time" 
-                {...register('startTime')} 
-                className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
-                style={{outline: 'none', boxShadow: 'none'}} 
+            <div className="flex flex-col">
+              <Label className="text-sm font-semibold mb-1">
+                {t('booking.startTime') || 'Start Time'} *
+              </Label>
+              <input
+                type="time"
+                {...register('startTime')}
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                required
               />
               {errors.startTime && (
                 <p className="text-sm text-red-500 mt-1">{errors.startTime.message}</p>
               )}
             </div>
-            <div>
-              <Label>{t('booking.endTime') || 'End Time'} *</Label>
-              <Input 
-                type="time" 
-                {...register('endTime')} 
-                className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
-                style={{outline: 'none', boxShadow: 'none'}} 
+            <div className="flex flex-col">
+              <Label className="text-sm font-semibold mb-1">
+                {t('booking.endTime') || 'End Time'} *
+              </Label>
+              <input
+                type="time"
+                {...register('endTime')}
+                className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                required
               />
               {errors.endTime && (
                 <p className="text-sm text-red-500 mt-1">{errors.endTime.message}</p>
@@ -229,7 +289,7 @@ export default function BookingForm({ booking, onSuccess }) {
               type="text"
               {...register('depositAmount', { valueAsNumber: true })}
               placeholder="0"
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              className="border border-gray-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-0" 
               style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
@@ -240,7 +300,7 @@ export default function BookingForm({ booking, onSuccess }) {
               type="text"
               {...register('givenAmount', { valueAsNumber: true })}
               placeholder="0"
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              className="border border-gray-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-0" 
               style={{outline: 'none', boxShadow: 'none'}}
             />
           </div>
@@ -261,7 +321,7 @@ export default function BookingForm({ booking, onSuccess }) {
               value={watch('status')}
               onValueChange={(value) => setValue('status', value)}
             >
-              <SelectTrigger className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}>
+              <SelectTrigger className="border border-gray-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-0" style={{outline: 'none', boxShadow: 'none'}}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -277,7 +337,7 @@ export default function BookingForm({ booking, onSuccess }) {
             <Input 
               {...register('notes')} 
               placeholder={t('booking.additionalNotesPlaceholder') || 'Additional notes or requirements...'} 
-              className="border border-gray-300 bg-transparent focus:outline-none focus:ring-0" 
+              className="border border-gray-300 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-0" 
               style={{outline: 'none', boxShadow: 'none'}} 
             />
           </div>

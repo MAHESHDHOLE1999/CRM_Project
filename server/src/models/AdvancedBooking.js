@@ -12,6 +12,25 @@ const advancedBookingSchema = new mongoose.Schema({
   email: {
     type: String
   },
+  
+  // ✅ NEW: Registration Date & Time (when booking was registered)
+  registrationDate: {
+    type: Date,
+    required: true,
+    default: () => new Date()
+  },
+  registrationTime: {
+    type: String,
+    required: true,
+    default: () => {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      return `${hours}:${minutes}`;
+    }
+  },
+  
+  // ✅ EXISTING: Booking Date & Time (when customer needs items)
   bookingDate: {
     type: Date,
     required: true
@@ -24,6 +43,8 @@ const advancedBookingSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  
+  // Items and amounts
   items: {
     type: String  // JSON string of selected items
   },

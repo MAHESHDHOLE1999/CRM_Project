@@ -32,6 +32,54 @@ const inputStyles = `
     outline: none !important;
     box-shadow: none !important;
   }
+
+  /* ✅ FIX: Make date input icon visible */
+  input[type="date"],
+  input[type="time"] {
+    padding-right: 10px !important;
+    min-height: 40px !important;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator,
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    cursor: pointer !important;
+    opacity: 1 !important;
+    display: block !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin-right: 5px !important;
+    filter: invert(0.8) !important;
+  }
+
+  /* Dark mode adjustments */
+  @media (prefers-color-scheme: dark) {
+    input[type="date"],
+    input[type="time"] {
+      color: #ffffff !important;
+      background-color: #1f2937 !important;
+      border-color: #4b5563 !important;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      filter: invert(1) !important;
+    }
+  }
+
+  /* Light mode adjustments */
+  @media (prefers-color-scheme: light) {
+    input[type="date"],
+    input[type="time"] {
+      color: #000000 !important;
+      background-color: #ffffff !important;
+      border-color: #d1d5db !important;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.8) !important;
+    }
+  }
 `;
 
 // const inputStyles = `
@@ -40,27 +88,27 @@ const inputStyles = `
 //     outline: none !important;
 //     box-shadow: none !important;
 //   }
-  
+
 //   /* Enhanced input styling for dark mode */
 //   input, textarea, select {
 //     color: #000000 !important;
 //   }
-  
+
 //   input::placeholder {
 //     color: #999999 !important;
 //   }
-  
+
 //   @media (prefers-color-scheme: dark) {
 //     input, textarea, select {
 //       color: #ffffff !important;
 //       background-color: #1f2937 !important;
 //       border-color: #4b5563 !important;
 //     }
-    
+
 //     input::placeholder {
 //       color: #9ca3af !important;
 //     }
-    
+
 //     input[type="date"],
 //     input[type="time"] {
 //       color: #ffffff !important;
@@ -88,11 +136,12 @@ const parseNumberInput = (value) => {
 
 const optionalNumber = z.preprocess(
   (val) => (val === "" || val === null ? undefined : Number(val)),
-  z.number().min(0).optional()
+  z.number().min(0).optional(),
 );
 
 const customerSchema = z.object({
   name: z.string().min(1, "Customer name is required"),
+  receiverName: z.string().optional().nullable(),
   phone: z
     .string()
     .min(10, "Phone number must be at least 10 digits")
@@ -116,18 +165,25 @@ export default function CustomerForm({ customer, onSuccess }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [selectedItems, setSelectedItems] = useState(
-    customer?.items ? customer.items : []
+    customer?.items ? customer.items : [],
   );
   const [itemsTotal, setItemsTotal] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [debugErrors, setDebugErrors] = useState([]);
   const [isLoadingCustomer, setIsLoadingCustomer] = useState(!!customer?._id);
-  
+
   const [itemsCheckoutData, setItemsCheckoutData] = useState({});
   const [totalPerItemExtraCharges, setTotalPerItemExtraCharges] = useState(0);
   const [isCalculating, setIsCalculating] = useState(false);
 
   const getTodayDate = () => new Date().toISOString().split("T")[0];
+
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
 
   const {
     register,
@@ -141,10 +197,11 @@ export default function CustomerForm({ customer, onSuccess }) {
     mode: "onChange",
     defaultValues: {
       name: "",
+      receiverName: "",
       phone: "",
       address: "",
       checkInDate: getTodayDate(),
-      checkInTime: "10:00",
+      checkInTime: getCurrentTime(),
       totalAmount: "",
       depositAmount: "",
       givenAmount: "",
@@ -172,6 +229,7 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         if (fetchedCustomer) {
           setValue("name", fetchedCustomer.name || "");
+          setValue("receiverName", fetchedCustomer.receiverName || "");
           setValue("phone", fetchedCustomer.phone || "");
           setValue("address", fetchedCustomer.address || "");
 
@@ -185,19 +243,32 @@ export default function CustomerForm({ customer, onSuccess }) {
           setValue("totalAmount", fetchedCustomer.totalAmount || 0);
           setValue("depositAmount", fetchedCustomer.depositAmount || 0);
           setValue("givenAmount", fetchedCustomer.givenAmount || 0);
-          setValue("transportRequired", fetchedCustomer.transportRequired || false);
+          setValue(
+            "transportRequired",
+            fetchedCustomer.transportRequired || false,
+          );
           setValue("transportCost", fetchedCustomer.transportCost || 0);
-          setValue("transportLocation", fetchedCustomer.transportLocation || "");
-          setValue("maintenanceCharges", fetchedCustomer.maintenanceCharges || 0);
+          setValue(
+            "transportLocation",
+            fetchedCustomer.transportLocation || "",
+          );
+          setValue(
+            "maintenanceCharges",
+            fetchedCustomer.maintenanceCharges || 0,
+          );
           setValue("fitterName", fetchedCustomer.fitterName || "");
           setValue("status", fetchedCustomer.status || "Active");
           setValue("notes", fetchedCustomer.notes || "");
 
           if (fetchedCustomer.itemsCheckoutData) {
             setItemsCheckoutData(fetchedCustomer.itemsCheckoutData);
-            
-            const totalExtra = Object.values(fetchedCustomer.itemsCheckoutData)
-              .reduce((sum, item) => sum + (parseFloat(item.extraCharges) || 0), 0);
+
+            const totalExtra = Object.values(
+              fetchedCustomer.itemsCheckoutData,
+            ).reduce(
+              (sum, item) => sum + (parseFloat(item.extraCharges) || 0),
+              0,
+            );
             setTotalPerItemExtraCharges(totalExtra);
           }
 
@@ -229,16 +300,20 @@ export default function CustomerForm({ customer, onSuccess }) {
     const total = selectedItems.reduce(
       (sum, item) =>
         sum + parseFloat(item.quantity || 0) * parseFloat(item.price || 0),
-      0
+      0,
     );
     setItemsTotal(total);
   }, [selectedItems]);
 
   useEffect(() => {
     const transportCost = parseNumberInput(watch("transportCost")) || 0;
-    const maintenanceCharges = parseNumberInput(watch("maintenanceCharges")) || 0;
+    const maintenanceCharges =
+      parseNumberInput(watch("maintenanceCharges")) || 0;
     const newTotal =
-      itemsTotal + transportCost + maintenanceCharges + totalPerItemExtraCharges;
+      itemsTotal +
+      transportCost +
+      maintenanceCharges +
+      totalPerItemExtraCharges;
 
     setValue("totalAmount", newTotal);
   }, [
@@ -259,34 +334,125 @@ export default function CustomerForm({ customer, onSuccess }) {
     }));
   };
 
+  // const calculateItemExtraCharges = async (itemId) => {
+  //   const formData = getValues();
+  //   const itemCheckout = itemsCheckoutData[itemId];
+
+  //   if (!itemCheckout?.checkOutDate || !itemCheckout?.checkOutTime) {
+  //     toast.error(
+  //       t("customer.checkOutDateTimeRequired") ||
+  //         "Please enter checkout date and time",
+  //     );
+  //     return;
+  //   }
+
+  //   const hourlyRate = parseNumberInput(itemCheckout.hourlyRate);
+  //   // if (!hourlyRate || hourlyRate <= 0) {
+  //   //   toast.error(t("customer.validHourlyRateRequired") || "Please enter a valid hourly rate");
+  //   //   return;
+  //   // }
+
+  //   // ✅ allow 0, block only negative
+  //   if (hourlyRate < 0) {
+  //     toast.error("Rate cannot be negative");
+  //     return;
+  //   }
+
+  //   setIsCalculating(true);
+
+  //   try {
+  //     const selectedItem = selectedItems.find(i => (i.itemId || i._id) === itemId);
+
+  //     const response = await customerService.calculateDuration({
+  //       checkInDate: formData.checkInDate,
+  //       checkInTime: formData.checkInTime,
+  //       checkOutDate: itemCheckout.checkOutDate,
+  //       checkOutTime: itemCheckout.checkOutTime,
+  //       hourlyRate: hourlyRate,
+  //       quantity: selectedItem?.quantity || 1,
+  //     });
+
+  //     if (response.data.success) {
+  //       // const { fullDays, extraHours, extraCharges } = response.data.data;
+  //       const { totalDays, extraCharges } = response.data.data;
+
+  //       const updatedCheckoutData = {
+  //         ...itemsCheckoutData,
+  //         [itemId]: {
+  //           ...itemsCheckoutData[itemId],
+  //           checkOutDate: itemCheckout.checkOutDate,
+  //           checkOutTime: itemCheckout.checkOutTime,
+  //           hourlyRate: hourlyRate,
+  //           // rentalDays: fullDays,
+  //           rentalDays: totalDays,
+  //           // extraHours: extraHours,
+  //           extraHours: 0,
+  //           extraCharges: parseFloat(extraCharges),
+  //         },
+  //       };
+
+  //       setItemsCheckoutData(updatedCheckoutData);
+
+  //       const totalExtra = Object.values(updatedCheckoutData).reduce(
+  //         (sum, item) => sum + (parseFloat(item.extraCharges) || 0),
+  //         0,
+  //       );
+
+  //       setTotalPerItemExtraCharges(totalExtra);
+
+  //       toast.success(
+  //         `✅ ${fullDays} ${t("customer.day") || "day"}(s), ${extraHours} ${t("customer.hour") || "hour"}(s) @ ₹${hourlyRate}/hr\n${t("customer.extraCharge") || "Extra Charge"}: ₹${extraCharges.toLocaleString("en-IN")}`,
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Calculate duration error:", error);
+  //     toast.error(
+  //       t("customer.calculationFailed") || "Failed to calculate duration",
+  //     );
+  //   } finally {
+  //     setIsCalculating(false);
+  //   }
+  // };
+
   const calculateItemExtraCharges = async (itemId) => {
     const formData = getValues();
     const itemCheckout = itemsCheckoutData[itemId];
 
     if (!itemCheckout?.checkOutDate || !itemCheckout?.checkOutTime) {
-      toast.error(t("customer.checkOutDateTimeRequired") || "Please enter checkout date and time");
+      toast.error(
+        t("customer.checkOutDateTimeRequired") ||
+          "Please enter checkout date and time",
+      );
       return;
     }
 
-    const hourlyRate = parseNumberInput(itemCheckout.hourlyRate);
-    if (!hourlyRate || hourlyRate <= 0) {
-      toast.error(t("customer.validHourlyRateRequired") || "Please enter a valid hourly rate");
+    const dailyRate = parseNumberInput(itemCheckout.hourlyRate);
+
+    if (dailyRate < 0) {
+      toast.error("Rate cannot be negative");
       return;
     }
 
     setIsCalculating(true);
 
     try {
+      const selectedItem = selectedItems.find(
+        (i) => (i.itemId || i._id) === itemId,
+      );
+      const itemQuantity = selectedItem?.quantity || 1;
+
       const response = await customerService.calculateDuration({
         checkInDate: formData.checkInDate,
         checkInTime: formData.checkInTime,
         checkOutDate: itemCheckout.checkOutDate,
         checkOutTime: itemCheckout.checkOutTime,
-        hourlyRate: hourlyRate,
+        hourlyRate: dailyRate,
+        quantity: itemQuantity,
       });
 
       if (response.data.success) {
-        const { fullDays, extraHours, extraCharges } = response.data.data;
+        const { totalDays, extraCharges, isWithinFreeWindow } =
+          response.data.data;
 
         const updatedCheckoutData = {
           ...itemsCheckoutData,
@@ -294,9 +460,9 @@ export default function CustomerForm({ customer, onSuccess }) {
             ...itemsCheckoutData[itemId],
             checkOutDate: itemCheckout.checkOutDate,
             checkOutTime: itemCheckout.checkOutTime,
-            hourlyRate: hourlyRate,
-            rentalDays: fullDays,
-            extraHours: extraHours,
+            dailyRate: dailyRate,
+            rentalDays: totalDays,
+            isWithinFreeWindow: isWithinFreeWindow, // Store for display
             extraCharges: parseFloat(extraCharges),
           },
         };
@@ -305,18 +471,28 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         const totalExtra = Object.values(updatedCheckoutData).reduce(
           (sum, item) => sum + (parseFloat(item.extraCharges) || 0),
-          0
+          0,
         );
 
         setTotalPerItemExtraCharges(totalExtra);
 
-        toast.success(
-          `✅ ${fullDays} ${t("customer.day") || "day"}(s), ${extraHours} ${t("customer.hour") || "hour"}(s) @ ₹${hourlyRate}/hr\n${t("customer.extraCharge") || "Extra Charge"}: ₹${extraCharges.toLocaleString("en-IN")}`
-        );
+        // ✅ Show appropriate message
+        if (isWithinFreeWindow) {
+          toast.success(
+            `✅ FREE RETURN\nWithin 24 hours until 10:00 AM\nExtra Charges: ₹0`,
+          );
+        } else {
+          toast.success(
+            `⏰ LATE RETURN\n${totalDays} day(s) after free window\n` +
+              `₹${dailyRate}/day × Qty ${itemQuantity} × ${totalDays} days = ₹${parseFloat(extraCharges).toLocaleString("en-IN")}`,
+          );
+        }
       }
     } catch (error) {
       console.error("Calculate duration error:", error);
-      toast.error(t("customer.calculationFailed") || "Failed to calculate duration");
+      toast.error(
+        t("customer.calculationFailed") || "Failed to calculate duration",
+      );
     } finally {
       setIsCalculating(false);
     }
@@ -327,20 +503,34 @@ export default function CustomerForm({ customer, onSuccess }) {
       const errors = [];
 
       if (selectedItems.length === 0) {
-        throw new Error(t("customer.selectAtLeastOneItem") || "Please select at least one item");
+        throw new Error(
+          t("customer.selectAtLeastOneItem") ||
+            "Please select at least one item",
+        );
       }
 
-      if (!formData.name?.trim()) errors.push(t("customer.nameRequired") || "Customer name is required");
-      if (!formData.phone?.trim()) errors.push(t("customer.phoneRequired") || "Phone number is required");
-      if (!formData.checkInDate) errors.push(t("customer.checkInDateRequired") || "Check-in date is required");
-      if (!formData.checkInTime) errors.push(t("customer.checkInTimeRequired") || "Check-in time is required");
-      if (!formData.status) errors.push(t("customer.statusRequired") || "Status is required");
+      if (!formData.name?.trim())
+        errors.push(t("customer.nameRequired") || "Customer name is required");
+      if (!formData.phone?.trim())
+        errors.push(t("customer.phoneRequired") || "Phone number is required");
+      if (!formData.checkInDate)
+        errors.push(
+          t("customer.checkInDateRequired") || "Check-in date is required",
+        );
+      if (!formData.checkInTime)
+        errors.push(
+          t("customer.checkInTimeRequired") || "Check-in time is required",
+        );
+      if (!formData.status)
+        errors.push(t("customer.statusRequired") || "Status is required");
 
       const totalAmount = parseNumberInput(formData.totalAmount) || 0;
       const givenAmount = parseNumberInput(formData.givenAmount) || 0;
 
       if (givenAmount > totalAmount) {
-        errors.push(t("customer.givenExceedsTotal") || "Given amount exceeds total");
+        errors.push(
+          t("customer.givenExceedsTotal") || "Given amount exceeds total",
+        );
       }
 
       if (errors.length > 0) {
@@ -350,6 +540,7 @@ export default function CustomerForm({ customer, onSuccess }) {
 
       const payload = {
         name: formData.name?.trim() || "",
+        receiverName: formData.receiverName?.trim() || "",
         phone: formData.phone?.trim() || "",
         address: formData.address?.trim() || "",
         checkInDate: formData.checkInDate || "",
@@ -392,14 +583,15 @@ export default function CustomerForm({ customer, onSuccess }) {
       toast.success(
         customer
           ? t("customer.updateSuccess") || "Customer updated successfully!"
-          : t("customer.createSuccess") || "Customer created successfully!"
+          : t("customer.createSuccess") || "Customer created successfully!",
       );
       queryClient.invalidateQueries({ queryKey: ["customers"] });
       onSuccess?.();
     },
     onError: (error) => {
       setIsSubmitting(false);
-      let errorMsg = error.message || (t("common.savingError") || "Failed to save customer");
+      let errorMsg =
+        error.message || t("common.savingError") || "Failed to save customer";
       if (error.response?.data?.message) {
         errorMsg = error.response.data.message;
       }
@@ -431,7 +623,9 @@ export default function CustomerForm({ customer, onSuccess }) {
       <div className="space-y-6">
         {debugErrors.length > 0 && (
           <div className="bg-red-50 border border-red-300 rounded-lg p-4">
-            <h4 className="font-semibold text-red-800 mb-2">❌ {t("common.issuesFound") || "Issues Found"}:</h4>
+            <h4 className="font-semibold text-red-800 mb-2">
+              ❌ {t("common.issuesFound") || "Issues Found"}:
+            </h4>
             {debugErrors.map((error, idx) => (
               <p key={idx} className="text-sm text-red-700 mb-1">
                 • {error}
@@ -441,15 +635,20 @@ export default function CustomerForm({ customer, onSuccess }) {
         )}
 
         <div className="bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-          <Badge className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100">✅ TEXT INPUT MODE</Badge>
+          <Badge className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100">
+            ✅ TEXT INPUT MODE
+          </Badge>
           <p className="text-sm text-blue-700 dark:text-blue-300 mt-2">
-            <strong>All numeric fields are text inputs.</strong> Admin must manually enter values. No scroll wheel changes allowed.
+            <strong>All numeric fields are text inputs.</strong> Admin must
+            manually enter values. No scroll wheel changes allowed.
           </p>
         </div>
 
         {/* Customer Information */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">{t("customer.customerInfo") || "Customer Information"}</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            {t("customer.customerInfo") || "Customer Information"}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label>{t("customer.name")} *</Label>
@@ -458,7 +657,21 @@ export default function CustomerForm({ customer, onSuccess }) {
                 placeholder={t("customer.name") || "Customer Name"}
                 className="border border-gray-300 bg-white"
               />
-              {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>}
+              {errors.name && (
+                <p className="text-sm text-red-600 mt-1">
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <Label>{t("customer.receiverName") || "Receiver Name"}</Label>
+              <Input
+                {...register("receiverName")}
+                placeholder={
+                  t("customer.receiverName") || "Receiver Name (Optional)"
+                }
+                className="border border-gray-300 bg-white"
+              />
             </div>
             <div>
               <Label>{t("customer.phone")} *</Label>
@@ -467,7 +680,11 @@ export default function CustomerForm({ customer, onSuccess }) {
                 placeholder="9876543210"
                 className="border border-gray-300 bg-white"
               />
-              {errors.phone && <p className="text-sm text-red-600 mt-1">{errors.phone.message}</p>}
+              {errors.phone && (
+                <p className="text-sm text-red-600 mt-1">
+                  {errors.phone.message}
+                </p>
+              )}
             </div>
             <div className="md:col-span-2">
               <Label>{t("customer.address") || "Address"}</Label>
@@ -482,7 +699,9 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         {/* Check-in Details */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">{t("customer.checkInDetails") || "Check-in Details"}</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            {t("customer.checkInDetails") || "Check-in Details"}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label>{t("customer.checkInDate")} *</Label>
@@ -505,11 +724,15 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         {/* Items with Per-Item Checkout */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">{t("customer.itemsCheckout") || "Items - Checkout & Hourly Rates"}</h3>
-          
+          <h3 className="text-lg font-semibold mb-4">
+            {t("customer.itemsCheckout") || "Items - Checkout & Hourly Rates"}
+          </h3>
+
           {selectedItems.length === 0 ? (
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center">
-              <p className="text-muted-foreground">{t("customer.noItemsSelected") || "No items selected"}</p>
+              <p className="text-muted-foreground">
+                {t("customer.noItemsSelected") || "No items selected"}
+              </p>
             </div>
           ) : (
             <div className="space-y-4 mb-6">
@@ -518,56 +741,113 @@ export default function CustomerForm({ customer, onSuccess }) {
                 const itemCheckout = itemsCheckoutData[itemKey] || {};
 
                 return (
-                  <Card key={idx} className="p-4 border border-blue-200 dark:border-blue-800 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-800">
+                  <Card
+                    key={idx}
+                    className="p-4 border border-blue-200 dark:border-blue-800 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-800"
+                  >
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label className="text-sm font-semibold">{t("customer.item") || "Item"}</Label>
-                          <p className="text-base font-medium">{item.itemName || item.name}</p>
+                          <Label className="text-sm font-semibold">
+                            {t("customer.item") || "Item"}
+                          </Label>
+                          <p className="text-base font-medium">
+                            {item.itemName || item.name}
+                          </p>
                         </div>
                         <div>
-                          <Label className="text-sm font-semibold">{t("customer.cost") || "Cost"}</Label>
+                          <Label className="text-sm font-semibold">
+                            {t("customer.cost") || "Cost"}
+                          </Label>
                           <p className="text-base">
-                            {item.quantity} × ₹{item.price.toLocaleString("en-IN")} = ₹
-                            {(item.quantity * item.price).toLocaleString("en-IN")}
+                            {item.quantity} × ₹
+                            {item.price.toLocaleString("en-IN")} = ₹
+                            {(item.quantity * item.price).toLocaleString(
+                              "en-IN",
+                            )}
                           </p>
                         </div>
                       </div>
 
                       <div className="border-t pt-4">
-                        <Label className="text-sm font-semibold block mb-3">{t("customer.itemCheckoutDetails") || "Item Checkout Details"}</Label>
+                        <Label className="text-sm font-semibold block mb-3">
+                          {t("customer.itemCheckoutDetails") ||
+                            "Item Checkout Details"}
+                        </Label>
                         <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
-                          <div>
-                            <Label className="text-xs">{t("customer.checkOutDate") || "Checkout Date"}</Label>
+                          {/* <div>
+                            <Label className="text-xs">
+                              {t("customer.checkOutDate") || "Checkout Date"}
+                            </Label>
                             <Input
                               type="date"
                               value={itemCheckout.checkOutDate || ""}
                               onChange={(e) =>
-                                updateItemCheckout(itemKey, "checkOutDate", e.target.value)
+                                updateItemCheckout(
+                                  itemKey,
+                                  "checkOutDate",
+                                  e.target.value,
+                                )
                               }
-                              className="border border-gray-300"
+                              className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-full"
+                              style={{
+                                paddingRight: "8px",
+                              }}
+                            />
+                          </div> */}
+
+                          <div className="flex flex-col">
+                            <Label className="text-xs font-semibold mb-1 text-gray-700 dark:text-gray-300">
+                              {t("customer.checkOutDate") || "Checkout Date"} *
+                            </Label>
+                            <input
+                              type="date"
+                              value={itemCheckout.checkOutDate || ""}
+                              onChange={(e) =>
+                                updateItemCheckout(
+                                  itemKey,
+                                  "checkOutDate",
+                                  e.target.value,
+                                )
+                              }
+                              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                              required
                             />
                           </div>
                           <div>
-                            <Label className="text-xs">{t("customer.time") || "Time"}</Label>
+                            <Label className="text-xs">
+                              {t("customer.time") || "Time"}
+                            </Label>
                             <Input
                               type="time"
                               value={itemCheckout.checkOutTime || ""}
                               onChange={(e) =>
-                                updateItemCheckout(itemKey, "checkOutTime", e.target.value)
+                                updateItemCheckout(
+                                  itemKey,
+                                  "checkOutTime",
+                                  e.target.value,
+                                )
                               }
                               className="border border-gray-300"
                             />
                           </div>
                           <div>
-                            <Label className="text-xs">{t("customer.hourlyRate")} (₹) *</Label>
+                            <Label className="text-xs">
+                              {t("customer.hourlyRate")} (₹) *
+                            </Label>
                             <Input
                               type="text"
                               inputMode="decimal"
                               value={itemCheckout.hourlyRate || ""}
                               onChange={(e) => {
-                                const formatted = formatDecimalInput(e.target.value);
-                                updateItemCheckout(itemKey, "hourlyRate", formatted);
+                                const formatted = formatDecimalInput(
+                                  e.target.value,
+                                );
+                                updateItemCheckout(
+                                  itemKey,
+                                  "hourlyRate",
+                                  formatted,
+                                );
                               }}
                               placeholder="100"
                               className="border border-gray-300 bg-white font-semibold"
@@ -578,35 +858,114 @@ export default function CustomerForm({ customer, onSuccess }) {
                             <Button
                               type="button"
                               onClick={() => calculateItemExtraCharges(itemKey)}
-                              disabled={!itemCheckout.checkOutDate || !itemCheckout.checkOutTime || !itemCheckout.hourlyRate || isCalculating}
+                              disabled={
+                                !itemCheckout.checkOutDate ||
+                                !itemCheckout.checkOutTime ||
+                                !itemCheckout.hourlyRate ||
+                                isCalculating
+                              }
                               className="w-full flex items-center justify-center gap-2"
                             >
                               <Calculator className="h-4 w-4" />
-                              {isCalculating ? t("common.calculating") || "Calculating..." : t("common.calculate") || "Calculate"}
+                              {isCalculating
+                                ? t("common.calculating") || "Calculating..."
+                                : t("common.calculate") || "Calculate"}
                             </Button>
                           </div>
                         </div>
                       </div>
 
+                      {/* {itemCheckout.rentalDays !== undefined && (
+                        <div className="bg-white border border-orange-200 rounded-lg p-3">
+                          <div className="grid grid-cols-5 gap-2 text-center">
+                            <div>
+                              <p className="text-xs text-muted-foreground">
+                                {t("customer.days") || "Days"}
+                              </p>
+                              <p className="text-lg font-bold text-blue-600">
+                                {itemCheckout.rentalDays}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">
+                                {t("customer.hours") || "Hours"}
+                              </p>
+                              <p className="text-lg font-bold text-orange-600">
+                                {itemCheckout.extraHours}h
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-muted-foreground">
+                                {t("customer.rate") || "Rate"}
+                              </p>
+                              <p className="text-sm font-bold text-purple-600">
+                                ₹{itemCheckout.hourlyRate}/hr
+                              </p>
+                            </div>
+                            <div className="md:col-span-2">
+                              <p className="text-xs text-muted-foreground">
+                                {t("customer.extraCharge") || "Extra Charge"}
+                              </p>
+                              <p className="text-lg font-bold text-red-600">
+                                ₹
+                                {itemCheckout.extraCharges?.toLocaleString(
+                                  "en-IN",
+                                ) || 0}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )} */}
                       {itemCheckout.rentalDays !== undefined && (
                         <div className="bg-white border border-orange-200 rounded-lg p-3">
                           <div className="grid grid-cols-5 gap-2 text-center">
                             <div>
-                              <p className="text-xs text-muted-foreground">{t("customer.days") || "Days"}</p>
-                              <p className="text-lg font-bold text-blue-600">{itemCheckout.rentalDays}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {t("customer.days") || "Days"}
+                              </p>
+                              <p className="text-lg font-bold text-blue-600">
+                                {itemCheckout.rentalDays}
+                              </p>
                             </div>
                             <div>
-                              <p className="text-xs text-muted-foreground">{t("customer.hours") || "Hours"}</p>
-                              <p className="text-lg font-bold text-orange-600">{itemCheckout.extraHours}h</p>
+                              <p className="text-xs text-muted-foreground">
+                                {t("customer.quantity") || "Qty"}
+                              </p>
+                              <p className="text-lg font-bold text-purple-600">
+                                {selectedItems.find(
+                                  (i) => (i.itemId || i._id) === itemKey,
+                                )?.quantity || 1}
+                              </p>
                             </div>
                             <div>
-                              <p className="text-xs text-muted-foreground">{t("customer.rate") || "Rate"}</p>
-                              <p className="text-sm font-bold text-purple-600">₹{itemCheckout.hourlyRate}/hr</p>
+                              <p className="text-xs text-muted-foreground">
+                                {t("customer.rate") || "Rate"}
+                              </p>
+                              <p className="text-sm font-bold text-green-600">
+                                ₹
+                                {itemCheckout.dailyRate ||
+                                  itemCheckout.hourlyRate}
+                                /day
+                              </p>
                             </div>
                             <div className="md:col-span-2">
-                              <p className="text-xs text-muted-foreground">{t("customer.extraCharge") || "Extra Charge"}</p>
-                              <p className="text-lg font-bold text-red-600">
-                                ₹{itemCheckout.extraCharges?.toLocaleString("en-IN") || 0}
+                              <p className="text-xs text-muted-foreground">
+                                {t("customer.extraCharge") || "Extra Charge"}
+                              </p>
+                              <div className="text-lg font-bold text-red-600">
+                                ₹
+                                {itemCheckout.extraCharges?.toLocaleString(
+                                  "en-IN",
+                                ) || 0}
+                              </div>
+                              <p className="text-xs text-gray-600 mt-1">
+                                {itemCheckout.dailyRate ||
+                                  itemCheckout.hourlyRate}{" "}
+                                ×{" "}
+                                {selectedItems.find(
+                                  (i) => (i.itemId || i._id) === itemKey,
+                                )?.quantity || 1}{" "}
+                                × {itemCheckout.rentalDays}
                               </p>
                             </div>
                           </div>
@@ -619,24 +978,38 @@ export default function CustomerForm({ customer, onSuccess }) {
             </div>
           )}
 
-          <ItemSelector selectedItems={selectedItems} onItemsChange={setSelectedItems} />
+          <ItemSelector
+            selectedItems={selectedItems}
+            onItemsChange={setSelectedItems}
+          />
           {selectedItems.length === 0 && (
-            <p className="text-sm text-red-600 font-medium mt-2">⚠️ {t("customer.selectAtLeastOneItem") || "Select at least one item"}</p>
+            <p className="text-sm text-red-600 font-medium mt-2">
+              ⚠️{" "}
+              {t("customer.selectAtLeastOneItem") || "Select at least one item"}
+            </p>
           )}
         </div>
 
         {/* Payment Summary */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">{t("customer.paymentInfo") || "Payment Summary"}</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            {t("customer.paymentInfo") || "Payment Summary"}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <p className="text-xs text-muted-foreground">{t("customer.itemsTotal") || "Items Cost"}</p>
-              <p className="text-2xl font-bold">₹{itemsTotal.toLocaleString("en-IN")}</p>
+              <p className="text-xs text-muted-foreground">
+                {t("customer.itemsTotal") || "Items Cost"}
+              </p>
+              <p className="text-2xl font-bold">
+                ₹{itemsTotal.toLocaleString("en-IN")}
+              </p>
             </div>
 
             {totalPerItemExtraCharges > 0 && (
               <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
-                <p className="text-xs font-semibold text-orange-600">{t("customer.extraCharges") || "Extra Charges"}</p>
+                <p className="text-xs font-semibold text-orange-600">
+                  {t("customer.extraCharges") || "Extra Charges"}
+                </p>
                 <p className="text-2xl font-bold text-orange-600">
                   ₹{totalPerItemExtraCharges.toLocaleString("en-IN")}
                 </p>
@@ -644,7 +1017,9 @@ export default function CustomerForm({ customer, onSuccess }) {
             )}
 
             <div>
-              <Label>{t("customer.maintenanceCharges") || "Maintenance Charges"}</Label>
+              <Label>
+                {t("customer.maintenanceCharges") || "Maintenance Charges"}
+              </Label>
               <Input
                 type="text"
                 inputMode="decimal"
@@ -663,15 +1038,21 @@ export default function CustomerForm({ customer, onSuccess }) {
               <Checkbox
                 id="transport"
                 checked={transportRequired}
-                onCheckedChange={(checked) => setValue("transportRequired", checked)}
+                onCheckedChange={(checked) =>
+                  setValue("transportRequired", checked)
+                }
               />
-              <Label htmlFor="transport">{t("customer.transport") || "Transport Required"}</Label>
+              <Label htmlFor="transport">
+                {t("customer.transport") || "Transport Required"}
+              </Label>
             </div>
 
             {transportRequired && (
               <>
                 <div>
-                  <Label>{t("customer.transportCost") || "Transport Cost"}</Label>
+                  <Label>
+                    {t("customer.transportCost") || "Transport Cost"}
+                  </Label>
                   <Input
                     type="text"
                     inputMode="decimal"
@@ -686,7 +1067,9 @@ export default function CustomerForm({ customer, onSuccess }) {
                   />
                 </div>
                 <div>
-                  <Label>{t("customer.transportLocation") || "Transport Location"}</Label>
+                  <Label>
+                    {t("customer.transportLocation") || "Transport Location"}
+                  </Label>
                   <Input
                     {...register("transportLocation")}
                     className="border border-gray-300"
@@ -696,9 +1079,14 @@ export default function CustomerForm({ customer, onSuccess }) {
             )}
 
             <div className="md:col-span-2 bg-green-50 border border-green-200 rounded-lg p-4">
-              <Label className="text-base font-semibold">{t("customer.totalAmount") || "Total Bill Amount"}</Label>
+              <Label className="text-base font-semibold">
+                {t("customer.totalAmount") || "Total Bill Amount"}
+              </Label>
               <p className="text-3xl font-bold text-green-600">
-                ₹{parseNumberInput(watch("totalAmount") || 0).toLocaleString("en-IN")}
+                ₹
+                {parseNumberInput(watch("totalAmount") || 0).toLocaleString(
+                  "en-IN",
+                )}
               </p>
             </div>
 
@@ -735,9 +1123,15 @@ export default function CustomerForm({ customer, onSuccess }) {
             </div>
 
             <div className="md:col-span-2 bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <Label className="text-base font-semibold">{t("customer.remainingAmount") || "Remaining Amount"}</Label>
+              <Label className="text-base font-semibold">
+                {t("customer.remainingAmount") || "Remaining Amount"}
+              </Label>
               <p className="text-2xl font-bold text-blue-600">
-                ₹{(parseNumberInput(watch("totalAmount") || 0) - parseNumberInput(watch("givenAmount") || 0)).toLocaleString("en-IN")}
+                ₹
+                {(
+                  parseNumberInput(watch("totalAmount") || 0) -
+                  parseNumberInput(watch("givenAmount") || 0)
+                ).toLocaleString("en-IN")}
               </p>
             </div>
           </div>
@@ -745,22 +1139,36 @@ export default function CustomerForm({ customer, onSuccess }) {
 
         {/* Additional Info */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">{t("customer.additionalInfo") || "Additional Information"}</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            {t("customer.additionalInfo") || "Additional Information"}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label>{t("customer.fitterName") || "Fitter Name"}</Label>
-              <Input {...register("fitterName")} className="border border-gray-300" />
+              <Input
+                {...register("fitterName")}
+                className="border border-gray-300"
+              />
             </div>
             <div>
               <Label>{t("customer.status")} *</Label>
-              <Select value={watch("status")} onValueChange={(value) => setValue("status", value)}>
+              <Select
+                value={watch("status")}
+                onValueChange={(value) => setValue("status", value)}
+              >
                 <SelectTrigger className="border border-gray-300 focus:ring-0 focus:outline-none focus:border-none">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Active">{t("customer.active") || "Active"}</SelectItem>
-                  <SelectItem value="Completed">{t("customer.completed") || "Completed"}</SelectItem>
-                  <SelectItem value="Cancelled">{t("customer.cancelled") || "Cancelled"}</SelectItem>
+                  <SelectItem value="Active">
+                    {t("customer.active") || "Active"}
+                  </SelectItem>
+                  <SelectItem value="Completed">
+                    {t("customer.completed") || "Completed"}
+                  </SelectItem>
+                  <SelectItem value="Cancelled">
+                    {t("customer.cancelled") || "Cancelled"}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -780,11 +1188,15 @@ export default function CustomerForm({ customer, onSuccess }) {
           <Button
             type="button"
             onClick={handleSubmit(onSubmit)}
-            disabled={isSubmitting || mutation.isPending || selectedItems.length === 0}
+            disabled={
+              isSubmitting || mutation.isPending || selectedItems.length === 0
+            }
             size="lg"
             className="min-w-[140px]"
           >
-            {isSubmitting || mutation.isPending ? t("common.saving") || "Saving..." : t("common.save") || "Save"}
+            {isSubmitting || mutation.isPending
+              ? t("common.saving") || "Saving..."
+              : t("common.save") || "Save"}
           </Button>
         </div>
       </div>

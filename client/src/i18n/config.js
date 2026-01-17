@@ -206,6 +206,7 @@ const resources = {
         hour: "hour",
         warningQuantityExceeds: "Warning",
         requestedQtyExceedsAvailable: "Requested quantity exceeds available quantity",
+        receiverName: "Receiver Name",
       },
       items: {
         title: "Items",
@@ -258,6 +259,9 @@ const resources = {
         failedSaveBooking: "Failed to save booking",
         amountGiven: "Amount Given",
         additionalNotesPlaceholder: "Additional notes or requirements...",
+        registrationDate: "Registration Date",
+        registrationTime: "Registration Time",
+        registrationDetails: "Registration Details",
       },
       report: {
         title: "Reports",
@@ -545,6 +549,7 @@ const resources = {
         hour: "तास",
         warningQuantityExceeds: "चेतावणी",
         requestedQtyExceedsAvailable: "विनंती केलेले प्रमाण उपलब्ध प्रमाणापेक्षा जास्त आहे",
+        receiverName: "प्राप्तकर्ता नाव",
       },
       items: {
         title: "वस्तू",
@@ -597,6 +602,9 @@ const resources = {
         failedSaveBooking: "बुकिंग जतन करू शकले नाही",
         amountGiven: "दिलेली रक्कम",
         additionalNotesPlaceholder: "अतिरिक्त नोट्स किंवा आवश्यकता...",
+        registrationDate: "नोंदणी तारीख",
+        registrationTime: "नोंदणी वेळ",
+        registrationDetails: "नोंदणी तपशील",
       },
       report: {
         title: "अहवाल",

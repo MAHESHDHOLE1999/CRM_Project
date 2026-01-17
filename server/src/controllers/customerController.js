@@ -237,6 +237,7 @@ export const createCustomer = async (req, res) => {
     const newCustomer = new Customer({
       userId: req.userId,
       name: customerData.name,
+      receiverName: customerData.receiverName || '',
       phone: customerData.phone,
       address: customerData.address || '',
       checkInDate: new Date(customerData.checkInDate),
@@ -1128,10 +1129,155 @@ export const deleteCustomer = async (req, res) => {
 // =====================================================
 // CHECKOUT CUSTOMER - MARK AS COMPLETED
 // =====================================================
+
+// Version 2
+// export const checkoutCustomer = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { checkOutDate, checkOutTime, itemsExtraCharges } = req.body;
+
+//     logger.info('🔵 CHECKOUT CUSTOMER - Starting');
+//     logger.info('Customer ID:', id);
+
+//     const customer = await Customer.findById(id);
+
+//     if (!customer) {
+//       return res.status(404).json({
+//         success: false,
+//         message: 'Customer not found'
+//       });
+//     }
+
+//     logger.info('Checking out customer:', customer.name);
+
+//     // ✅ Parse check-in date-time
+//     const [inHours, inMinutes] = customer.checkInTime.split(':');
+//     const checkInDateTime = new Date(customer.checkInDate);
+//     checkInDateTime.setHours(parseInt(inHours), parseInt(inMinutes), 0, 0);
+
+//     // ✅ Parse check-out date-time
+//     const [outHours, outMinutes] = checkOutTime.split(':');
+//     const checkOutDateTime = new Date(checkOutDate);
+//     checkOutDateTime.setHours(parseInt(outHours), parseInt(outMinutes), 0, 0);
+
+//     logger.info('Check-in:', checkInDateTime.toISOString());
+//     logger.info('Check-out:', checkOutDateTime.toISOString());
+
+//     // ✅ FREE RETURN WINDOW: Same day + next day until 10:00 AM
+//     const freeReturnDeadline = new Date(checkInDateTime);
+//     freeReturnDeadline.setDate(freeReturnDeadline.getDate() + 1); // Next day
+//     freeReturnDeadline.setHours(10, 0, 0, 0); // 10:00 AM
+
+//     const isFreeReturn = checkOutDateTime <= freeReturnDeadline;
+
+//     logger.info('📅 Free Return Deadline:', freeReturnDeadline.toISOString());
+//     logger.info('📅 Actual Return:', checkOutDateTime.toISOString());
+//     logger.info('✅ Is Free Return?', isFreeReturn);
+
+//     let totalExtraCharges = 0;
+//     let itemExtraChargesMap = {};
+
+//     if (!isFreeReturn) {
+//       // ✅ LATE RETURN: Calculate charges for each item
+//       logger.info('⏰ LATE RETURN - Calculating charges...');
+
+//       // Calculate hours after free return deadline
+//       const lateHours = Math.ceil((checkOutDateTime - freeReturnDeadline) / (1000 * 60 * 60));
+//       logger.info('Late hours:', lateHours);
+
+//       // Admin can provide per-item extra charges
+//       if (itemsExtraCharges && typeof itemsExtraCharges === 'object') {
+//         itemExtraChargesMap = itemsExtraCharges;
+//         totalExtraCharges = Object.values(itemsExtraCharges)
+//           .reduce((sum, charge) => sum + (parseFloat(charge) || 0), 0);
+//       }
+//     } else {
+//       logger.info('✅ FREE RETURN - No extra charges');
+//     }
+
+//     logger.info('Total Extra Charges:', totalExtraCharges);
+
+//     // ✅ Update customer with checkout info
+//     customer.checkOutDate = new Date(checkOutDate);
+//     customer.checkOutTime = checkOutTime;
+//     customer.extraCharges = totalExtraCharges; // ✅ Accept zero also
+//     customer.status = 'Completed';
+
+//     // Update itemsCheckoutData with extra charges
+//     if (Object.keys(itemExtraChargesMap).length > 0) {
+//       Object.entries(itemExtraChargesMap).forEach(([itemId, charge]) => {
+//         if (customer.itemsCheckoutData && customer.itemsCheckoutData[itemId]) {
+//           customer.itemsCheckoutData[itemId].extraCharges = parseFloat(charge) || 0;
+//         }
+//       });
+//     }
+
+//     // ✅ Recalculate totals
+//     const previousTotal = customer.totalAmount;
+//     customer.totalAmount = previousTotal + totalExtraCharges;
+//     customer.remainingAmount = customer.totalAmount - customer.givenAmount;
+
+//     // ✅ Add to rental history
+//     if (!customer.rentalHistory) {
+//       customer.rentalHistory = [];
+//     }
+//     customer.rentalHistory.push({
+//       date: new Date(),
+//       action: 'completed',
+//       itemsUsed: customer.items || [],
+//       totalQuantityUsed: (customer.items || []).reduce((sum, item) => sum + item.quantity, 0),
+//       totalValueUsed: (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
+//       status: 'Completed',
+//       notes: isFreeReturn ? 'Free return (within 24hrs until 10:00 AM)' : 'Late return - extra charges applied'
+//     });
+
+//     await customer.save();
+
+//     // ✅ RETURN ITEMS to available
+//     logger.info('🔄 Returning items to inventory...');
+//     if (customer.items && customer.items.length > 0) {
+//       await returnItemsWithHistory(customer.items, 'Completed');
+//     }
+
+//     logger.info('✅ Customer checked out');
+
+//     res.json({
+//       success: true,
+//       message: 'Customer checked out successfully',
+//       data: {
+//         customer,
+//         checkoutInfo: {
+//           checkInDateTime: checkInDateTime.toISOString(),
+//           checkOutDateTime: checkOutDateTime.toISOString(),
+//           freeReturnDeadline: freeReturnDeadline.toISOString(),
+//           isFreeReturn: isFreeReturn,
+//           totalExtraCharges: Math.round(totalExtraCharges),
+//           itemExtraCharges: itemExtraChargesMap,
+//           previousTotal: Math.round(previousTotal),
+//           newTotal: Math.round(customer.totalAmount),
+//           remainingAmount: Math.round(customer.remainingAmount)
+//         }
+//       }
+//     });
+//   } catch (error) {
+//     logger.error('❌ Checkout customer error:', error);
+//     res.status(500).json({
+//       success: false,
+//       message: 'Error checking out customer',
+//       error: error.message
+//     });
+//   }
+// };
+
 export const checkoutCustomer = async (req, res) => {
   try {
     const { id } = req.params;
-    const { checkOutDate, checkOutTime, hourlyRate } = req.body;
+    const { 
+      checkOutDate, 
+      checkOutTime, 
+      itemsExtraCharges,
+      itemsExtraHours = {}  // ✅ NEW: Per-item extra hours
+    } = req.body;
 
     logger.info('🔵 CHECKOUT CUSTOMER - Starting');
     logger.info('Customer ID:', id);
@@ -1160,45 +1306,72 @@ export const checkoutCustomer = async (req, res) => {
     logger.info('Check-in:', checkInDateTime.toISOString());
     logger.info('Check-out:', checkOutDateTime.toISOString());
 
-    // ✅ Calculate total hours
-    const totalMilliseconds = checkOutDateTime - checkInDateTime;
-    const totalHours = Math.ceil(totalMilliseconds / (1000 * 60 * 60));
+    // ✅ FREE RETURN WINDOW: Same day + next day until 10:00 AM (24 hours from check-in time)
+    const freeReturnDeadline = new Date(checkInDateTime);
+    freeReturnDeadline.setDate(freeReturnDeadline.getDate() + 1); // Next day
+    // Keep same time as check-in (e.g., 10:00 AM)
 
-    if (totalHours < 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'Check-out time cannot be before check-in time'
+    const isFreeReturn = checkOutDateTime <= freeReturnDeadline;
+
+    logger.info('📅 Free Return Deadline:', freeReturnDeadline.toISOString());
+    logger.info('📅 Actual Return:', checkOutDateTime.toISOString());
+    logger.info('✅ Is Free Return?', isFreeReturn);
+
+    let totalExtraCharges = 0;
+    let itemExtraChargesMap = {};
+    let itemExtraHoursMap = {};
+
+    // ✅ Process per-item extra charges and extra hours
+    if (itemsExtraCharges && typeof itemsExtraCharges === 'object') {
+      itemExtraChargesMap = itemsExtraCharges;
+      totalExtraCharges = Object.values(itemsExtraCharges)
+        .reduce((sum, charge) => sum + (parseFloat(charge) || 0), 0);
+      
+      logger.info('Per-item extra charges:', itemExtraChargesMap);
+    }
+
+    // ✅ Store per-item extra hours
+    if (itemsExtraHours && typeof itemsExtraHours === 'object') {
+      itemExtraHoursMap = itemsExtraHours;
+      logger.info('Per-item extra hours:', itemExtraHoursMap);
+    }
+
+    if (isFreeReturn) {
+      logger.info('✅ FREE RETURN - Setting extra charges to 0');
+      totalExtraCharges = 0;
+      itemExtraChargesMap = {};
+    }
+
+    logger.info('Total Extra Charges:', totalExtraCharges);
+
+    // ✅ Update customer
+    customer.checkOutDate = new Date(checkOutDate);
+    customer.checkOutTime = checkOutTime;
+    customer.extraCharges = totalExtraCharges; // ✅ Can be 0
+    customer.status = 'Completed';
+
+    // Update itemsCheckoutData with extra charges and extra hours
+    if (Object.keys(itemExtraChargesMap).length > 0) {
+      Object.entries(itemExtraChargesMap).forEach(([itemId, charge]) => {
+        if (customer.itemsCheckoutData && customer.itemsCheckoutData[itemId]) {
+          customer.itemsCheckoutData[itemId].extraCharges = parseFloat(charge) || 0;
+        }
       });
     }
 
-    // ✅ 24-hour cycle calculation
-    const rentalDays = Math.floor(totalHours / 24);
-    const extraHours = totalHours % 24;
-
-    logger.info(`Rental Duration: ${rentalDays} days, ${extraHours} hours`);
-
-    // ✅ Calculate extra charges based on hourly rate
-    let extraCharges = 0;
-    if (extraHours > 0 && hourlyRate && hourlyRate > 0) {
-      extraCharges = Math.round(extraHours * hourlyRate);
+    // ✅ Store extra hours for reference
+    if (Object.keys(itemExtraHoursMap).length > 0) {
+      Object.entries(itemExtraHoursMap).forEach(([itemId, hours]) => {
+        if (customer.itemsCheckoutData && customer.itemsCheckoutData[itemId]) {
+          customer.itemsCheckoutData[itemId].manualExtraHours = parseFloat(hours) || 0;
+        }
+      });
     }
 
-    logger.info('Extra Charges:', extraCharges);
-
-    // ✅ Update customer with rental info
-    customer.checkOutDate = new Date(checkOutDate);
-    customer.checkOutTime = checkOutTime;
-    customer.rentalDays = rentalDays;
-    customer.extraHours = extraHours;
-    customer.extraCharges = extraCharges;
-    customer.hourlyRate = hourlyRate || 0;
-    
-    // ✅ Update total amount - ADD extra charges
+    // ✅ Recalculate totals
     const previousTotal = customer.totalAmount;
-    customer.totalAmount = previousTotal + extraCharges;
+    customer.totalAmount = previousTotal + totalExtraCharges;
     customer.remainingAmount = customer.totalAmount - customer.givenAmount;
-    
-    customer.status = 'Completed';
 
     // ✅ Add to rental history
     if (!customer.rentalHistory) {
@@ -1211,39 +1384,40 @@ export const checkoutCustomer = async (req, res) => {
       totalQuantityUsed: (customer.items || []).reduce((sum, item) => sum + item.quantity, 0),
       totalValueUsed: (customer.items || []).reduce((sum, item) => sum + (item.quantity * item.price), 0),
       status: 'Completed',
-      rentalDays: rentalDays,
-      extraHours: extraHours,
-      extraCharges: extraCharges,
-      notes: 'Customer checked out'
+      itemsExtraCharges: itemExtraChargesMap,
+      itemsExtraHours: itemExtraHoursMap,
+      totalExtraCharges: totalExtraCharges,
+      notes: isFreeReturn 
+        ? '✅ Free return (within 24hrs from check-in time)' 
+        : '⏰ Late return - extra charges applied'
     });
 
     await customer.save();
 
-    // ✅ RETURN ITEMS to available
+    // ✅ RETURN ITEMS
     logger.info('🔄 Returning items to inventory...');
     if (customer.items && customer.items.length > 0) {
       await returnItemsWithHistory(customer.items, 'Completed');
     }
 
-    logger.info('✅ Customer checked out and items returned');
+    logger.info('✅ Customer checked out successfully');
 
     res.json({
       success: true,
       message: 'Customer checked out successfully',
       data: {
         customer,
-        rentalInfo: {
+        checkoutInfo: {
           checkInDateTime: checkInDateTime.toISOString(),
           checkOutDateTime: checkOutDateTime.toISOString(),
-          totalHours,
-          rentalDays,
-          extraHours,
-          hourlyRate: hourlyRate || 0,
-          extraCharges: Math.round(extraCharges),
+          freeReturnDeadline: freeReturnDeadline.toISOString(),
+          isFreeReturn: isFreeReturn,
+          totalExtraCharges: Math.round(totalExtraCharges),
+          itemExtraCharges: itemExtraChargesMap,
+          itemExtraHours: itemExtraHoursMap,
           previousTotal: Math.round(previousTotal),
-          extraChargesAdded: Math.round(extraCharges),
           newTotal: Math.round(customer.totalAmount),
-          remainingAmountAfterCheckout: Math.round(customer.remainingAmount)
+          remainingAmount: Math.round(customer.remainingAmount)
         }
       }
     });
@@ -1260,9 +1434,11 @@ export const checkoutCustomer = async (req, res) => {
 // =====================================================
 // CALCULATE RENTAL DURATION
 // =====================================================
+
+// Version 2
 // export const calculateRentalDuration = async (req, res) => {
 //   try {
-//     const { checkInDate, checkInTime, checkOutDate, checkOutTime, hourlyRate } = req.body;
+//     const { checkInDate, checkInTime, checkOutDate, checkOutTime, hourlyRate, quantity } = req.body;
 
 //     logger.info('🔵 CALCULATE RENTAL DURATION');
 
@@ -1273,20 +1449,17 @@ export const checkoutCustomer = async (req, res) => {
 //       });
 //     }
 
-//     // Parse check-in date-time
+//     const dailyRate = parseFloat(hourlyRate) || 0;
+//     const qty = parseInt(quantity) || 1;
+
 //     const [inHours, inMinutes] = checkInTime.split(':');
 //     const checkIn = new Date(checkInDate);
 //     checkIn.setHours(parseInt(inHours), parseInt(inMinutes), 0, 0);
 
-//     // Parse check-out date-time
 //     const [outHours, outMinutes] = checkOutTime.split(':');
 //     const checkOut = new Date(checkOutDate);
 //     checkOut.setHours(parseInt(outHours), parseInt(outMinutes), 0, 0);
 
-//     logger.info('Check-in:', checkIn.toISOString());
-//     logger.info('Check-out:', checkOut.toISOString());
-
-//     // Calculate total hours
 //     const totalHours = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60));
     
 //     if (totalHours < 0) {
@@ -1296,18 +1469,15 @@ export const checkoutCustomer = async (req, res) => {
 //       });
 //     }
 
-//     // 24-hour cycle calculation
 //     const fullDays = Math.floor(totalHours / 24);
 //     const extraHours = totalHours % 24;
 
-//     logger.info(`Duration: ${fullDays} days, ${extraHours} hours`);
-
-//     // Calculate extra charges
 //     let extraCharges = 0;
 //     if (extraHours > 0 && hourlyRate && hourlyRate > 0) {
 //       extraCharges = extraHours * hourlyRate;
 //     }
 
+//     logger.info(`✅ Duration: ${fullDays} days, ${extraHours} hours`);
 //     logger.info('Extra Charges:', extraCharges);
 
 //     res.json({
@@ -1318,11 +1488,11 @@ export const checkoutCustomer = async (req, res) => {
 //         extraHours,
 //         hourlyRate: hourlyRate || 0,
 //         extraCharges: parseFloat(extraCharges.toFixed(2)),
-//         message: `${fullDays} day(s) and ${extraHours} hour(s)${extraCharges > 0 ? ` + Extra Charge: ₹${extraCharges.toFixed(2)}` : ''}`
+//         message: `${fullDays} day(s) and ${extraHours} hour(s)`
 //       }
 //     });
 //   } catch (error) {
-//     logger.error('❌ Calculate rental duration error:', error);
+//     logger.error('❌ Calculate duration error:', error);
 //     res.status(500).json({
 //       success: false,
 //       message: 'Error calculating rental duration',
@@ -1331,68 +1501,114 @@ export const checkoutCustomer = async (req, res) => {
 //   }
 // };
 
-// Version 2
+// =====================================================
+// CALCULATE RENTAL DURATION - FIXED
+// =====================================================
+// Formula: totalDays × quantity × dailyRate = extraCharges
+// If dailyRate is 0, extraCharges is 0
+
 export const calculateRentalDuration = async (req, res) => {
   try {
-    const { checkInDate, checkInTime, checkOutDate, checkOutTime, hourlyRate } = req.body;
-
-    logger.info('🔵 CALCULATE RENTAL DURATION');
+    const { checkInDate, checkInTime, checkOutDate, checkOutTime, hourlyRate, quantity } = req.body;
 
     if (!checkInDate || !checkInTime || !checkOutDate || !checkOutTime) {
       return res.status(400).json({
         success: false,
-        message: 'All date and time fields are required'
+        message: "All date and time fields are required"
       });
     }
 
-    const [inHours, inMinutes] = checkInTime.split(':');
+    const dailyRate = parseFloat(hourlyRate) || 0;
+    const qty = parseInt(quantity) || 1;
+
+    // Parse check-in date and time
+    const [inHours, inMinutes] = checkInTime.split(":");
     const checkIn = new Date(checkInDate);
     checkIn.setHours(parseInt(inHours), parseInt(inMinutes), 0, 0);
 
-    const [outHours, outMinutes] = checkOutTime.split(':');
+    // Parse check-out date and time
+    const [outHours, outMinutes] = checkOutTime.split(":");
     const checkOut = new Date(checkOutDate);
     checkOut.setHours(parseInt(outHours), parseInt(outMinutes), 0, 0);
 
-    const totalHours = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60));
-    
-    if (totalHours < 0) {
+    logger.info('📊 RENTAL DURATION CALCULATION:');
+    logger.info(`   Check-in: ${checkIn.toISOString()}`);
+    logger.info(`   Check-out: ${checkOut.toISOString()}`);
+
+    if (checkOut < checkIn) {
       return res.status(400).json({
         success: false,
-        message: 'Check-out time cannot be before check-in time'
+        message: "Check-out time cannot be before check-in time"
       });
     }
 
-    const fullDays = Math.floor(totalHours / 24);
-    const extraHours = totalHours % 24;
+    // ✅ FREE RETURN WINDOW: Next day at 10:00 AM
+    const freeReturnDeadline = new Date(checkIn);
+    freeReturnDeadline.setDate(freeReturnDeadline.getDate() + 1); // Next day
+    freeReturnDeadline.setHours(10, 0, 0, 0); // 10:00 AM
 
-    let extraCharges = 0;
-    if (extraHours > 0 && hourlyRate && hourlyRate > 0) {
-      extraCharges = extraHours * hourlyRate;
+    logger.info(`   Free Return Deadline: ${freeReturnDeadline.toISOString()}`);
+
+    let totalDays = 0;
+
+    if (checkOut <= freeReturnDeadline) {
+      // ✅ Within free return window
+      logger.info('   ✅ FREE RETURN - No extra charges');
+      totalDays = 0;
+    } else {
+      // ✅ After free return window - Calculate charged days
+      // Days are calculated from the deadline onwards
+      const diffMs = checkOut - freeReturnDeadline;
+      const diffHours = diffMs / (1000 * 60 * 60);
+      
+      // If any fraction of an hour past deadline, count as 1 full day
+      totalDays = Math.ceil(diffHours / 24);
+      
+      logger.info(`   ⏰ LATE RETURN`);
+      logger.info(`   Hours past deadline: ${diffHours.toFixed(2)}`);
+      logger.info(`   Charged Days: ${totalDays}`);
     }
 
-    logger.info(`✅ Duration: ${fullDays} days, ${extraHours} hours`);
-    logger.info('Extra Charges:', extraCharges);
+    // ✅ Calculate extra charges
+    // Formula: Daily Rate × Quantity × Charged Days
+    let extraCharges = 0;
+    if (totalDays > 0 && dailyRate > 0) {
+      extraCharges = dailyRate * qty * totalDays;
+    }
 
-    res.json({
+    logger.info(`   Daily Rate: ₹${dailyRate}/day`);
+    logger.info(`   Quantity: ${qty}`);
+    logger.info(`   ✅ Calculation: ${dailyRate} × ${qty} × ${totalDays} = ₹${extraCharges}`);
+
+    return res.json({
       success: true,
       data: {
-        totalHours,
-        fullDays,
-        extraHours,
-        hourlyRate: hourlyRate || 0,
-        extraCharges: parseFloat(extraCharges.toFixed(2)),
-        message: `${fullDays} day(s) and ${extraHours} hour(s)`
+        checkInDate: checkIn.toISOString().split('T')[0],
+        checkInTime: checkInTime,
+        checkOutDate: checkOut.toISOString().split('T')[0],
+        checkOutTime: checkOutTime,
+        freeReturnDeadline: freeReturnDeadline.toISOString(),
+        isWithinFreeWindow: checkOut <= freeReturnDeadline,
+        totalDays: totalDays,
+        dailyRate: dailyRate,
+        quantity: qty,
+        extraCharges: Math.round(extraCharges),
+        message: totalDays === 0 
+          ? `✅ Free return (within 24hrs until 10:00 AM)`
+          : `${totalDays} day(s) × ₹${dailyRate}/day × Qty(${qty}) = ₹${Math.round(extraCharges)}`
       }
     });
+
   } catch (error) {
-    logger.error('❌ Calculate duration error:', error);
+    logger.error("❌ Calculate duration error:", error);
     res.status(500).json({
       success: false,
-      message: 'Error calculating rental duration',
+      message: "Error calculating rental duration",
       error: error.message
     });
   }
 };
+
 
 // =====================================================
 // DASHBOARD STATS

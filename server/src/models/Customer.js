@@ -728,6 +728,11 @@ const customerSchema = new mongoose.Schema(
       required: [true, 'Customer name is required'],
       trim: true
     },
+    receiverName:{
+      type: String,
+      trim: true,
+      default:''
+    },
     phone: {
       type: String,
       required: [true, 'Phone number is required'],

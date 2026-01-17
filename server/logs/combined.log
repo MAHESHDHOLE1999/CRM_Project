@@ -1697,3 +1697,788 @@
 {"level":"info","message":"GET /api/auth/me 304 9.980 ms - ::1","timestamp":"2026-01-11T07:16:43.542Z"}
 {"level":"info","message":"GET /api/bookings?search=&status=all 304 36.154 ms - ::1","timestamp":"2026-01-11T07:16:46.240Z"}
 {"level":"info","message":"GET /api/bookings/stats 304 71.115 ms - ::1","timestamp":"2026-01-11T07:16:46.730Z"}
+{"level":"info","message":"GET /api/auth/me 401 8.604 ms - ::1","timestamp":"2026-01-16T07:41:25.512Z"}
+{"level":"info","message":"GET /api/auth/me 401 1.706 ms - ::1","timestamp":"2026-01-16T07:41:25.532Z"}
+{"level":"info","message":"POST /api/auth/login 200 1385.444 ms - ::1","timestamp":"2026-01-16T07:41:34.162Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:35.873Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:35.878Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:35.882Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:35.889Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:35.913Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-15 200 345.887 ms - ::1","timestamp":"2026-01-16T07:41:36.196Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 229.755 ms - ::1","timestamp":"2026-01-16T07:41:36.219Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:36.245Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:36.248Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:36.250Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:36.251Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 328.323 ms - ::1","timestamp":"2026-01-16T07:41:36.265Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:36.292Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:36.293Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T07:41:36.298Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-15 200 429.645 ms - ::1","timestamp":"2026-01-16T07:41:36.313Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 304 111.172 ms - ::1","timestamp":"2026-01-16T07:41:44.649Z"}
+{"level":"info","message":"POST /api/items 201 177.497 ms - ::1","timestamp":"2026-01-16T07:42:13.606Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 13.852 ms - ::1","timestamp":"2026-01-16T07:42:13.631Z"}
+{"level":"info","message":"POST /api/items 201 27.574 ms - ::1","timestamp":"2026-01-16T07:42:34.124Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 18.912 ms - ::1","timestamp":"2026-01-16T07:42:34.157Z"}
+{"level":"info","message":"POST /api/items 201 15.949 ms - ::1","timestamp":"2026-01-16T07:43:42.247Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 16.382 ms - ::1","timestamp":"2026-01-16T07:43:42.272Z"}
+{"level":"info","message":"POST /api/items 201 16.154 ms - ::1","timestamp":"2026-01-16T07:44:02.156Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 17.728 ms - ::1","timestamp":"2026-01-16T07:44:02.187Z"}
+{"level":"info","message":"POST /api/items 201 13.141 ms - ::1","timestamp":"2026-01-16T07:44:20.500Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 15.717 ms - ::1","timestamp":"2026-01-16T07:44:20.526Z"}
+{"level":"info","message":"POST /api/items 201 16.193 ms - ::1","timestamp":"2026-01-16T07:44:42.312Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 16.078 ms - ::1","timestamp":"2026-01-16T07:44:42.339Z"}
+{"level":"info","message":"POST /api/items 201 10.360 ms - ::1","timestamp":"2026-01-16T07:46:45.412Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 19.388 ms - ::1","timestamp":"2026-01-16T07:46:45.442Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 304 540.848 ms - ::1","timestamp":"2026-01-16T07:55:01.927Z"}
+{"level":"info","message":"POST /api/items 201 316.563 ms - ::1","timestamp":"2026-01-16T07:55:08.680Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 31.114 ms - ::1","timestamp":"2026-01-16T07:55:08.786Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 391.414 ms - ::1","timestamp":"2026-01-16T07:55:15.337Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 151.115 ms - ::1","timestamp":"2026-01-16T07:55:20.892Z"}
+{"level":"info","message":"GET /api/auth/me 200 653.527 ms - ::1","timestamp":"2026-01-16T07:59:18.546Z"}
+{"level":"info","message":"GET /api/auth/me 304 10.418 ms - ::1","timestamp":"2026-01-16T07:59:18.614Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 1171.391 ms - ::1","timestamp":"2026-01-16T07:59:20.210Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 155.747 ms - ::1","timestamp":"2026-01-16T07:59:34.930Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 202.652 ms - ::1","timestamp":"2026-01-16T08:02:58.547Z"}
+{"level":"info","message":"GET /api/auth/me 304 191.885 ms - ::1","timestamp":"2026-01-16T08:02:58.554Z"}
+{"level":"info","message":"GET /api/auth/me 304 11.025 ms - ::1","timestamp":"2026-01-16T08:02:58.573Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 24.211 ms - ::1","timestamp":"2026-01-16T08:03:06.916Z"}
+{"level":"info","message":"🔵 CREATE CUSTOMER - Starting","timestamp":"2026-01-16T08:06:37.431Z"}
+{"0":{"itemId":"6969ebeafb9c136d7bd4adc2","itemName":"Reshmi Gadi","price":45,"quantity":20},"level":"info","message":"📦 Items:","timestamp":"2026-01-16T08:06:37.435Z"}
+{"level":"info","message":"⏰ Checkout Data:","timestamp":"2026-01-16T08:06:37.437Z"}
+{"level":"info","message":"💰 Calculation:","timestamp":"2026-01-16T08:06:37.453Z"}
+{"level":"info","message":"   Items Cost: ₹900","timestamp":"2026-01-16T08:06:37.454Z"}
+{"level":"info","message":"   Extra Charges: ₹0","timestamp":"2026-01-16T08:06:37.455Z"}
+{"level":"info","message":"   Total: ₹900","timestamp":"2026-01-16T08:06:37.456Z"}
+{"level":"info","message":"📄 Generating bill data...","timestamp":"2026-01-16T08:06:37.475Z"}
+{"buffer":{"data":[105,105,241,141,251,156,19,109,123,212,173,249],"type":"Buffer"},"level":"info","message":"✅ Customer created:","timestamp":"2026-01-16T08:06:37.686Z"}
+{"level":"info","message":"✅ Bill data saved","timestamp":"2026-01-16T08:06:37.688Z"}
+{"level":"info","message":"🔄 Renting items...","timestamp":"2026-01-16T08:06:37.690Z"}
+{"level":"info","message":"🔄 RENT ITEMS","timestamp":"2026-01-16T08:06:37.692Z"}
+{"level":"info","message":"✅ Items rented","timestamp":"2026-01-16T08:06:37.731Z"}
+{"level":"info","message":"POST /api/customers 201 312.077 ms - ::1","timestamp":"2026-01-16T08:06:37.735Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 56.428 ms - ::1","timestamp":"2026-01-16T08:06:37.809Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 133.171 ms - ::1","timestamp":"2026-01-16T08:06:37.892Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 99.811 ms - ::1","timestamp":"2026-01-16T08:06:37.968Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 247.235 ms - ::1","timestamp":"2026-01-16T08:42:41.460Z"}
+{"level":"info","message":"GET /api/auth/me 304 24.096 ms - ::1","timestamp":"2026-01-16T08:42:50.168Z"}
+{"level":"info","message":"GET /api/auth/me 304 10.392 ms - ::1","timestamp":"2026-01-16T08:42:50.189Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 92.906 ms - ::1","timestamp":"2026-01-16T08:42:50.485Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T08:42:54.922Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T08:42:54.935Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T08:42:54.937Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 200 23.794 ms - ::1","timestamp":"2026-01-16T08:42:54.945Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T08:42:54.957Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T08:42:54.990Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T08:42:54.999Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 59.781 ms - ::1","timestamp":"2026-01-16T08:42:55.033Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 27.415 ms - ::1","timestamp":"2026-01-16T08:42:55.208Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 129.809 ms - ::1","timestamp":"2026-01-16T08:50:01.363Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 133.119 ms - ::1","timestamp":"2026-01-16T08:50:01.392Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 69.234 ms - ::1","timestamp":"2026-01-16T08:50:47.462Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 82.569 ms - ::1","timestamp":"2026-01-16T08:50:47.467Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 275.308 ms - ::1","timestamp":"2026-01-16T09:29:44.473Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 180.299 ms - ::1","timestamp":"2026-01-16T09:29:44.487Z"}
+{"level":"info","message":"GET /api/auth/me 304 17.067 ms - ::1","timestamp":"2026-01-16T09:29:51.909Z"}
+{"level":"info","message":"GET /api/auth/me 304 3.997 ms - ::1","timestamp":"2026-01-16T09:29:51.917Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 34.742 ms - ::1","timestamp":"2026-01-16T09:29:52.077Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:29:56.864Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:29:56.870Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:29:56.871Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 31.977 ms - ::1","timestamp":"2026-01-16T09:29:56.895Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:29:56.912Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:29:56.918Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:29:56.919Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 12.913 ms - ::1","timestamp":"2026-01-16T09:29:56.922Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:30:18.068Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:30:18.095Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:30:18.096Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 200 50.812 ms - ::1","timestamp":"2026-01-16T09:30:18.099Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:30:18.126Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:30:18.151Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:30:18.152Z"}
+{"level":"info","message":"GET /api/customers/6961ce0bd1bc57518a284888 304 28.822 ms - ::1","timestamp":"2026-01-16T09:30:18.154Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 57.782 ms - ::1","timestamp":"2026-01-16T09:31:30.371Z"}
+{"level":"info","message":"GET /api/auth/me 304 5.026 ms - ::1","timestamp":"2026-01-16T09:31:33.851Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.623 ms - ::1","timestamp":"2026-01-16T09:31:33.861Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 44.677 ms - ::1","timestamp":"2026-01-16T09:31:34.003Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:31:35.939Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:31:36.013Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:31:36.014Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 78.617 ms - ::1","timestamp":"2026-01-16T09:31:36.017Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:31:36.022Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:31:36.031Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:31:36.033Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 17.347 ms - ::1","timestamp":"2026-01-16T09:31:36.039Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 9.547 ms - ::1","timestamp":"2026-01-16T09:31:36.121Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 134.927 ms - ::1","timestamp":"2026-01-16T09:43:48.823Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 195.552 ms - ::1","timestamp":"2026-01-16T09:43:48.833Z"}
+{"level":"info","message":"GET /api/auth/me 304 12.962 ms - ::1","timestamp":"2026-01-16T09:43:55.713Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.593 ms - ::1","timestamp":"2026-01-16T09:43:55.722Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 47.288 ms - ::1","timestamp":"2026-01-16T09:43:55.863Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:43:59.012Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:43:59.025Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:43:59.026Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 19.627 ms - ::1","timestamp":"2026-01-16T09:43:59.031Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:43:59.041Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:43:59.051Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:43:59.052Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 14.978 ms - ::1","timestamp":"2026-01-16T09:43:59.056Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 76.783 ms - ::1","timestamp":"2026-01-16T09:46:41.418Z"}
+{"level":"info","message":"GET /api/auth/me 304 8.684 ms - ::1","timestamp":"2026-01-16T09:46:44.452Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.319 ms - ::1","timestamp":"2026-01-16T09:46:44.461Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 42.665 ms - ::1","timestamp":"2026-01-16T09:46:44.603Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:46:47.483Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:46:47.488Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:46:47.489Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 8.256 ms - ::1","timestamp":"2026-01-16T09:46:47.491Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:46:47.498Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:46:47.505Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:46:47.507Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 13.689 ms - ::1","timestamp":"2026-01-16T09:46:47.511Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 10.735 ms - ::1","timestamp":"2026-01-16T09:46:47.591Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 148.070 ms - ::1","timestamp":"2026-01-16T09:58:24.650Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 257.642 ms - ::1","timestamp":"2026-01-16T09:58:24.678Z"}
+{"level":"info","message":"GET /api/auth/me 304 15.466 ms - ::1","timestamp":"2026-01-16T09:58:27.181Z"}
+{"level":"info","message":"GET /api/auth/me 304 7.481 ms - ::1","timestamp":"2026-01-16T09:58:27.194Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 55.661 ms - ::1","timestamp":"2026-01-16T09:58:27.399Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:58:30.998Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:58:31.017Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:58:31.019Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 32.656 ms - ::1","timestamp":"2026-01-16T09:58:31.032Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T09:58:31.049Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T09:58:31.079Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T09:58:31.080Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9 304 35.938 ms - ::1","timestamp":"2026-01-16T09:58:31.085Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 23.475 ms - ::1","timestamp":"2026-01-16T09:58:31.284Z"}
+{"level":"info","message":"🔵 UPDATE CUSTOMER - Starting","timestamp":"2026-01-16T09:59:25.352Z"}
+{"level":"info","message":"Customer ID:","timestamp":"2026-01-16T09:59:25.354Z"}
+{"6969ebeafb9c136d7bd4adc2":{"checkOutDate":"2026-01-16","checkOutTime":"20:33","hourlyRate":""},"level":"info","message":"Update checkout data:","timestamp":"2026-01-16T09:59:25.355Z"}
+{"level":"info","message":"📊 Status Change: Active → Completed","timestamp":"2026-01-16T09:59:25.365Z"}
+{"level":"info","message":"💰 Total extra charges:","timestamp":"2026-01-16T09:59:25.367Z"}
+{"level":"info","message":"✅ Total amount recalculated:","timestamp":"2026-01-16T09:59:25.368Z"}
+{"level":"info","message":"🏁 Completing booking...","timestamp":"2026-01-16T09:59:25.369Z"}
+{"level":"info","message":"🔄 RETURN ITEMS (Completed) - Adding back to available","timestamp":"2026-01-16T09:59:25.370Z"}
+{"level":"info","message":"  📦 Reshmi Gadi:","timestamp":"2026-01-16T09:59:25.380Z"}
+{"level":"info","message":"     Available: 280 → 300","timestamp":"2026-01-16T09:59:25.381Z"}
+{"level":"info","message":"     Rented: 20 → 0","timestamp":"2026-01-16T09:59:25.382Z"}
+{"level":"info","message":"✅ Items returned successfully (Completed)","timestamp":"2026-01-16T09:59:25.444Z"}
+{"level":"info","message":"📄 Regenerating bill data...","timestamp":"2026-01-16T09:59:25.494Z"}
+{"level":"info","message":"✅ Customer updated","timestamp":"2026-01-16T09:59:25.519Z"}
+{"level":"info","message":"✅ Bill data regenerated","timestamp":"2026-01-16T09:59:25.521Z"}
+{"level":"info","message":"PUT /api/customers/6969f18dfb9c136d7bd4adf9 200 179.708 ms - ::1","timestamp":"2026-01-16T09:59:25.533Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 53.616 ms - ::1","timestamp":"2026-01-16T09:59:25.603Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 63.834 ms - ::1","timestamp":"2026-01-16T09:59:25.623Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 57.857 ms - ::1","timestamp":"2026-01-16T09:59:25.674Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all - - ms - ::1","timestamp":"2026-01-16T11:07:28.526Z"}
+{"level":"info","message":"GET /api/auth/me 304 33.867 ms - ::1","timestamp":"2026-01-16T11:07:29.809Z"}
+{"level":"info","message":"GET /api/auth/me 304 54.312 ms - ::1","timestamp":"2026-01-16T11:07:29.920Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 204.103 ms - ::1","timestamp":"2026-01-16T11:07:30.302Z"}
+{"level":"info","message":"POST /api/auth/login 200 794.891 ms - ::1","timestamp":"2026-01-16T11:37:09.915Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.607Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.609Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.611Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.613Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.615Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 200 201.778 ms - ::1","timestamp":"2026-01-16T11:37:11.740Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-15 304 218.998 ms - ::1","timestamp":"2026-01-16T11:37:11.813Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.822Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.823Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.825Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.826Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 237.230 ms - ::1","timestamp":"2026-01-16T11:37:11.839Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.856Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.856Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:11.868Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-15 304 261.438 ms - ::1","timestamp":"2026-01-16T11:37:11.870Z"}
+{"level":"info","message":"GET /api/auth/me 200 15.588 ms - ::1","timestamp":"2026-01-16T11:37:14.362Z"}
+{"level":"info","message":"GET /api/auth/me 304 9.455 ms - ::1","timestamp":"2026-01-16T11:37:14.377Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.467Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.468Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.468Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.469Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.469Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 50.653 ms - ::1","timestamp":"2026-01-16T11:37:14.513Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.520Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.521Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.522Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.522Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.535Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.536Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-16T11:37:14.542Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-15 304 74.882 ms - ::1","timestamp":"2026-01-16T11:37:14.548Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 304 131.056 ms - ::1","timestamp":"2026-01-16T11:37:14.557Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-15 304 127.643 ms - ::1","timestamp":"2026-01-16T11:37:14.577Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 192.764 ms - ::1","timestamp":"2026-01-16T11:37:17.216Z"}
+{"level":"info","message":"Fetching customer for bill generation - Customer ID: 6969f18dfb9c136d7bd4adf9","timestamp":"2026-01-16T11:37:22.954Z"}
+{"level":"info","message":"Customer found: Mirza Shoabh","timestamp":"2026-01-16T11:37:22.966Z"}
+{"level":"info","message":"Bill data retrieved successfully","timestamp":"2026-01-16T11:37:22.968Z"}
+{"level":"debug","message":"Number of items with charges: 1","timestamp":"2026-01-16T11:37:22.970Z"}
+{"level":"info","message":"Logo loaded successfully","timestamp":"2026-01-16T11:37:22.979Z"}
+{"level":"info","message":"Building HTML content for bill generation","timestamp":"2026-01-16T11:37:23.163Z"}
+{"level":"info","message":"Puppeteer browser launched successfully","timestamp":"2026-01-16T11:37:25.069Z"}
+{"level":"info","message":"HTML content set in browser page","timestamp":"2026-01-16T11:37:26.348Z"}
+{"level":"info","message":"PDF generated successfully - Size: 632443 bytes","timestamp":"2026-01-16T11:37:28.407Z"}
+{"level":"info","message":"Sending PDF file: Bill_Mirza Shoabh_d4adf9_EN.pdf","timestamp":"2026-01-16T11:37:28.408Z"}
+{"level":"info","message":"GET /api/customers/6969f18dfb9c136d7bd4adf9/bill?language=en 200 5458.958 ms - ::1","timestamp":"2026-01-16T11:37:28.411Z"}
+{"level":"info","message":"GET /api/auth/me 304 984.362 ms - ::1","timestamp":"2026-01-16T14:07:55.361Z"}
+{"level":"info","message":"GET /api/auth/me 304 45.959 ms - ::1","timestamp":"2026-01-16T14:07:55.543Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 516.182 ms - ::1","timestamp":"2026-01-16T14:07:56.238Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 235.796 ms - ::1","timestamp":"2026-01-16T14:08:06.803Z"}
+{"level":"info","message":"GET /api/items?search=&status=all 200 21.565 ms - ::1","timestamp":"2026-01-16T14:08:10.792Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 235.643 ms - ::1","timestamp":"2026-01-16T14:08:18.612Z"}
+{"level":"info","message":"🔵 CREATE CUSTOMER - Starting","timestamp":"2026-01-16T14:10:29.266Z"}
+{"0":{"price":0,"quantity":1},"level":"info","message":"📦 Items:","timestamp":"2026-01-16T14:10:29.315Z"}
+{"level":"info","message":"⏰ Checkout Data:","timestamp":"2026-01-16T14:10:29.321Z"}
+{"level":"info","message":"POST /api/customers 400 243.980 ms - ::1","timestamp":"2026-01-16T14:10:29.444Z"}
+{"level":"info","message":"🔵 CREATE CUSTOMER - Starting","timestamp":"2026-01-16T14:10:40.711Z"}
+{"0":{"itemId":"6969eedcfb9c136d7bd4ade2","itemName":"Old Gadi","price":75,"quantity":1},"level":"info","message":"📦 Items:","timestamp":"2026-01-16T14:10:40.713Z"}
+{"level":"info","message":"⏰ Checkout Data:","timestamp":"2026-01-16T14:10:40.715Z"}
+{"level":"info","message":"💰 Calculation:","timestamp":"2026-01-16T14:10:40.736Z"}
+{"level":"info","message":"   Items Cost: ₹75","timestamp":"2026-01-16T14:10:40.737Z"}
+{"level":"info","message":"   Extra Charges: ₹0","timestamp":"2026-01-16T14:10:40.738Z"}
+{"level":"info","message":"   Total: ₹75","timestamp":"2026-01-16T14:10:40.739Z"}
+{"level":"info","message":"📄 Generating bill data...","timestamp":"2026-01-16T14:10:40.779Z"}
+{"buffer":{"data":[105,106,70,224,95,211,106,155,11,250,185,97],"type":"Buffer"},"level":"info","message":"✅ Customer created:","timestamp":"2026-01-16T14:10:40.904Z"}
+{"level":"info","message":"✅ Bill data saved","timestamp":"2026-01-16T14:10:40.907Z"}
+{"level":"info","message":"🔄 Renting items...","timestamp":"2026-01-16T14:10:40.909Z"}
+{"level":"info","message":"🔄 RENT ITEMS","timestamp":"2026-01-16T14:10:40.911Z"}
+{"level":"info","message":"✅ Items rented","timestamp":"2026-01-16T14:10:40.966Z"}
+{"level":"info","message":"POST /api/customers 201 260.354 ms - ::1","timestamp":"2026-01-16T14:10:40.971Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 145.728 ms - ::1","timestamp":"2026-01-16T14:10:41.146Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 76.475 ms - ::1","timestamp":"2026-01-16T14:10:41.235Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 218.897 ms - ::1","timestamp":"2026-01-16T14:10:41.250Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T14:10:44.904Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T14:10:44.921Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T14:10:44.922Z"}
+{"level":"info","message":"GET /api/customers/696a46e05fd36a9b0bfab961 200 31.110 ms - ::1","timestamp":"2026-01-16T14:10:44.935Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T14:10:44.948Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T14:10:44.979Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T14:10:44.981Z"}
+{"level":"info","message":"GET /api/customers/696a46e05fd36a9b0bfab961 304 40.010 ms - ::1","timestamp":"2026-01-16T14:10:44.992Z"}
+{"level":"info","message":"🔵 UPDATE CUSTOMER - Starting","timestamp":"2026-01-16T14:11:38.430Z"}
+{"level":"info","message":"Customer ID:","timestamp":"2026-01-16T14:11:38.431Z"}
+{"6969eedcfb9c136d7bd4ade2":{"checkOutDate":"2026-01-17","checkOutTime":"11:30","hourlyRate":""},"level":"info","message":"Update checkout data:","timestamp":"2026-01-16T14:11:38.432Z"}
+{"level":"info","message":"📊 Status Change: Active → Completed","timestamp":"2026-01-16T14:11:38.449Z"}
+{"level":"info","message":"💰 Total extra charges:","timestamp":"2026-01-16T14:11:38.451Z"}
+{"level":"info","message":"✅ Total amount recalculated:","timestamp":"2026-01-16T14:11:38.453Z"}
+{"level":"info","message":"🏁 Completing booking...","timestamp":"2026-01-16T14:11:38.454Z"}
+{"level":"info","message":"🔄 RETURN ITEMS (Completed) - Adding back to available","timestamp":"2026-01-16T14:11:38.458Z"}
+{"level":"info","message":"  📦 Old Gadi:","timestamp":"2026-01-16T14:11:38.482Z"}
+{"level":"info","message":"     Available: 599 → 600","timestamp":"2026-01-16T14:11:38.483Z"}
+{"level":"info","message":"     Rented: 1 → 0","timestamp":"2026-01-16T14:11:38.484Z"}
+{"level":"info","message":"✅ Items returned successfully (Completed)","timestamp":"2026-01-16T14:11:38.506Z"}
+{"level":"info","message":"📄 Regenerating bill data...","timestamp":"2026-01-16T14:11:38.638Z"}
+{"level":"info","message":"✅ Customer updated","timestamp":"2026-01-16T14:11:38.664Z"}
+{"level":"info","message":"✅ Bill data regenerated","timestamp":"2026-01-16T14:11:38.666Z"}
+{"level":"info","message":"PUT /api/customers/696a46e05fd36a9b0bfab961 200 247.108 ms - ::1","timestamp":"2026-01-16T14:11:38.673Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 92.536 ms - ::1","timestamp":"2026-01-16T14:11:38.794Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 115.464 ms - ::1","timestamp":"2026-01-16T14:11:38.825Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 96.468 ms - ::1","timestamp":"2026-01-16T14:11:38.908Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T14:11:56.425Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T14:11:56.451Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T14:11:56.454Z"}
+{"level":"info","message":"GET /api/customers/696a46e05fd36a9b0bfab961 200 38.243 ms - ::1","timestamp":"2026-01-16T14:11:56.464Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T14:11:56.482Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T14:11:56.517Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T14:11:56.521Z"}
+{"level":"info","message":"GET /api/customers/696a46e05fd36a9b0bfab961 304 50.032 ms - ::1","timestamp":"2026-01-16T14:11:56.531Z"}
+{"level":"info","message":"🔵 CALCULATE RENTAL DURATION","timestamp":"2026-01-16T14:12:58.211Z"}
+{"level":"info","message":"✅ Duration: 1 days, 2 hours","timestamp":"2026-01-16T14:12:58.237Z"}
+{"level":"info","message":"Extra Charges:","timestamp":"2026-01-16T14:12:58.239Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 36.180 ms - ::1","timestamp":"2026-01-16T14:12:58.244Z"}
+{"level":"info","message":"🔵 CALCULATE RENTAL DURATION","timestamp":"2026-01-16T14:17:11.399Z"}
+{"level":"info","message":"✅ Duration: 3 days, 2 hours","timestamp":"2026-01-16T14:17:11.406Z"}
+{"level":"info","message":"Extra Charges:","timestamp":"2026-01-16T14:17:11.407Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 12.455 ms - ::1","timestamp":"2026-01-16T14:17:11.413Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 265.807 ms - ::1","timestamp":"2026-01-16T14:18:48.114Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 204.244 ms - ::1","timestamp":"2026-01-16T14:18:48.139Z"}
+{"level":"info","message":"🔵 CALCULATE RENTAL DURATION","timestamp":"2026-01-16T14:18:59.172Z"}
+{"level":"info","message":"✅ Duration: 3 days, 2 hours","timestamp":"2026-01-16T14:18:59.179Z"}
+{"level":"info","message":"Extra Charges:","timestamp":"2026-01-16T14:18:59.185Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 26.351 ms - ::1","timestamp":"2026-01-16T14:18:59.205Z"}
+{"level":"info","message":"🔵 CALCULATE RENTAL DURATION","timestamp":"2026-01-16T14:19:32.847Z"}
+{"level":"info","message":"✅ Duration: 3 days, 2 hours","timestamp":"2026-01-16T14:19:32.848Z"}
+{"level":"info","message":"Extra Charges:","timestamp":"2026-01-16T14:19:32.849Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 3.357 ms - ::1","timestamp":"2026-01-16T14:19:32.851Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 251.664 ms - ::1","timestamp":"2026-01-16T14:21:38.150Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T14:21:54.884Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T14:21:54.999Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T14:21:55.001Z"}
+{"level":"info","message":"GET /api/customers/696a46e05fd36a9b0bfab961 304 173.551 ms - ::1","timestamp":"2026-01-16T14:21:55.042Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T14:21:55.066Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T14:21:55.116Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T14:21:55.119Z"}
+{"level":"info","message":"GET /api/customers/696a46e05fd36a9b0bfab961 304 62.324 ms - ::1","timestamp":"2026-01-16T14:21:55.130Z"}
+{"level":"info","message":"🔵 UPDATE CUSTOMER - Starting","timestamp":"2026-01-16T14:22:35.916Z"}
+{"level":"info","message":"Customer ID:","timestamp":"2026-01-16T14:22:35.918Z"}
+{"6969eedcfb9c136d7bd4ade2":{"checkOutDate":"2026-01-16","checkOutTime":"22:30","hourlyRate":null},"level":"info","message":"Update checkout data:","timestamp":"2026-01-16T14:22:35.920Z"}
+{"level":"info","message":"📊 Status Change: Completed → Completed","timestamp":"2026-01-16T14:22:35.932Z"}
+{"level":"info","message":"💰 Total extra charges:","timestamp":"2026-01-16T14:22:35.933Z"}
+{"level":"info","message":"✅ Total amount recalculated:","timestamp":"2026-01-16T14:22:35.935Z"}
+{"level":"info","message":"📄 Regenerating bill data...","timestamp":"2026-01-16T14:22:35.965Z"}
+{"level":"info","message":"✅ Customer updated","timestamp":"2026-01-16T14:22:36.009Z"}
+{"level":"info","message":"✅ Bill data regenerated","timestamp":"2026-01-16T14:22:36.014Z"}
+{"level":"info","message":"PUT /api/customers/696a46e05fd36a9b0bfab961 200 122.000 ms - ::1","timestamp":"2026-01-16T14:22:36.039Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 62.746 ms - ::1","timestamp":"2026-01-16T14:22:36.136Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 83.556 ms - ::1","timestamp":"2026-01-16T14:22:36.166Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 90.794 ms - ::1","timestamp":"2026-01-16T14:22:36.246Z"}
+{"level":"info","message":"🔵 CREATE CUSTOMER - Starting","timestamp":"2026-01-16T14:23:49.499Z"}
+{"0":{"itemId":"6969ec42fb9c136d7bd4adcc","itemName":"Ketli","price":35,"quantity":20},"level":"info","message":"📦 Items:","timestamp":"2026-01-16T14:23:49.502Z"}
+{"level":"info","message":"⏰ Checkout Data:","timestamp":"2026-01-16T14:23:49.504Z"}
+{"level":"info","message":"💰 Calculation:","timestamp":"2026-01-16T14:23:49.518Z"}
+{"level":"info","message":"   Items Cost: ₹700","timestamp":"2026-01-16T14:23:49.519Z"}
+{"level":"info","message":"   Extra Charges: ₹0","timestamp":"2026-01-16T14:23:49.520Z"}
+{"level":"info","message":"   Total: ₹700","timestamp":"2026-01-16T14:23:49.521Z"}
+{"level":"info","message":"📄 Generating bill data...","timestamp":"2026-01-16T14:23:49.533Z"}
+{"buffer":{"data":[105,106,73,245,95,211,106,155,11,250,185,146],"type":"Buffer"},"level":"info","message":"✅ Customer created:","timestamp":"2026-01-16T14:23:49.564Z"}
+{"level":"info","message":"✅ Bill data saved","timestamp":"2026-01-16T14:23:49.565Z"}
+{"level":"info","message":"🔄 Renting items...","timestamp":"2026-01-16T14:23:49.566Z"}
+{"level":"info","message":"🔄 RENT ITEMS","timestamp":"2026-01-16T14:23:49.567Z"}
+{"level":"info","message":"✅ Items rented","timestamp":"2026-01-16T14:23:49.595Z"}
+{"level":"info","message":"POST /api/customers 201 100.611 ms - ::1","timestamp":"2026-01-16T14:23:49.600Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 109.641 ms - ::1","timestamp":"2026-01-16T14:23:49.730Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 100.667 ms - ::1","timestamp":"2026-01-16T14:23:49.753Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 68.650 ms - ::1","timestamp":"2026-01-16T14:23:49.813Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T14:24:05.594Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T14:24:05.607Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T14:24:05.608Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 200 22.569 ms - ::1","timestamp":"2026-01-16T14:24:05.617Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T14:24:05.631Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T14:24:05.656Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T14:24:05.657Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 35.513 ms - ::1","timestamp":"2026-01-16T14:24:05.667Z"}
+{"level":"info","message":"🔵 CALCULATE RENTAL DURATION","timestamp":"2026-01-16T14:26:02.770Z"}
+{"level":"info","message":"✅ Duration: 5 days, 13 hours","timestamp":"2026-01-16T14:26:02.771Z"}
+{"level":"info","message":"Extra Charges:","timestamp":"2026-01-16T14:26:02.772Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 4.247 ms - ::1","timestamp":"2026-01-16T14:26:02.775Z"}
+{"level":"info","message":"🔵 CALCULATE RENTAL DURATION","timestamp":"2026-01-16T14:29:03.476Z"}
+{"level":"info","message":"✅ Duration: 5 days, 13 hours","timestamp":"2026-01-16T14:29:03.483Z"}
+{"level":"info","message":"Extra Charges:","timestamp":"2026-01-16T14:29:03.484Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 13.987 ms - ::1","timestamp":"2026-01-16T14:29:03.487Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 108.058 ms - ::1","timestamp":"2026-01-16T14:31:20.287Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 144.076 ms - ::1","timestamp":"2026-01-16T14:31:20.329Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 90.381 ms - ::1","timestamp":"2026-01-16T14:33:59.054Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 253.744 ms - ::1","timestamp":"2026-01-16T14:34:03.925Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 268.065 ms - ::1","timestamp":"2026-01-16T14:34:04.021Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 667.031 ms - ::1","timestamp":"2026-01-16T17:53:41.598Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 1038.310 ms - ::1","timestamp":"2026-01-16T17:53:42.379Z"}
+{"level":"info","message":"GET /api/auth/me 304 94.837 ms - ::1","timestamp":"2026-01-16T17:53:44.739Z"}
+{"level":"info","message":"GET /api/auth/me 304 9.393 ms - ::1","timestamp":"2026-01-16T17:53:44.756Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 21.160 ms - ::1","timestamp":"2026-01-16T17:53:45.040Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 23.931 ms - ::1","timestamp":"2026-01-16T17:53:45.051Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 189.112 ms - ::1","timestamp":"2026-01-16T17:53:50.026Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T17:53:55.834Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T17:53:55.849Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T17:53:55.852Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 33.004 ms - ::1","timestamp":"2026-01-16T17:53:55.865Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T17:53:55.932Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T17:53:55.959Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T17:53:55.960Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 44.290 ms - ::1","timestamp":"2026-01-16T17:53:55.973Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 48.816 ms - ::1","timestamp":"2026-01-16T17:53:56.149Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T17:54:14.259Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T17:54:14.314Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T17:54:14.315Z"}
+{"level":"info","message":"GET /api/customers/696a46e05fd36a9b0bfab961 200 67.096 ms - ::1","timestamp":"2026-01-16T17:54:14.330Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T17:54:14.341Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T17:54:14.389Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T17:54:14.391Z"}
+{"level":"info","message":"GET /api/customers/696a46e05fd36a9b0bfab961 304 62.822 ms - ::1","timestamp":"2026-01-16T17:54:14.401Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T17:54:32.416Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T17:54:32.452Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T17:54:32.464Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 55.014 ms - ::1","timestamp":"2026-01-16T17:54:32.470Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T17:54:32.486Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T17:54:32.524Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T17:54:32.535Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 63.492 ms - ::1","timestamp":"2026-01-16T17:54:32.549Z"}
+{"level":"info","message":"🔵 CALCULATE RENTAL DURATION","timestamp":"2026-01-16T17:55:10.917Z"}
+{"level":"info","message":"✅ Duration: 2 days, 17 hours","timestamp":"2026-01-16T17:55:10.926Z"}
+{"level":"info","message":"Extra Charges:","timestamp":"2026-01-16T17:55:10.928Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 31.009 ms - ::1","timestamp":"2026-01-16T17:55:10.980Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 138.031 ms - ::1","timestamp":"2026-01-16T17:55:57.142Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 191.643 ms - ::1","timestamp":"2026-01-16T17:57:34.237Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 2971.631 ms - ::1","timestamp":"2026-01-16T18:22:36.505Z"}
+{"level":"info","message":"GET /api/items?inStock=true - - ms - ::1","timestamp":"2026-01-16T18:22:37.899Z"}
+{"level":"info","message":"GET /api/auth/me 304 125.436 ms - ::1","timestamp":"2026-01-16T18:22:39.139Z"}
+{"level":"info","message":"GET /api/auth/me 304 210.782 ms - ::1","timestamp":"2026-01-16T18:22:39.553Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 885.873 ms - ::1","timestamp":"2026-01-16T18:22:40.676Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T18:22:43.388Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T18:22:43.420Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T18:22:43.427Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 60.533 ms - ::1","timestamp":"2026-01-16T18:22:43.449Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-16T18:22:43.477Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-16T18:22:43.516Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-16T18:22:43.520Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 62.905 ms - ::1","timestamp":"2026-01-16T18:22:43.540Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 25.364 ms - ::1","timestamp":"2026-01-16T18:22:43.657Z"}
+{"level":"info","message":"🔵 CALCULATE RENTAL DURATION","timestamp":"2026-01-16T18:23:57.288Z"}
+{"level":"info","message":"✅ Duration: 2 days, 18 hours","timestamp":"2026-01-16T18:23:57.290Z"}
+{"level":"info","message":"Extra Charges:","timestamp":"2026-01-16T18:23:57.291Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 6.990 ms - ::1","timestamp":"2026-01-16T18:23:57.294Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 139.476 ms - ::1","timestamp":"2026-01-16T18:24:31.982Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 209.158 ms - ::1","timestamp":"2026-01-16T20:35:19.187Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 149.912 ms - ::1","timestamp":"2026-01-16T20:35:19.216Z"}
+{"level":"info","message":"GET /api/auth/me 304 106.552 ms - ::1","timestamp":"2026-01-17T07:28:33.665Z"}
+{"level":"info","message":"GET /api/auth/me 304 8.862 ms - ::1","timestamp":"2026-01-17T07:28:33.683Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.764Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.768Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.769Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.770Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.771Z"}
+{"level":"info","message":"GET /api/customers/enhanced-stats 200 149.820 ms - ::1","timestamp":"2026-01-17T07:28:33.885Z"}
+{"level":"info","message":"GET /api/customers/analytics?period=month 304 134.146 ms - ::1","timestamp":"2026-01-17T07:28:33.891Z"}
+{"level":"info","message":"GET /api/customers/financial-stats?startDate=2025-12-31&endDate=2026-01-16 200 198.075 ms - ::1","timestamp":"2026-01-17T07:28:33.923Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.936Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.936Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.937Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.938Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.947Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.947Z"}
+{"level":"info","message":"CUSTOMER REPORT","timestamp":"2026-01-17T07:28:33.952Z"}
+{"level":"info","message":"GET /api/reports/customers?startDate=2025-12-31&endDate=2026-01-16 200 189.413 ms - ::1","timestamp":"2026-01-17T07:28:33.953Z"}
+{"level":"info","message":"GET /api/auth/me 304 9.520 ms - ::1","timestamp":"2026-01-17T07:28:36.361Z"}
+{"level":"info","message":"GET /api/auth/me 304 24.755 ms - ::1","timestamp":"2026-01-17T07:28:36.392Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 163.899 ms - ::1","timestamp":"2026-01-17T07:28:36.874Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 44.715 ms - ::1","timestamp":"2026-01-17T07:28:38.558Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T07:28:42.189Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T07:28:42.220Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T07:28:42.222Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 37.506 ms - ::1","timestamp":"2026-01-17T07:28:42.227Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T07:28:42.243Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T07:28:42.251Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T07:28:42.252Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 13.351 ms - ::1","timestamp":"2026-01-17T07:28:42.254Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 49.502 ms - ::1","timestamp":"2026-01-17T07:28:42.381Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 1.507 ms - ::1","timestamp":"2026-01-17T07:29:03.067Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 88.517 ms - ::1","timestamp":"2026-01-17T07:37:31.476Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 112.714 ms - ::1","timestamp":"2026-01-17T07:37:31.500Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 51.617 ms - ::1","timestamp":"2026-01-17T07:38:36.143Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 138.011 ms - ::1","timestamp":"2026-01-17T07:47:10.291Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 130.878 ms - ::1","timestamp":"2026-01-17T07:47:10.310Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 134.828 ms - ::1","timestamp":"2026-01-17T07:49:01.417Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 55.787 ms - ::1","timestamp":"2026-01-17T07:51:55.644Z"}
+{"level":"info","message":"GET /api/auth/me 304 10.418 ms - ::1","timestamp":"2026-01-17T07:51:59.832Z"}
+{"level":"info","message":"GET /api/auth/me 304 4.512 ms - ::1","timestamp":"2026-01-17T07:51:59.842Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 40.416 ms - ::1","timestamp":"2026-01-17T07:51:59.963Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T07:52:02.859Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T07:52:02.867Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T07:52:02.868Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 13.535 ms - ::1","timestamp":"2026-01-17T07:52:02.872Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T07:52:02.884Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T07:52:02.889Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T07:52:02.890Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 11.917 ms - ::1","timestamp":"2026-01-17T07:52:02.893Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 10.258 ms - ::1","timestamp":"2026-01-17T07:52:02.960Z"}
+{"level":"info","message":"📊 CALCULATION:","timestamp":"2026-01-17T07:52:33.873Z"}
+{"level":"info","message":"   Check-in: 2026-01-16T04:30:00.000Z","timestamp":"2026-01-17T07:52:33.874Z"}
+{"level":"info","message":"   Check-out: 2026-01-18T04:58:00.000Z","timestamp":"2026-01-17T07:52:33.874Z"}
+{"level":"info","message":"   Total Days: 3","timestamp":"2026-01-17T07:52:33.874Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T07:52:33.875Z"}
+{"level":"info","message":"   Daily Rate: ₹20/day","timestamp":"2026-01-17T07:52:33.875Z"}
+{"level":"info","message":"   ✅ Extra Charges: 20 × 20 × 3 = ₹1200","timestamp":"2026-01-17T07:52:33.875Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 4.262 ms - ::1","timestamp":"2026-01-17T07:52:33.878Z"}
+{"level":"info","message":"📊 CALCULATION:","timestamp":"2026-01-17T07:52:49.123Z"}
+{"level":"info","message":"   Check-in: 2026-01-16T04:30:00.000Z","timestamp":"2026-01-17T07:52:49.123Z"}
+{"level":"info","message":"   Check-out: 2026-01-18T04:58:00.000Z","timestamp":"2026-01-17T07:52:49.124Z"}
+{"level":"info","message":"   Total Days: 3","timestamp":"2026-01-17T07:52:49.124Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T07:52:49.125Z"}
+{"level":"info","message":"   Daily Rate: ₹0/day","timestamp":"2026-01-17T07:52:49.126Z"}
+{"level":"info","message":"   ✅ Extra Charges: 0 × 20 × 3 = ₹0","timestamp":"2026-01-17T07:52:49.126Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 4.885 ms - ::1","timestamp":"2026-01-17T07:52:49.128Z"}
+{"level":"info","message":"📊 CALCULATION:","timestamp":"2026-01-17T07:52:54.987Z"}
+{"level":"info","message":"   Check-in: 2026-01-16T04:30:00.000Z","timestamp":"2026-01-17T07:52:54.987Z"}
+{"level":"info","message":"   Check-out: 2026-01-18T04:58:00.000Z","timestamp":"2026-01-17T07:52:54.988Z"}
+{"level":"info","message":"   Total Days: 3","timestamp":"2026-01-17T07:52:54.988Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T07:52:54.989Z"}
+{"level":"info","message":"   Daily Rate: ₹35/day","timestamp":"2026-01-17T07:52:54.989Z"}
+{"level":"info","message":"   ✅ Extra Charges: 35 × 20 × 3 = ₹2100","timestamp":"2026-01-17T07:52:54.990Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 4.646 ms - ::1","timestamp":"2026-01-17T07:52:54.991Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 222.416 ms - ::1","timestamp":"2026-01-17T08:22:19.172Z"}
+{"level":"info","message":"GET /api/items?inStock=true - - ms - ::1","timestamp":"2026-01-17T08:22:19.282Z"}
+{"level":"info","message":"GET /api/auth/me 304 12.176 ms - ::1","timestamp":"2026-01-17T08:22:20.247Z"}
+{"level":"info","message":"GET /api/auth/me 304 6.608 ms - ::1","timestamp":"2026-01-17T08:22:20.260Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 50.358 ms - ::1","timestamp":"2026-01-17T08:22:20.472Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:22:23.516Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:22:23.524Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:22:23.525Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 14.837 ms - ::1","timestamp":"2026-01-17T08:22:23.531Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:22:23.545Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:22:23.559Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:22:23.560Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 19.601 ms - ::1","timestamp":"2026-01-17T08:22:23.564Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 11.399 ms - ::1","timestamp":"2026-01-17T08:22:23.669Z"}
+{"level":"info","message":"📊 CALCULATION:","timestamp":"2026-01-17T08:22:49.492Z"}
+{"level":"info","message":"   Check-in: 2026-01-16T04:30:00.000Z","timestamp":"2026-01-17T08:22:49.493Z"}
+{"level":"info","message":"   Check-out: 2026-01-19T10:24:00.000Z","timestamp":"2026-01-17T08:22:49.495Z"}
+{"level":"info","message":"   Total Days: 4","timestamp":"2026-01-17T08:22:49.495Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T08:22:49.496Z"}
+{"level":"info","message":"   Daily Rate: ₹20/day","timestamp":"2026-01-17T08:22:49.499Z"}
+{"level":"info","message":"   ✅ Extra Charges: 20 × 20 × 4 = ₹1600","timestamp":"2026-01-17T08:22:49.504Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 19.712 ms - ::1","timestamp":"2026-01-17T08:22:49.513Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 156.279 ms - ::1","timestamp":"2026-01-17T08:23:25.120Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 101.643 ms - ::1","timestamp":"2026-01-17T08:23:34.274Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 134.412 ms - ::1","timestamp":"2026-01-17T08:24:11.351Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 381.719 ms - ::1","timestamp":"2026-01-17T08:30:18.918Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 380.873 ms - ::1","timestamp":"2026-01-17T08:30:18.984Z"}
+{"level":"info","message":"GET /api/auth/me 304 20.041 ms - ::1","timestamp":"2026-01-17T08:30:22.836Z"}
+{"level":"info","message":"GET /api/auth/me 304 12.817 ms - ::1","timestamp":"2026-01-17T08:30:22.860Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 183.840 ms - ::1","timestamp":"2026-01-17T08:30:23.329Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:30:25.526Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:30:25.540Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:30:25.541Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 23.540 ms - ::1","timestamp":"2026-01-17T08:30:25.549Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:30:25.566Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:30:25.579Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:30:25.580Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 21.369 ms - ::1","timestamp":"2026-01-17T08:30:25.586Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 13.889 ms - ::1","timestamp":"2026-01-17T08:30:25.671Z"}
+{"level":"info","message":"📊 RENTAL DURATION CALCULATION:","timestamp":"2026-01-17T08:30:41.971Z"}
+{"level":"info","message":"   Check-in: 2026-01-16T04:30:00.000Z","timestamp":"2026-01-17T08:30:41.973Z"}
+{"level":"info","message":"   Check-out: 2026-01-19T12:33:00.000Z","timestamp":"2026-01-17T08:30:41.973Z"}
+{"level":"info","message":"   Free Return Deadline: 2026-01-17T04:30:00.000Z","timestamp":"2026-01-17T08:30:41.974Z"}
+{"level":"info","message":"   ⏰ LATE RETURN","timestamp":"2026-01-17T08:30:41.975Z"}
+{"level":"info","message":"   Hours past deadline: 56.05","timestamp":"2026-01-17T08:30:41.976Z"}
+{"level":"info","message":"   Charged Days: 3","timestamp":"2026-01-17T08:30:41.977Z"}
+{"level":"info","message":"   Daily Rate: ₹20/day","timestamp":"2026-01-17T08:30:41.978Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T08:30:41.979Z"}
+{"level":"info","message":"   ✅ Calculation: 20 × 20 × 3 = ₹1200","timestamp":"2026-01-17T08:30:41.981Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 18.288 ms - ::1","timestamp":"2026-01-17T08:30:41.989Z"}
+{"level":"info","message":"📊 RENTAL DURATION CALCULATION:","timestamp":"2026-01-17T08:31:39.070Z"}
+{"level":"info","message":"   Check-in: 2026-01-16T04:30:00.000Z","timestamp":"2026-01-17T08:31:39.076Z"}
+{"level":"info","message":"   Check-out: 2026-01-19T11:34:00.000Z","timestamp":"2026-01-17T08:31:39.078Z"}
+{"level":"info","message":"   Free Return Deadline: 2026-01-17T04:30:00.000Z","timestamp":"2026-01-17T08:31:39.078Z"}
+{"level":"info","message":"   ⏰ LATE RETURN","timestamp":"2026-01-17T08:31:39.082Z"}
+{"level":"info","message":"   Hours past deadline: 55.07","timestamp":"2026-01-17T08:31:39.083Z"}
+{"level":"info","message":"   Charged Days: 3","timestamp":"2026-01-17T08:31:39.083Z"}
+{"level":"info","message":"   Daily Rate: ₹20/day","timestamp":"2026-01-17T08:31:39.084Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T08:31:39.085Z"}
+{"level":"info","message":"   ✅ Calculation: 20 × 20 × 3 = ₹1200","timestamp":"2026-01-17T08:31:39.086Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 24.701 ms - ::1","timestamp":"2026-01-17T08:31:39.095Z"}
+{"level":"info","message":"🔵 UPDATE CUSTOMER - Starting","timestamp":"2026-01-17T08:31:57.722Z"}
+{"level":"info","message":"Customer ID:","timestamp":"2026-01-17T08:31:57.723Z"}
+{"6969ec42fb9c136d7bd4adcc":{"checkOutDate":"2026-01-19","checkOutTime":"18:03","dailyRate":20,"extraCharges":1200,"hourlyRate":"20","isWithinFreeWindow":false,"rentalDays":3},"6969eedcfb9c136d7bd4ade2":{"checkOutDate":"2026-01-19","checkOutTime":"17:04","dailyRate":20,"extraCharges":1200,"hourlyRate":"20","isWithinFreeWindow":false,"rentalDays":3},"level":"info","message":"Update checkout data:","timestamp":"2026-01-17T08:31:57.724Z"}
+{"level":"info","message":"📊 Status Change: Active → Active","timestamp":"2026-01-17T08:31:57.733Z"}
+{"level":"info","message":"💰 Total extra charges:","timestamp":"2026-01-17T08:31:57.734Z"}
+{"level":"info","message":"✅ Total amount recalculated:","timestamp":"2026-01-17T08:31:57.735Z"}
+{"level":"info","message":"📄 Regenerating bill data...","timestamp":"2026-01-17T08:31:57.781Z"}
+{"level":"info","message":"✅ Customer updated","timestamp":"2026-01-17T08:31:57.824Z"}
+{"level":"info","message":"✅ Bill data regenerated","timestamp":"2026-01-17T08:31:57.825Z"}
+{"level":"info","message":"PUT /api/customers/696a49f55fd36a9b0bfab992 200 109.741 ms - ::1","timestamp":"2026-01-17T08:31:57.830Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 52.767 ms - ::1","timestamp":"2026-01-17T08:31:57.899Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 62.471 ms - ::1","timestamp":"2026-01-17T08:31:57.917Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 69.117 ms - ::1","timestamp":"2026-01-17T08:31:57.979Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:32:02.635Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:32:02.648Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:32:02.649Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 200 21.814 ms - ::1","timestamp":"2026-01-17T08:32:02.658Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:32:02.668Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:32:02.681Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:32:02.682Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 20.889 ms - ::1","timestamp":"2026-01-17T08:32:02.689Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 87.854 ms - ::1","timestamp":"2026-01-17T08:33:23.052Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:33:25.376Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:33:25.385Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:33:25.387Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 23.124 ms - ::1","timestamp":"2026-01-17T08:33:25.399Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:33:25.417Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:33:25.432Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:33:25.433Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 24.571 ms - ::1","timestamp":"2026-01-17T08:33:25.440Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 224.082 ms - ::1","timestamp":"2026-01-17T08:37:55.541Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 218.505 ms - ::1","timestamp":"2026-01-17T08:37:55.564Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 102.576 ms - ::1","timestamp":"2026-01-17T08:40:13.651Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:40:15.873Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:40:15.887Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:40:15.888Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 20.988 ms - ::1","timestamp":"2026-01-17T08:40:15.893Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:40:15.913Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:40:15.942Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:40:15.947Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 46.291 ms - ::1","timestamp":"2026-01-17T08:40:15.956Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 279.623 ms - ::1","timestamp":"2026-01-17T08:41:12.485Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 98.243 ms - ::1","timestamp":"2026-01-17T08:41:31.117Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 76.510 ms - ::1","timestamp":"2026-01-17T08:41:53.088Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 154.934 ms - ::1","timestamp":"2026-01-17T08:45:15.414Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 135.781 ms - ::1","timestamp":"2026-01-17T08:45:15.431Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 135.012 ms - ::1","timestamp":"2026-01-17T08:46:19.864Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:46:28.999Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:46:29.009Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:46:29.010Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 23.370 ms - ::1","timestamp":"2026-01-17T08:46:29.024Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T08:46:29.037Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T08:46:29.047Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T08:46:29.047Z"}
+{"level":"info","message":"GET /api/customers/696a49f55fd36a9b0bfab992 304 19.542 ms - ::1","timestamp":"2026-01-17T08:46:29.054Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 70.796 ms - ::1","timestamp":"2026-01-17T08:50:58.695Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 77.215 ms - ::1","timestamp":"2026-01-17T08:50:58.711Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 189.381 ms - ::1","timestamp":"2026-01-17T08:54:04.973Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 164.696 ms - ::1","timestamp":"2026-01-17T08:58:53.828Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 160.296 ms - ::1","timestamp":"2026-01-17T08:58:53.847Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 51.559 ms - ::1","timestamp":"2026-01-17T08:59:36.495Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 49.912 ms - ::1","timestamp":"2026-01-17T08:59:36.500Z"}
+{"level":"info","message":"GET /api/auth/me 304 145.968 ms - ::1","timestamp":"2026-01-17T09:46:25.973Z"}
+{"level":"info","message":"GET /api/auth/me 304 14.309 ms - ::1","timestamp":"2026-01-17T09:46:26.003Z"}
+{"level":"info","message":"✅ Fetched 7 bookings","timestamp":"2026-01-17T09:46:26.153Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 200 26.836 ms - ::1","timestamp":"2026-01-17T09:46:26.166Z"}
+{"level":"info","message":"GET /api/bookings/stats 200 39.138 ms - ::ffff:127.0.0.1","timestamp":"2026-01-17T09:46:26.181Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 15.032 ms - ::ffff:127.0.0.1","timestamp":"2026-01-17T09:46:36.068Z"}
+{"level":"info","message":"✅ Fetched 7 bookings","timestamp":"2026-01-17T09:47:43.166Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 32.527 ms - ::1","timestamp":"2026-01-17T09:47:43.171Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 30.776 ms - ::1","timestamp":"2026-01-17T09:47:43.181Z"}
+{"level":"info","message":"🔵 CREATE BOOKING - Starting","timestamp":"2026-01-17T09:51:22.679Z"}
+{"level":"info","message":"Customer:","timestamp":"2026-01-17T09:51:22.680Z"}
+{"level":"info","message":"Registration Date:","timestamp":"2026-01-17T09:51:22.681Z"}
+{"level":"info","message":"Booking Date:","timestamp":"2026-01-17T09:51:22.681Z"}
+{"buffer":{"data":[105,107,91,154,118,164,251,8,87,115,235,155],"type":"Buffer"},"level":"info","message":"✅ Booking created:","timestamp":"2026-01-17T09:51:22.749Z"}
+{"level":"info","message":"POST /api/bookings 201 74.492 ms - ::1","timestamp":"2026-01-17T09:51:22.754Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 65.974 ms - ::1","timestamp":"2026-01-17T09:53:22.380Z"}
+{"level":"info","message":"✅ Fetched 8 bookings","timestamp":"2026-01-17T09:53:39.797Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 200 21.204 ms - ::1","timestamp":"2026-01-17T09:53:39.802Z"}
+{"level":"info","message":"GET /api/bookings/stats 200 16.242 ms - ::1","timestamp":"2026-01-17T09:53:39.808Z"}
+{"level":"info","message":"✅ Booking status updated to Confirmed","timestamp":"2026-01-17T09:53:56.965Z"}
+{"buffer":{"data":[105,107,92,52,118,164,251,8,87,115,235,176],"type":"Buffer"},"level":"info","message":"✅ Customer created from booking:","timestamp":"2026-01-17T09:53:57.058Z"}
+{"level":"info","message":"POST /api/bookings/696b5b9a76a4fb085773eb9b/confirm 200 109.335 ms - ::1","timestamp":"2026-01-17T09:53:57.061Z"}
+{"level":"info","message":"✅ Fetched 8 bookings","timestamp":"2026-01-17T09:53:57.083Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 200 14.155 ms - ::1","timestamp":"2026-01-17T09:53:57.086Z"}
+{"level":"info","message":"GET /api/bookings/stats 200 12.107 ms - ::1","timestamp":"2026-01-17T09:53:57.089Z"}
+{"level":"info","message":"✅ Fetched 8 bookings","timestamp":"2026-01-17T09:53:57.103Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 11.876 ms - ::1","timestamp":"2026-01-17T09:53:57.104Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 11.258 ms - ::1","timestamp":"2026-01-17T09:53:57.108Z"}
+{"level":"info","message":"✅ Fetched 8 bookings","timestamp":"2026-01-17T09:53:57.119Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 10.219 ms - ::1","timestamp":"2026-01-17T09:53:57.121Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 11.300 ms - ::1","timestamp":"2026-01-17T09:53:57.126Z"}
+{"level":"info","message":"✅ Fetched 8 bookings","timestamp":"2026-01-17T09:53:57.138Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 13.086 ms - ::1","timestamp":"2026-01-17T09:53:57.142Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 15.219 ms - ::1","timestamp":"2026-01-17T09:53:57.149Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 56.895 ms - ::1","timestamp":"2026-01-17T09:54:03.725Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 29.359 ms - ::1","timestamp":"2026-01-17T09:54:41.619Z"}
+{"level":"info","message":"GET /api/users?search=&role=all 200 13.795 ms - ::1","timestamp":"2026-01-17T09:55:32.702Z"}
+{"level":"info","message":"✅ Fetched 8 bookings","timestamp":"2026-01-17T09:55:44.942Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 11.853 ms - ::1","timestamp":"2026-01-17T09:55:44.944Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 16.503 ms - ::1","timestamp":"2026-01-17T09:55:44.953Z"}
+{"level":"info","message":"✅ Fetched 8 bookings","timestamp":"2026-01-17T09:56:39.481Z"}
+{"level":"info","message":"GET /api/bookings?search=&status=all 304 32.447 ms - ::1","timestamp":"2026-01-17T09:56:39.487Z"}
+{"level":"info","message":"GET /api/bookings/stats 304 44.433 ms - ::1","timestamp":"2026-01-17T09:56:39.507Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 53.248 ms - ::1","timestamp":"2026-01-17T10:08:25.477Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 134.432 ms - ::1","timestamp":"2026-01-17T10:08:47.363Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T10:08:50.685Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T10:08:50.697Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T10:08:50.699Z"}
+{"level":"info","message":"GET /api/customers/696b5c3476a4fb085773ebb0 200 22.831 ms - ::1","timestamp":"2026-01-17T10:08:50.713Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T10:08:50.724Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T10:08:50.733Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T10:08:50.734Z"}
+{"level":"info","message":"GET /api/customers/696b5c3476a4fb085773ebb0 304 19.788 ms - ::1","timestamp":"2026-01-17T10:08:50.743Z"}
+{"level":"info","message":"📊 RENTAL DURATION CALCULATION:","timestamp":"2026-01-17T10:10:06.100Z"}
+{"level":"info","message":"   Check-in: 2026-01-20T07:30:00.000Z","timestamp":"2026-01-17T10:10:06.101Z"}
+{"level":"info","message":"   Check-out: 2026-01-23T13:12:00.000Z","timestamp":"2026-01-17T10:10:06.102Z"}
+{"level":"info","message":"   Free Return Deadline: 2026-01-21T04:30:00.000Z","timestamp":"2026-01-17T10:10:06.102Z"}
+{"level":"info","message":"   ⏰ LATE RETURN","timestamp":"2026-01-17T10:10:06.103Z"}
+{"level":"info","message":"   Hours past deadline: 56.70","timestamp":"2026-01-17T10:10:06.103Z"}
+{"level":"info","message":"   Charged Days: 3","timestamp":"2026-01-17T10:10:06.103Z"}
+{"level":"info","message":"   Daily Rate: ₹20/day","timestamp":"2026-01-17T10:10:06.104Z"}
+{"level":"info","message":"   Quantity: 1","timestamp":"2026-01-17T10:10:06.104Z"}
+{"level":"info","message":"   ✅ Calculation: 20 × 1 × 3 = ₹60","timestamp":"2026-01-17T10:10:06.104Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 26.459 ms - ::1","timestamp":"2026-01-17T10:10:06.107Z"}
+{"level":"info","message":"🔵 CREATE CUSTOMER - Starting","timestamp":"2026-01-17T10:12:01.899Z"}
+{"0":{"itemId":"6969eedcfb9c136d7bd4ade2","itemName":"Old Gadi","price":75,"quantity":20},"level":"info","message":"📦 Items:","timestamp":"2026-01-17T10:12:01.900Z"}
+{"level":"info","message":"⏰ Checkout Data:","timestamp":"2026-01-17T10:12:01.900Z"}
+{"level":"info","message":"💰 Calculation:","timestamp":"2026-01-17T10:12:01.906Z"}
+{"level":"info","message":"   Items Cost: ₹1500","timestamp":"2026-01-17T10:12:01.907Z"}
+{"level":"info","message":"   Extra Charges: ₹0","timestamp":"2026-01-17T10:12:01.907Z"}
+{"level":"info","message":"   Total: ₹1500","timestamp":"2026-01-17T10:12:01.908Z"}
+{"level":"info","message":"📄 Generating bill data...","timestamp":"2026-01-17T10:12:01.915Z"}
+{"buffer":{"data":[105,107,96,113,96,201,177,125,150,116,70,117],"type":"Buffer"},"level":"info","message":"✅ Customer created:","timestamp":"2026-01-17T10:12:01.950Z"}
+{"level":"info","message":"✅ Bill data saved","timestamp":"2026-01-17T10:12:01.951Z"}
+{"level":"info","message":"🔄 Renting items...","timestamp":"2026-01-17T10:12:01.952Z"}
+{"level":"info","message":"🔄 RENT ITEMS","timestamp":"2026-01-17T10:12:01.953Z"}
+{"level":"info","message":"✅ Items rented","timestamp":"2026-01-17T10:12:01.974Z"}
+{"level":"info","message":"POST /api/customers 201 78.811 ms - ::1","timestamp":"2026-01-17T10:12:01.979Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 63.882 ms - ::1","timestamp":"2026-01-17T10:12:02.054Z"}
+{"level":"info","message":"GET /api/items?inStock=true 200 76.028 ms - ::1","timestamp":"2026-01-17T10:12:02.073Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 56.308 ms - ::1","timestamp":"2026-01-17T10:12:02.122Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T10:12:05.631Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T10:12:05.637Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T10:12:05.638Z"}
+{"level":"info","message":"GET /api/customers/696b607160c9b17d96744675 200 11.293 ms - ::1","timestamp":"2026-01-17T10:12:05.645Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T10:12:05.655Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T10:12:05.664Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T10:12:05.665Z"}
+{"level":"info","message":"GET /api/customers/696b607160c9b17d96744675 304 14.849 ms - ::1","timestamp":"2026-01-17T10:12:05.667Z"}
+{"level":"info","message":"📊 RENTAL DURATION CALCULATION:","timestamp":"2026-01-17T10:12:48.635Z"}
+{"level":"info","message":"   Check-in: 2026-01-17T10:10:00.000Z","timestamp":"2026-01-17T10:12:48.635Z"}
+{"level":"info","message":"   Check-out: 2026-01-20T15:17:00.000Z","timestamp":"2026-01-17T10:12:48.636Z"}
+{"level":"info","message":"   Free Return Deadline: 2026-01-18T04:30:00.000Z","timestamp":"2026-01-17T10:12:48.637Z"}
+{"level":"info","message":"   ⏰ LATE RETURN","timestamp":"2026-01-17T10:12:48.637Z"}
+{"level":"info","message":"   Hours past deadline: 58.78","timestamp":"2026-01-17T10:12:48.638Z"}
+{"level":"info","message":"   Charged Days: 3","timestamp":"2026-01-17T10:12:48.639Z"}
+{"level":"info","message":"   Daily Rate: ₹20/day","timestamp":"2026-01-17T10:12:48.640Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T10:12:48.640Z"}
+{"level":"info","message":"   ✅ Calculation: 20 × 20 × 3 = ₹1200","timestamp":"2026-01-17T10:12:48.641Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 7.964 ms - ::1","timestamp":"2026-01-17T10:12:48.644Z"}
+{"level":"info","message":"📊 RENTAL DURATION CALCULATION:","timestamp":"2026-01-17T10:14:57.830Z"}
+{"level":"info","message":"   Check-in: 2026-01-17T10:10:00.000Z","timestamp":"2026-01-17T10:14:57.830Z"}
+{"level":"info","message":"   Check-out: 2026-01-20T15:17:00.000Z","timestamp":"2026-01-17T10:14:57.831Z"}
+{"level":"info","message":"   Free Return Deadline: 2026-01-18T04:30:00.000Z","timestamp":"2026-01-17T10:14:57.831Z"}
+{"level":"info","message":"   ⏰ LATE RETURN","timestamp":"2026-01-17T10:14:57.831Z"}
+{"level":"info","message":"   Hours past deadline: 58.78","timestamp":"2026-01-17T10:14:57.832Z"}
+{"level":"info","message":"   Charged Days: 3","timestamp":"2026-01-17T10:14:57.832Z"}
+{"level":"info","message":"   Daily Rate: ₹75/day","timestamp":"2026-01-17T10:14:57.832Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T10:14:57.833Z"}
+{"level":"info","message":"   ✅ Calculation: 75 × 20 × 3 = ₹4500","timestamp":"2026-01-17T10:14:57.833Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 4.587 ms - ::1","timestamp":"2026-01-17T10:14:57.835Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 55.326 ms - ::1","timestamp":"2026-01-17T10:31:31.630Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 73.110 ms - ::1","timestamp":"2026-01-17T10:31:31.635Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 168.339 ms - ::1","timestamp":"2026-01-17T10:41:55.623Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 182.734 ms - ::1","timestamp":"2026-01-17T10:41:55.630Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 160.539 ms - ::1","timestamp":"2026-01-17T10:44:46.175Z"}
+{"level":"info","message":"📊 RENTAL DURATION CALCULATION:","timestamp":"2026-01-17T10:46:32.521Z"}
+{"level":"info","message":"   Check-in: 2026-01-17T10:10:00.000Z","timestamp":"2026-01-17T10:46:32.521Z"}
+{"level":"info","message":"   Check-out: 2026-01-20T15:17:00.000Z","timestamp":"2026-01-17T10:46:32.522Z"}
+{"level":"info","message":"   Free Return Deadline: 2026-01-18T04:30:00.000Z","timestamp":"2026-01-17T10:46:32.522Z"}
+{"level":"info","message":"   ⏰ LATE RETURN","timestamp":"2026-01-17T10:46:32.523Z"}
+{"level":"info","message":"   Hours past deadline: 58.78","timestamp":"2026-01-17T10:46:32.523Z"}
+{"level":"info","message":"   Charged Days: 3","timestamp":"2026-01-17T10:46:32.524Z"}
+{"level":"info","message":"   Daily Rate: ₹0/day","timestamp":"2026-01-17T10:46:32.524Z"}
+{"level":"info","message":"   Quantity: 20","timestamp":"2026-01-17T10:46:32.525Z"}
+{"level":"info","message":"   ✅ Calculation: 0 × 20 × 3 = ₹0","timestamp":"2026-01-17T10:46:32.526Z"}
+{"level":"info","message":"POST /api/customers/calculate-duration 200 8.063 ms - ::1","timestamp":"2026-01-17T10:46:32.530Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 531.185 ms - ::1","timestamp":"2026-01-17T11:22:13.348Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 1952.671 ms - ::1","timestamp":"2026-01-17T11:22:14.928Z"}
+{"level":"info","message":"GET /api/auth/me 304 37.962 ms - ::1","timestamp":"2026-01-17T11:22:15.456Z"}
+{"level":"info","message":"GET /api/auth/me 304 45.248 ms - ::1","timestamp":"2026-01-17T11:22:15.552Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 200 164.105 ms - ::1","timestamp":"2026-01-17T11:22:15.881Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T11:22:21.667Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T11:22:21.683Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T11:22:21.685Z"}
+{"level":"info","message":"GET /api/customers/696b607160c9b17d96744675 304 24.413 ms - ::1","timestamp":"2026-01-17T11:22:21.689Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T11:22:21.700Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T11:22:21.718Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T11:22:21.719Z"}
+{"level":"info","message":"GET /api/customers/696b607160c9b17d96744675 304 25.739 ms - ::1","timestamp":"2026-01-17T11:22:21.726Z"}
+{"level":"info","message":"GET /api/items?inStock=true 304 15.800 ms - ::1","timestamp":"2026-01-17T11:22:21.835Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T11:23:03.749Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T11:23:03.759Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T11:23:03.761Z"}
+{"level":"info","message":"GET /api/customers/696b607160c9b17d96744675 304 17.363 ms - ::1","timestamp":"2026-01-17T11:23:03.766Z"}
+{"level":"info","message":"🔵 GET CUSTOMER BY ID:","timestamp":"2026-01-17T11:23:03.775Z"}
+{"level":"info","message":"✅ Customer found:","timestamp":"2026-01-17T11:23:03.787Z"}
+{"level":"info","message":"✅ Bill data exists:","timestamp":"2026-01-17T11:23:03.788Z"}
+{"level":"info","message":"GET /api/customers/696b607160c9b17d96744675 304 19.027 ms - ::1","timestamp":"2026-01-17T11:23:03.794Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 113.633 ms - ::1","timestamp":"2026-01-17T11:24:29.436Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 124.428 ms - ::1","timestamp":"2026-01-17T11:24:43.763Z"}
+{"level":"info","message":"Fetching customer for bill generation - Customer ID: 696b607160c9b17d96744675","timestamp":"2026-01-17T11:24:51.159Z"}
+{"level":"info","message":"Customer found: asdfghjkkl;","timestamp":"2026-01-17T11:24:51.170Z"}
+{"level":"info","message":"Bill data retrieved successfully","timestamp":"2026-01-17T11:24:51.171Z"}
+{"level":"debug","message":"Number of items with charges: 1","timestamp":"2026-01-17T11:24:51.172Z"}
+{"level":"info","message":"Logo loaded successfully","timestamp":"2026-01-17T11:24:51.188Z"}
+{"level":"info","message":"Building HTML content for bill generation","timestamp":"2026-01-17T11:24:51.337Z"}
+{"level":"info","message":"Puppeteer browser launched successfully","timestamp":"2026-01-17T11:24:53.227Z"}
+{"level":"info","message":"HTML content set in browser page","timestamp":"2026-01-17T11:24:55.025Z"}
+{"level":"info","message":"PDF generated successfully - Size: 628109 bytes","timestamp":"2026-01-17T11:24:57.407Z"}
+{"level":"info","message":"Sending PDF file: Bill_asdfghjkkl;_744675_EN.pdf","timestamp":"2026-01-17T11:24:57.409Z"}
+{"level":"info","message":"GET /api/customers/696b607160c9b17d96744675/bill?language=en 200 6256.392 ms - ::1","timestamp":"2026-01-17T11:24:57.413Z"}
+{"level":"info","message":"GET /api/customers?search=&status=all 304 99.009 ms - ::1","timestamp":"2026-01-17T11:25:18.068Z"}
