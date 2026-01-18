@@ -49,6 +49,8 @@ export default function Items() {
 
   const items = data?.data?.data?.items || [];
 
+  const sortedItems = [...items].sort((a, b) => a.name.localeCompare(b.name));
+
   const handleEdit = (item) => {
     setSelectedItem(item);
     setDialogOpen(true);
@@ -158,7 +160,7 @@ export default function Items() {
         <div className="flex items-center justify-center h-96">
           <div className="text-lg">{t("common.loading")}</div>
         </div>
-      ) : items.length === 0 ? (
+      ) : sortedItems.length === 0 ? (
         <Card className="p-12">
           <div className="text-center">
             <Package className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
@@ -176,7 +178,7 @@ export default function Items() {
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {items.map((item) => {
+          {sortedItems.map((item) => {
             const actualStatus = getActualStatus(item);
             
             return (

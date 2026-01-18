@@ -6,6 +6,8 @@ import AdvancedBooking from '../models/AdvancedBooking.js';
 import Customer from '../models/Customer.js';
 import Item from '../models/Item.js';
 import logger from '../../utils/logger.js';
+import { getAccessibleUserIds } from '../utils/accessControl.js';
+import User from '../models/User.js';
 
 export const createBooking = async (req, res) => {
   try {
@@ -70,7 +72,11 @@ export const getBookings = async (req, res) => {
       limit = 50
     } = req.query;
     
-    const query = { userId: req.userId };
+    // const query = { userId: req.userId };
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+    
+    const query = { userId: { $in: accessibleUserIds } };
     
     if (status && status !== 'all') {
       query.status = status;
@@ -134,7 +140,14 @@ export const getBookingById = async (req, res) => {
     const { id } = req.params;
     logger.info('🔵 GET BOOKING:', id);
     
-    const booking = await AdvancedBooking.findById(id);
+    // const booking = await AdvancedBooking.findById(id);
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+    
+    const booking = await AdvancedBooking.findOne({
+      _id: id,
+      userId: { $in: accessibleUserIds }
+    });
 
     if (!booking) {
       return res.status(404).json({
@@ -380,13 +393,22 @@ export const cancelBooking = async (req, res) => {
 
 export const getBookingStats = async (req, res) => {
   try {
-    const userId = req.userId;
+    // const userId = req.userId;
+
+    // const [totalBookings, pendingBookings, confirmedBookings, cancelledBookings] = await Promise.all([
+    //   AdvancedBooking.countDocuments({ userId }),
+    //   AdvancedBooking.countDocuments({ userId, status: 'Pending' }),
+    //   AdvancedBooking.countDocuments({ userId, status: 'Confirmed' }),
+    //   AdvancedBooking.countDocuments({ userId, status: 'Cancelled' })
+    // ]);
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
 
     const [totalBookings, pendingBookings, confirmedBookings, cancelledBookings] = await Promise.all([
-      AdvancedBooking.countDocuments({ userId }),
-      AdvancedBooking.countDocuments({ userId, status: 'Pending' }),
-      AdvancedBooking.countDocuments({ userId, status: 'Confirmed' }),
-      AdvancedBooking.countDocuments({ userId, status: 'Cancelled' })
+      AdvancedBooking.countDocuments({ userId: { $in: accessibleUserIds } }),
+      AdvancedBooking.countDocuments({ userId: { $in: accessibleUserIds }, status: 'Pending' }),
+      AdvancedBooking.countDocuments({ userId: { $in: accessibleUserIds }, status: 'Confirmed' }),
+      AdvancedBooking.countDocuments({ userId: { $in: accessibleUserIds }, status: 'Cancelled' })
     ]);
 
     res.json({

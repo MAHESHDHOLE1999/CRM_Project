@@ -2,6 +2,8 @@
 import Customer from '../models/Customer.js';
 import Item from '../models/Item.js';
 import logger from '../../utils/logger.js';
+import { getAccessibleUserIds } from '../utils/accessControl.js';
+import User from '../models/User.js';
 
 // =====================================================
 // CREATE CUSTOMER - RENT ITEMS
@@ -372,7 +374,11 @@ export const getCustomers = async (req, res) => {
       limit = 50
     } = req.query;
     
-    const query = { userId: req.userId };
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+
+    // const query = { userId: req.userId };
+    const query = { userId: { $in: accessibleUserIds } };
     
     if (status && status !== 'all') {
       query.status = status;
@@ -754,7 +760,15 @@ export const getCustomerById = async (req, res) => {
     
     logger.info('🔵 GET CUSTOMER BY ID:', id);
 
-    const customer = await Customer.findById(id);
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+
+    // const customer = await Customer.findById(id);
+    const customer = await Customer.findOne({
+      _id: id,
+      userId: { $in: accessibleUserIds }
+    });
+
 
     if (!customer) {
       return res.status(404).json({
@@ -924,7 +938,14 @@ export const updateCustomer = async (req, res) => {
     logger.info('Customer ID:', id);
     logger.info('Update checkout data:', updateData.itemsCheckoutData);
 
-    const customer = await Customer.findById(id);
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+
+    // const customer = await Customer.findById(id);
+    const customer = await Customer.findOne({
+      _id: id,
+      userId: { $in: accessibleUserIds }
+    });
 
     if (!customer) {
       return res.status(404).json({
@@ -1092,7 +1113,15 @@ export const deleteCustomer = async (req, res) => {
     
     logger.info('🗑️ DELETE CUSTOMER:', id);
 
-    const customer = await Customer.findById(id);
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+
+    const customer = await Customer.findOne({
+      _id: id,
+      userId: { $in: accessibleUserIds }
+    });
+
+    // const customer = await Customer.findById(id);
 
     if (!customer) {
       return res.status(404).json({
@@ -1615,9 +1644,38 @@ export const calculateRentalDuration = async (req, res) => {
 // =====================================================
 export const getDashboardStats = async (req, res) => {
   try {
-    const userId = req.userId;
+    // const userId = req.userId;
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+
+    // const [
+    //   totalBookings,
+    //   activeBookings,
+    //   completedBookings,
+    //   cancelledBookings,
+    //   todaysBookings,
+    //   incomeData,
+    //   pendingData
+    // ] = await Promise.all([
+    //   Customer.countDocuments({ userId }),
+    //   Customer.countDocuments({ userId, status: 'Active' }),
+    //   Customer.countDocuments({ userId, status: 'Completed' }),
+    //   Customer.countDocuments({ userId, status: 'Cancelled' }),
+    //   Customer.countDocuments({
+    //     userId,
+    //     registrationDate: { $gte: today }
+    //   }),
+    //   Customer.aggregate([
+    //     { $match: { userId: userId, status: 'Completed' } },
+    //     { $group: { _id: null, total: { $sum: '$givenAmount' } } }
+    //   ]),
+    //   Customer.aggregate([
+    //     { $match: { userId: userId, status: { $in: ['Active'] } } },
+    //     { $group: { _id: null, total: { $sum: '$remainingAmount' } } }
+    //   ])
+    // ]);
 
     const [
       totalBookings,
@@ -1628,20 +1686,20 @@ export const getDashboardStats = async (req, res) => {
       incomeData,
       pendingData
     ] = await Promise.all([
-      Customer.countDocuments({ userId }),
-      Customer.countDocuments({ userId, status: 'Active' }),
-      Customer.countDocuments({ userId, status: 'Completed' }),
-      Customer.countDocuments({ userId, status: 'Cancelled' }),
+      Customer.countDocuments({ userId: { $in: accessibleUserIds } }),
+      Customer.countDocuments({ userId: { $in: accessibleUserIds }, status: 'Active' }),
+      Customer.countDocuments({ userId: { $in: accessibleUserIds }, status: 'Completed' }),
+      Customer.countDocuments({ userId: { $in: accessibleUserIds }, status: 'Cancelled' }),
       Customer.countDocuments({
-        userId,
+        userId: { $in: accessibleUserIds },
         registrationDate: { $gte: today }
       }),
       Customer.aggregate([
-        { $match: { userId: userId, status: 'Completed' } },
+        { $match: { userId: { $in: accessibleUserIds }, status: 'Completed' } },
         { $group: { _id: null, total: { $sum: '$givenAmount' } } }
       ]),
       Customer.aggregate([
-        { $match: { userId: userId, status: { $in: ['Active'] } } },
+        { $match: { userId: { $in: accessibleUserIds }, status: { $in: ['Active'] } } },
         { $group: { _id: null, total: { $sum: '$remainingAmount' } } }
       ])
     ]);

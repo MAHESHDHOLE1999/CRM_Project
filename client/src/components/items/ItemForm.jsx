@@ -201,7 +201,7 @@ export default function ItemForm({ item, onSuccess }) {
 
         <div>
           <Label>
-            {item ? 'Quantity to Add *' : `${t('items.totalQuantity')} *`}
+            {item ? `${t('items.quantityToAdd')} *` : `${t('items.totalQuantity')} *`}
           </Label>
           <Input
             type="text"
@@ -236,7 +236,7 @@ export default function ItemForm({ item, onSuccess }) {
                 onClick={() => setShowQuantityBreakdown(!showQuantityBreakdown)}
                 className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
               >
-                {showQuantityBreakdown ? '▼' : '▶'} View Quantity Breakdown
+                {showQuantityBreakdown ? '▼' : '▶'} {t('items.quantityBreakdown')}
               </button>
             </div>
 
@@ -245,20 +245,20 @@ export default function ItemForm({ item, onSuccess }) {
                 <CardContent className="pt-4">
                   <div className="space-y-3">
                     <div className="font-semibold text-sm text-gray-700 mb-3">
-                      Quantity Summary
+                      {t('items.quantitySummary')}
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <div>
-                          <p className="text-xs text-gray-600">Previous Total</p>
+                          <p className="text-xs text-gray-600">{t('items.previousTotal')}</p>
                           <p className="text-lg font-bold text-gray-900">
                             {quantityBreakdown.previousTotal}
                           </p>
                         </div>
                         <div>
                           <p className="text-xs text-gray-600">
-                            Previously Available
+                            {t('items.previouslyAvailable')}
                           </p>
                           <p className="text-lg font-bold text-green-600">
                             {quantityBreakdown.previousAvailable}
@@ -268,13 +268,13 @@ export default function ItemForm({ item, onSuccess }) {
 
                       <div className="space-y-2">
                         <div>
-                          <p className="text-xs text-gray-600">Currently Rented</p>
+                          <p className="text-xs text-gray-600">{t('items.currentlyRented')}</p>
                           <p className="text-lg font-bold text-orange-600">
                             {quantityBreakdown.previousRented}
                           </p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-600">Adding Now</p>
+                          <p className="text-xs text-gray-600">{t('items.addingNow')}</p>
                           <p className="text-lg font-bold text-blue-600">
                             +{quantityBreakdown.addingQuantity}
                           </p>
@@ -285,13 +285,13 @@ export default function ItemForm({ item, onSuccess }) {
                     <div className="border-t border-blue-200 pt-3 mt-3">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <p className="text-xs text-gray-600">New Total Quantity</p>
+                          <p className="text-xs text-gray-600">{t('items.newTotalQuantity')}</p>
                           <p className="text-2xl font-bold text-blue-700">
                             {quantityBreakdown.newTotal}
                           </p>
                         </div>
                         <div>
-                          <p className="text-xs text-gray-600">New Available</p>
+                          <p className="text-xs text-gray-600">{t('items.newAvailable')}</p>
                           <p className="text-2xl font-bold text-green-600">
                             {quantityBreakdown.newAvailable}
                           </p>
@@ -309,7 +309,7 @@ export default function ItemForm({ item, onSuccess }) {
         {item && (
           <>
             <div>
-              <Label>Available Quantity</Label>
+              <Label>{t('items.availableQuantity')}</Label>
               <Input
                 type="text"
                 value={item.availableQuantity || 0}
@@ -318,7 +318,7 @@ export default function ItemForm({ item, onSuccess }) {
               />
             </div>
             <div>
-              <Label>Rented Quantity</Label>
+              <Label>{t('items.rentedQuantity')}</Label>
               <Input
                 type="text"
                 value={item.rentedQuantity || 0}
@@ -351,7 +351,7 @@ export default function ItemForm({ item, onSuccess }) {
           </Select>
           {item && item.rentedQuantity > 0 && (
             <p className="text-sm text-muted-foreground mt-1">
-              Status is auto-managed based on rental status
+              {t('items.statusMessage')}
             </p>
           )}
         </div>

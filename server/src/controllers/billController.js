@@ -1105,7 +1105,7 @@ export const generateBookingBill = async (req, res) => {
       <div class="logo-section">${logoImg}</div>
       <div class="bill-title">${t.billTitle}</div>
       <div class="company-tagline">${t.tagline}</div>
-      <div class="company-address">${t.address1}<br>${t.address2}</div>
+      <div class="company-address">${t.address1} | ${t.address2}</div>
       <div class="contact-info">📧 ${t.email}</div>
     </div>
     

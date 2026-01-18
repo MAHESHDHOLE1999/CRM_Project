@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import logger from '../../utils/logger.js';
 
-export const authenticate = (req, res, next) => {
+export const authenticate = async (req, res, next) => {
   try {
     // Token comes from HTTP-only cookie
     const token = req.cookies?.token;
@@ -18,6 +18,12 @@ export const authenticate = (req, res, next) => {
 
     req.userId = decoded.userId;
     req.userEmail = decoded.email;
+
+    // ✅ NEW: Get user and store role in request
+    const user = await User.findById(req.userId);
+    if (user) {
+      req.userRole = user.role; // 'admin' or 'user'
+    }
 
     next();
   } catch (error) {
@@ -52,6 +58,7 @@ export const authorize = (...allowedRoles) => {
 
       // Attach user to request
       req.user = user;
+      req.userRole = user.role;
 
       next();
     } catch (error) {

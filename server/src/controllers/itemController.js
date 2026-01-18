@@ -1,5 +1,7 @@
 import Item from "../models/Item.js";
 import logger from "../../utils/logger.js";
+import { getAccessibleUserIds } from "../utils/accessControl.js";
+import User from "../models/User.js";
 
 // Helper function to determine correct status based on quantities
 const determineStatus = (totalQuantity, availableQuantity, rentedQuantity) => {
@@ -69,7 +71,11 @@ export const getItems = async (req, res) => {
       limit = 50,
     } = req.query;
 
-    const query = { userId: req.userId };
+    // const query = { userId: req.userId };
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+
+    const query = { userId: { $in: accessibleUserIds } };
 
     // Note: Status filter is applied, but frontend recalculates actual status
     if (status && status !== "all") {
@@ -143,9 +149,16 @@ export const getItemById = async (req, res) => {
     const { id } = req.params;
 
     // let item = await Item.findById(id);
+    // let item = await Item.findOne({
+    //   _id: id,
+    //   userId: req.userId,
+    // });
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+
     let item = await Item.findOne({
       _id: id,
-      userId: req.userId,
+      userId: { $in: accessibleUserIds },
     });
 
     if (!item) {
@@ -446,16 +459,33 @@ export const returnItem = async (req, res) => {
 // Get inventory stats
 export const getInventoryStats = async (req, res) => {
   try {
+    // const stats = await Item.aggregate([
+    //   { $match: { userId: req.userId} },
+    //   {
+    //     $group: {
+    //       _id: null,
+    //       totalItems: { $sum: 1 },
+    //       totalQuantity: { $sum: "$totalQuantity" },
+    //       availableQuantity: { $sum: "$availableQuantity" },
+    //       rentedQuantity: { $sum: "$rentedQuantity" },
+    //       totalValue: { $sum: { $multiply: ["$totalQuantity", "$price"] } },
+    //     },
+    //   },
+    // ]);
+
+    // ✅ Get accessible user IDs
+    const accessibleUserIds = await getAccessibleUserIds(req.userId, User);
+
     const stats = await Item.aggregate([
-      { $match: { userId: req.userId} },
+      { $match: { userId: { $in: accessibleUserIds } } },
       {
         $group: {
           _id: null,
           totalItems: { $sum: 1 },
-          totalQuantity: { $sum: "$totalQuantity" },
-          availableQuantity: { $sum: "$availableQuantity" },
-          rentedQuantity: { $sum: "$rentedQuantity" },
-          totalValue: { $sum: { $multiply: ["$totalQuantity", "$price"] } },
+          totalQuantity: { $sum: '$totalQuantity' },
+          availableQuantity: { $sum: '$availableQuantity' },
+          rentedQuantity: { $sum: '$rentedQuantity' },
+          totalValue: { $sum: { $multiply: ['$totalQuantity', '$price'] } },
         },
       },
     ]);

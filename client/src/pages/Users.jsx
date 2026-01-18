@@ -294,9 +294,12 @@ export default function Users() {
   const [userToDelete, setUserToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
+
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['users', { search, role: roleFilter }],
-    queryFn: () => userService.getAll({ search, role: roleFilter }),
+    queryKey: ['users', { search }],
+    queryFn: () => userService.getAll({ search }),
+    // queryKey: ['users', { search, role: roleFilter }],
+    // queryFn: () => userService.getAll({ search, role: roleFilter }),
   });
 
   const deleteMutation = useMutation({
