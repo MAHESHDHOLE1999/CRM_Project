@@ -28,10 +28,29 @@ const transporter = nodemailer.createTransport({
 export const getAllUsers = async (req, res) => {
   try {
     const { search, role } = req.query;
+    const adminId = req.userId;
+
+    const currentUser = await User.findById(adminId);
+    if (!currentUser){
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorized'
+      });
+    };
     
     // Build filter
     let filter = {};
+
+    if(currentUser.role === 'admin'){
+      filter.createdBy = adminId;
+    }else{
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. Only admins can view users.'
+      });
+    }
     
+    // Add search filter
     if (search) {
       filter = {
         $or: [
@@ -42,6 +61,7 @@ export const getAllUsers = async (req, res) => {
       };
     }
     
+    // Add role filter
     if (role && role !== 'all') {
       filter.role = role;
     }
@@ -58,6 +78,7 @@ export const getAllUsers = async (req, res) => {
       phone: user.phone || '',
       role: user.role,
       isInactive: user.isInactive,
+      createdBy: user.createdBy,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt
     }));
@@ -87,6 +108,15 @@ export const getAllUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
+    const adminId = req.userId;
+
+    const currentUser = await User.findById(adminId);
+    if(!currentUser || currentUser.role !== 'admin'){
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. Only admins can view user details.'
+      });
+    }
 
     // Select all fields EXCEPT password and sensitive reset fields
     const user = await User.findById(id).select('-password -resetOTP -resetOTPExpiry -resetToken -resetTokenExpiry');
@@ -95,6 +125,14 @@ export const getUserById = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: 'User not found'
+      });
+    }
+
+    //check if user belongs to this admin
+    if(user.createdBy.toString() !== adminId){
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. You do not have permission to view this user.'
       });
     }
 
@@ -109,6 +147,7 @@ export const getUserById = async (req, res) => {
           phone: user.phone || '',
           role: user.role,
           isInactive: user.isInactive,
+          createdBy: user.createdBy,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt
         }
@@ -127,6 +166,16 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const { username, email, phone, password, role } = req.body;
+    const adminId = req.userId;
+
+    //validate admin role
+    const admin = await User.findById(adminId);
+    if (!admin || admin.role !== 'admin'){
+      return res.status(403).json({
+        success: false,
+        message: 'Only admins can create users'
+      });
+    }
 
     // Validation
     if (!username || !email || !password) {
@@ -157,8 +206,12 @@ export const createUser = async (req, res) => {
       email,
       phone: phone || undefined,
       password: hashedPassword,
-      role: role || 'user'
+      role: role || 'user',
+      createdBy: adminId,
+      managedBy: adminId
     });
+
+    logger.info(`✅ User created: ${username} by admin ${admin.username}`);
 
     res.status(201).json({
       success: true,
@@ -170,6 +223,7 @@ export const createUser = async (req, res) => {
           email: user.email,
           phone: user.phone,
           role: user.role,
+          createdBy: user.createdBy,
           createdAt: user.createdAt
         }
       }
@@ -188,6 +242,16 @@ export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { username, email, phone, password, role } = req.body;
+    const adminId = req.userId;
+
+    //validate admin role
+    const admin = await User.findById(adminId);
+    if (!admin || admin.role !== 'admin'){
+      return res.status(403).json({
+        success: false,
+        message: 'Only admins can update users'
+      });
+    }
 
     // Check if user exists
     const user = await User.findById(id);
@@ -196,6 +260,14 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({
         success: false,
         message: 'User not found'
+      });
+    }
+
+    // Check if user belongs to this admin
+    if (user.createdBy.toString() !== adminId){
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. You do not have permission to update this user.'
       });
     }
 
@@ -222,6 +294,8 @@ export const updateUser = async (req, res) => {
 
     await user.save();
 
+    logger.info(`✅ User updated: ${user.username} by admin ${admin.username}`);
+
     res.json({
       success: true,
       message: 'User updated successfully',
@@ -233,6 +307,7 @@ export const updateUser = async (req, res) => {
           phone: user.phone || '',
           role: user.role,
           isInactive: user.isInactive,
+          createdBy: user.createdBy,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt
         }
@@ -251,15 +326,42 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+    const adminId = req.userId;
 
-    const user = await User.findByIdAndDelete(id);
+    //validate admin role
+    const admin = await User.findById(adminId);
+    if (!admin || admin.role !== 'admin'){
+      return res.status(403).json({
+        success: false,
+        message: 'Only admins can delete users'
+      });
+    }
 
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({
         success: false,
         message: 'User not found'
       });
     }
+
+    // Check if user belongs to this admin
+    if (user.createdBy.toString() !== adminId){
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. You do not have permission to delete this user.'
+      });
+    }
+
+    await User.findByIdAndDelete(id);
+    logger.info(`✅ User deleted: ${user.username} by admin ${admin.username}`);
+
+    // if (!user) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: 'User not found'
+    //   });
+    // }
 
     res.json({
       success: true,

@@ -30,6 +30,18 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'admin'
   },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+    index: true
+  },
+  managedBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+    index: true
+  },
   isInactive: {
     type: Boolean,
     default: false
@@ -62,5 +74,8 @@ const userSchema = new mongoose.Schema({
 // ✅ Index for faster queries
 userSchema.index({ email: 1, username: 1 });
 userSchema.index({ role: 1 });
+userSchema.index({ createdBy: 1 }); // For filtering users by admin
+userSchema.index({ managedBy: 1 });
+userSchema.index({ createdBy: 1, createdAt: -1 });
 
 export default mongoose.model('User', userSchema);
