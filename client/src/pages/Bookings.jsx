@@ -189,9 +189,10 @@ export default function Bookings() {
 
     try {
       setIsDownloadingBill(true);
-      
+
       // Use fetch instead of api.get for blob download
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      const apiUrl =
+        import.meta.env.VITE_API_URL || "http://localhost:5000/api";
       const downloadUrl = `${apiUrl}/bookings/${selectedBookingForBill._id}/bill/generate?language=${billLanguage}`;
 
       const response = await fetch(downloadUrl, {
@@ -225,7 +226,7 @@ export default function Bookings() {
       window.URL.revokeObjectURL(url);
 
       toast.success(
-        t("common.downloadSuccess") || "Bill downloaded successfully"
+        t("common.downloadSuccess") || "Bill downloaded successfully",
       );
       setBillLanguageDialogOpen(false);
     } catch (error) {
@@ -467,7 +468,7 @@ export default function Bookings() {
       {/* =====================================================
           Bill Language Selection Dialog
           ===================================================== */}
-      <Dialog
+      {/* <Dialog
         open={billLanguageDialogOpen}
         onOpenChange={setBillLanguageDialogOpen}
       >
@@ -485,7 +486,6 @@ export default function Bookings() {
             </p>
 
             <div className="space-y-2">
-              {/* English Option */}
               <div
                 className={`p-4 border-2 rounded-lg cursor-pointer transition ${
                   billLanguage === "en"
@@ -509,7 +509,6 @@ export default function Bookings() {
                 </div>
               </div>
 
-              {/* Marathi Option */}
               <div
                 className={`p-4 border-2 rounded-lg cursor-pointer transition ${
                   billLanguage === "mr"
@@ -564,6 +563,119 @@ export default function Bookings() {
             </div>
           </div>
         </DialogContent>
+      </Dialog> */}
+
+      <Dialog
+        open={billLanguageDialogOpen}
+        onOpenChange={setBillLanguageDialogOpen}
+      >
+        <DialogContent className="max-w-sm bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-slate-900 dark:text-white">
+              <Globe className="h-5 w-5" />
+              Select Bill Language / बिल भाषा निवडा
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4 py-4">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              Choose the language for the bill / बिलासाठी भाषा निवडा
+            </p>
+
+            <div className="space-y-2">
+              {/* English Option */}
+              <div
+                className={`p-4 border-2 rounded-lg cursor-pointer transition ${
+                  billLanguage === "en"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
+                    : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-900"
+                }`}
+                onClick={() => setBillLanguage("en")}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                      billLanguage === "en"
+                        ? "border-blue-500"
+                        : "border-slate-400 dark:border-slate-600"
+                    }`}
+                  >
+                    {billLanguage === "en" && (
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900 dark:text-white">
+                      English
+                    </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Download bill in English
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Marathi Option */}
+              <div
+                className={`p-4 border-2 rounded-lg cursor-pointer transition ${
+                  billLanguage === "mr"
+                    ? "border-orange-500 bg-orange-50 dark:bg-orange-950"
+                    : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-900"
+                }`}
+                onClick={() => setBillLanguage("mr")}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                      billLanguage === "mr"
+                        ? "border-orange-500"
+                        : "border-slate-400 dark:border-slate-600"
+                    }`}
+                  >
+                    {billLanguage === "mr" && (
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900 dark:text-white">
+                      मराठी (Marathi)
+                    </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      बिल मराठीमध्ये डाउनलोड करा
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setBillLanguageDialogOpen(false)}
+                className="flex-1 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
+              >
+                Cancel / रद्द करा
+              </Button>
+              <Button
+                onClick={handleDownloadBill}
+                disabled={isDownloadingBill}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white"
+              >
+                {isDownloadingBill ? (
+                  <>
+                    <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                    Downloading...
+                  </>
+                ) : (
+                  <>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download / डाउनलोड करा
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
       </Dialog>
 
       {/* =====================================================
@@ -588,7 +700,7 @@ export default function Bookings() {
                   {bookingToConfirm &&
                     format(
                       new Date(bookingToConfirm.bookingDate),
-                      "dd/MM/yyyy"
+                      "dd/MM/yyyy",
                     )}
                 </p>
                 <p className="text-sm">
@@ -637,7 +749,7 @@ export default function Bookings() {
       {/* =====================================================
           Professional Delete Confirmation Dialog
           ===================================================== */}
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+      {/* <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent className="max-w-sm">
           <AlertDialogHeader>
             <div className="flex items-center gap-3">
@@ -673,7 +785,7 @@ export default function Bookings() {
                         <p className="font-semibold text-slate-900">
                           {format(
                             new Date(bookingToDelete.bookingDate),
-                            "dd/MM/yyyy"
+                            "dd/MM/yyyy",
                           )}
                         </p>
                       </div>
@@ -682,8 +794,7 @@ export default function Bookings() {
                           {t("customer.totalAmount")}
                         </p>
                         <p className="font-semibold text-slate-900">
-                          ₹
-                          {bookingToDelete.totalAmount.toLocaleString("en-IN")}
+                          ₹{bookingToDelete.totalAmount.toLocaleString("en-IN")}
                         </p>
                       </div>
                     </div>
@@ -706,6 +817,91 @@ export default function Bookings() {
               onClick={handleConfirmDelete}
               disabled={isDeleting}
               className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+            >
+              {isDeleting ? (
+                <>
+                  <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                  {t("common.deleting") || "Deleting..."}
+                </>
+              ) : (
+                <>
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  {t("common.delete")}
+                </>
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog> */}
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 max-w-sm">
+          <AlertDialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-950">
+                <AlertCircle className="h-6 w-6 text-red-600 dark:text-red-400" />
+              </div>
+              <AlertDialogTitle className="text-lg text-slate-900 dark:text-white">
+                {t("common.deleteConfirmation")}
+              </AlertDialogTitle>
+            </div>
+            <AlertDialogDescription className="mt-4">
+              <div className="space-y-4">
+                <p className="text-slate-600 dark:text-slate-400">
+                  {t("common.deleteWarning") ||
+                    "This action cannot be undone. Please be certain."}
+                </p>
+
+                {bookingToDelete && (
+                  <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+                    <div className="space-y-2">
+                      <div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                          {t("customer.name")}
+                        </p>
+                        <p className="font-semibold text-slate-900 dark:text-white">
+                          {bookingToDelete.customerName}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                          {t("customer.phone")}
+                        </p>
+                        <p className="font-semibold text-slate-900 dark:text-white">
+                          {bookingToDelete.phone}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                          {t("customer.totalAmount")}
+                        </p>
+                        <p className="font-semibold text-slate-900 dark:text-white">
+                          ₹
+                          {bookingToDelete.totalAmount.toLocaleString("en-IN")}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-start gap-2 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 p-3 rounded-lg border border-red-200 dark:border-red-800">
+                  <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <p>
+                    {t("common.deleteWarning2") ||
+                      "Once deleted, this record cannot be recovered."}
+                  </p>
+                </div>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-2">
+            <AlertDialogCancel className="border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800">
+              {t("common.cancel")}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              disabled={isDeleting}
+              className="bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white focus:ring-red-600"
             >
               {isDeleting ? (
                 <>

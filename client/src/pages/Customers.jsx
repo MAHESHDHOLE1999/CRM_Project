@@ -397,16 +397,16 @@ export default function Customers() {
         open={billLanguageDialogOpen}
         onOpenChange={setBillLanguageDialogOpen}
       >
-        <DialogContent className="max-w-sm">
+        <DialogContent className="max-w-sm bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className="flex items-center gap-2 text-slate-900 dark:text-white">
               <Globe className="h-5 w-5" />
               Select Bill Language / बिल भाषा निवडा
             </DialogTitle>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               Choose the language for the bill / बिलासाठी भाषा निवडा
             </p>
 
@@ -415,20 +415,20 @@ export default function Customers() {
               <div
                 className={`p-4 border-2 rounded-lg cursor-pointer transition ${
                   billLanguage === "en"
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
+                    : "border-gray-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-900"
                 }`}
                 onClick={() => setBillLanguage("en")}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center">
+                  <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center">
                     {billLanguage === "en" && (
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     )}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">English</p>
-                    <p className="text-sm text-gray-600">
+                    <p className="font-semibold text-slate-900 dark:text-white">English</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
                       Download bill in English
                     </p>
                   </div>
@@ -439,22 +439,28 @@ export default function Customers() {
               <div
                 className={`p-4 border-2 rounded-lg cursor-pointer transition ${
                   billLanguage === "mr"
-                    ? "border-orange-500 bg-orange-50"
-                    : "border-gray-200 hover:border-gray-300"
+                    ? "border-orange-500 bg-orange-50 dark:bg-orange-950"
+                    : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-900"
                 }`}
                 onClick={() => setBillLanguage("mr")}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full border-2 border-orange-500 flex items-center justify-center">
+                  <div
+                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                      billLanguage === "mr"
+                        ? "border-orange-500"
+                        : "border-slate-400 dark:border-slate-600"
+                    }`}
+                  >
                     {billLanguage === "mr" && (
                       <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                     )}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-slate-900 dark:text-white">
                       मराठी (Marathi)
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
                       बिल मराठीमध्ये डाउनलोड करा
                     </p>
                   </div>
@@ -490,47 +496,47 @@ export default function Customers() {
 
       {/* Professional Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent className="max-w-sm">
+        <AlertDialogContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 max-w-sm">
           <AlertDialogHeader>
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
-                <AlertCircle className="h-6 w-6 text-red-600" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100 dark:bg-red-950">
+                <AlertCircle className="h-6 w-6 text-red-600 dark:text-red-400" />
               </div>
-              <AlertDialogTitle className="text-lg">
+              <AlertDialogTitle className="text-lg text-slate-900 dark:text-white">
                 {t("common.deleteConfirmation")}
               </AlertDialogTitle>
             </div>
             <AlertDialogDescription className="mt-4">
               <div className="space-y-4">
-                <p>
+                <p className="text-slate-600 dark:text-slate-400">
                   {t("common.deleteWarning") ||
                     "This action cannot be undone. Please be certain."}
                 </p>
 
                 {customerToDelete && (
-                  <div className="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                  <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
                     <div className="space-y-2">
                       <div>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
                           {t("customer.name")}
                         </p>
-                        <p className="font-semibold text-slate-900">
+                        <p className="font-semibold text-slate-900 dark:text-white">
                           {customerToDelete.name}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
                           {t("customer.phone")}
                         </p>
-                        <p className="font-semibold text-slate-900">
+                        <p className="font-semibold text-slate-900 dark:text-white">
                           {customerToDelete.phone}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
                           {t("customer.totalAmount")}
                         </p>
-                        <p className="font-semibold text-slate-900">
+                        <p className="font-semibold text-slate-900 dark:text-white">
                           ₹
                           {customerToDelete.totalAmount.toLocaleString("en-IN")}
                         </p>
@@ -539,7 +545,7 @@ export default function Customers() {
                   </div>
                 )}
 
-                <div className="flex items-start gap-2 text-sm text-red-600 bg-red-50 p-3 rounded-lg">
+                <div className="flex items-start gap-2 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950 p-3 rounded-lg border border-red-200 dark:border-red-800">
                   <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <p>
                     {t("common.deleteWarning2") ||
